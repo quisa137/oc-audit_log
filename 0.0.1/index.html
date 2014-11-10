@@ -1,0 +1,21 @@
+<?
+$LastModified=gmdate("D, d M Y H:i:s",filemtime(__FILE__));
+header("Last-Modified:$LastModified GMT");
+?>
+
+<!DOCTYPE HTML>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<title>JDC Audit_Log</title>
+</head>
+<frameset cols="240,*" frameborder="0" border=0 framespacing="0">
+	<frame name="auditlogmenu" src="./lib/left.php" marginwidth="0" marginheight="0" scrolling="no" noresize frameborder="0">
+	<frame name="auditlogcontent" src="./ifile/blist.php" marginwidth="0" marginheight="0" scrolling="yes" frameborder="0"><!--framespacing x-->
+</frameset> 
+<noframes>
+<body>
+<p align=center>Not Found Document and FRAME not supporting....</p>
+</body>
+</noframes>
+</html>

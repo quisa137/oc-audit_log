@@ -1,0 +1,94 @@
+@charset 'utf-8';
+* {-webkit-text-size-adjust:none;}/*iphone 글자크기 자동조정 방지 / auto;화면의 폭에 맞추어서 텍스트의 크기를 자동으로 조절*/
+* { margin:0; padding:0; color:#333333; font-size:14px; font-family:"맑은고딕","Malgun Gothic","돋움",dotum,"굴림",Gulim,Helvetica,Sans-serif; }
+
+textarea {resize:none;}
+img {border:0 none;}
+a {color:#333333;text-decoration:none;}
+a:link {color:#333333;text-decoration:none;}
+a:hover {color:#333333;text-decoration:underline;}
+a:visited {color:#333333;}
+
+
+/*bbs list--- 밖에 감싸는 width 있어야함*/
+.forms {border:1px solid #999999;}
+.bbs_type1 {clear:both; width:98%; border-collapse:separate; border-top:2px solid #3d5f80; font-family:"맑은고딕","Malgun Gothic","돋움",dotum,"굴림",Gulim,Helvetica,Sans-serif; letter-spacing:-0.03em;}
+.bbs_type1 thead th {margin:0; padding:0; height:40px; font-size:13px; border-bottom:1px solid #e8e8e8;}
+.bbs_type1 tbody td {margin:0; padding:0; height:50px; border-bottom:1px solid #e8e8e8;}
+.bbs_type1 td.writer {text-align:center; vertical-align:middle;}
+.bbs_type1 td.no {text-align:center; vertical-align:middle; font-size:11px; font-family:verdana; letter-spacing:-0.03em; color:#888888;}
+.bbs_type1 td.file {text-align:center; vertical-align:middle;}
+.bbs_type1 td.date {text-align:center; vertical-align:middle; font-size:11px; font-family:verdana; letter-spacing:-0.03em; color:#888888;}
+.bbs_type1 td.hit {text-align:center; vertical-align:middle; font-size:11px; font-family:verdana; letter-spacing:-0.03em; color:#888888;}
+.bbs_type1 td.subject {padding:4px 0; font-size:13px;}
+.bbs_type1 td.subject a {text-decoration:none;}
+
+.bbs_type1_info {clear:both; width:98%; border-collapse:separate; letter-spacing:-0.05em;}
+.bbs_type1_info td {margin:0; padding:0; text-align:right; height:30px; color:#777777; font-size:11px; font-family:verdana;}
+
+.bbs_btnview {margin:0; padding:0; margin-top:10px; width:98%; overflow:hidden;}
+.bbs_btnview .btn_list {float:left;}
+/*pager*/
+.bbs_btnview .pager {float:right; margin: 0 auto; padding: 10px 0 30px 0; font-size: 13px; text-align: center; overflow: hidden;}
+.bbs_btnview .pager a {display: inline-block; margin: 0 1px; padding: 2px 6px 3px 6px; border: 1px solid #dddddd; font-family: verdana; color: #777777; text-decoration: none; font-size: 13px;}
+.bbs_btnview .pager a.current {display: inline-block; margin: 0 1px; padding: 2px 6px 3px 6px; border: 1px solid #ffa079; font-family: verdana; font-weight: bold; color: #333333; font-size: 13px;}
+.bbs_btnview .pager a.arrow {border:0; margin:0; padding:2px;}
+
+.wrap_bbssearch {clear:both; margin-top:14px; height:45px; border:1px solid #efefef; background-color:#f7f7f2; text-align:center; width:98%;}
+.wrap_bbssearch form {padding:10px 0 10px 0; font-size:12px;}
+.wrap_bbssearch input {vertical-align:middle;}
+
+/*bbs view*/
+.bbs_type1_view {clear:both; padding:0; border-top:2px solid #3d5f80; border-bottom:2px solid #aeaeae;}
+.bbs_type1_view .subject {width:100%; padding:10px 5px 10px 5px; border-bottom:1px solid #e8e8e8; line-height:12px; position:relative; overflow:hidden;}
+.bbs_type1_view .subject strong {display:block; margin-bottom:10px; color:#444444; font-family:"맑은고딕","Malgun Gothic","돋움",dotum,"굴림",Gulim,Helvetica,Sans-serif;; line-height:21px; font-size:14pt; letter-spacing:-0.03em; word-wrap:break-word; word-break:break-all;}
+.bbs_type1_view .subject .info {width:100%; clear:both; margin:0; padding:0; margin-top:20px; position:relative;}
+.bbs_type1_view .subject .info ul {margin:0; padding:0; list-style-type:none;}
+.bbs_type1_view .subject .info ul li {float:left; height:15px; color:#888888; font-size: 12px; padding:0 10px 0 0; font-weight:bold;}
+.bbs_type1_view .subject .fileinfo {clear:both; width:100%; margin:0; padding:0; margin-top:20px; position:relative;}
+.bbs_type1_view .subject .fileinfo ul {margin:0; padding:0; list-style-type:none;}
+.bbs_type1_view .subject .fileinfo ul li {float:left; padding:0 10px 0 0;}
+.bbs_type1_view .subject .fileinfo ul li span {color:#888888; font-size: 11px; letter-spacing:-0.05em; cursor:pointer;}
+.bbs_type1_view .article {clear:both; padding:10px 5px 10px 5px; line-height:20px; font-size:14px; font-family:"맑은고딕","Malgun Gothic","돋움"; letter-spacing:-0.03em; overflow-x:hidden;}
+
+
+
+
+/*bbs write*/
+.bbs_write {clear:both; width:100%; border-collapse:separate; border-top:2px solid #3d5f80; font-family:"맑은고딕","Malgun Gothic","돋움",dotum,"굴림",Gulim,Helvetica,Sans-serif; letter-spacing:-0.03em;}
+.bbs_write thead th {display:none;}
+.bbs_write tr {margin:0; padding:0;}
+.bbs_write tr td {margin:0; padding:6px 0 6px 4px; border-bottom:1px solid #e8e8e8;}
+.bbs_write tr td label {color:#888888; font-size:12px; letter-spacing:-0.05em;}
+.bbs_write input {vertical-align:middle;}
+/*
+.bbs_write {clear:both; position:relative; padding:20px; border-top:2px solid #3d5f80;}
+.bbs_write dl {border-bottom:1px solid #efefef; overflow:auto; padding:0; margin-left:-18px; margin-right:-18px; height:30px;}
+.bbs_write dl dt {float:left; clear:left; padding-top:4px; width:100px; font-weight:bold; text-align:left;}
+.bbs_write dl dd {float:left; padding-top:4px;}
+*/
+
+
+/*bbs password*/
+.wrap_bbspassword {clear:both; padding:20px; height:80px; border:1px solid #efefef; background-color:#f7f7f2; text-align:center;}
+.wrap_bbspassword form {padding:0; font-size:12px;}
+.wrap_bbspassword ul {list-style-type:none; padding-top:20px;}
+.wrap_bbspassword ul li {float:center; padding:0 10px 0 0; display:inline}
+
+
+
+/*bbs type2 - 이미지 글 형식*/
+.bbs_type2 {clear:both; width:100%; border-collapse:separate; border-top:2px solid #3d5f80; font-family:"맑은고딕","Malgun Gothic","돋움",dotum,"굴림",Gulim,Helvetica,Sans-serif; letter-spacing:-0.03em;}
+.bbs_type2 thead th {display:none;}
+.bbs_type2 tbody td {margin:0; padding:0; text-align:left; vertical-align:top;}
+.bbs_type2 td.sbjcont strong {display:block; color:#000000; margin:4px 0 8px 0; font-size:18px; letter-spacing:-0.03em;}
+.bbs_type2 td.sbjcont .info ul {margin:0; padding:0; list-style-type:none;}
+.bbs_type2 td.sbjcont .info ul li {float:left; height:15px; color:#888888; font-size: 12px; padding:10px 10px 0 0; font-weight:bold;}
+
+
+.bbs_type2_info {clear:both; width:100%; border-collapse:separate; letter-spacing:-0.05em;}
+.bbs_type2_info td {margin:0; padding:0; text-align:right; height:30px; color:#777777; font-size:11px; font-family:verdana;}
+
+
+#wrap_contents_leftmenu {width:170px; margin:0; margin-left:4px; margin-top:30px; padding:15px; border:1px solid #dfdfdf; background-color:#f7f7f2;}
+#wrap_contents_leftmenus {width:940px; margin:0 auto; margin-top:10px; padding:15px; border:1px solid #dfdfdf;}
