@@ -43,7 +43,7 @@ class GroupHelperTest extends \PHPUnit_Framework_TestCase {
 				true,
 				array(
 					array(
-						'activity_id'	=> 1,
+						'log_id'	=> 1,
 						'user'			=> 'user',
 						'affecteduser'	=> 'affecteduser',
 						'app'			=> 'files',
@@ -58,7 +58,7 @@ class GroupHelperTest extends \PHPUnit_Framework_TestCase {
 				),
 				array(
 					array(
-						'activity_id'	=> 1,
+						'log_id'	=> 1,
 						'user'			=> 'user',
 						'affecteduser'	=> 'affecteduser',
 						'app'			=> 'files',
@@ -76,7 +76,7 @@ class GroupHelperTest extends \PHPUnit_Framework_TestCase {
 				true,
 				array(
 					array(
-						'activity_id'	=> 1,
+						'log_id'	=> 1,
 						'user'			=> 'user',
 						'affecteduser'	=> 'affecteduser',
 						'app'			=> 'files',
@@ -91,7 +91,7 @@ class GroupHelperTest extends \PHPUnit_Framework_TestCase {
 				),
 				array(
 					array(
-						'activity_id'	=> 1,
+						'log_id'	=> 1,
 						'user'			=> 'user',
 						'affecteduser'	=> 'affecteduser',
 						'app'			=> 'files',
@@ -109,7 +109,7 @@ class GroupHelperTest extends \PHPUnit_Framework_TestCase {
 				true,
 				array(
 					array(
-						'activity_id'	=> 2,
+						'log_id'	=> 2,
 						'user'			=> 'user',
 						'affecteduser'	=> 'affecteduser',
 						'app'			=> 'files',
@@ -122,7 +122,7 @@ class GroupHelperTest extends \PHPUnit_Framework_TestCase {
 						'timestamp'		=> time(),
 					),
 					array(
-						'activity_id'	=> 1,
+						'log_id'	=> 1,
 						'user'			=> 'user',
 						'affecteduser'	=> 'affecteduser',
 						'app'			=> 'files',
@@ -137,7 +137,7 @@ class GroupHelperTest extends \PHPUnit_Framework_TestCase {
 				),
 				array(
 					array(
-						'activity_id'	=> 2,
+						'log_id'	=> 2,
 						'activity_ids'	=> array(2, 1),
 						'user'			=> 'user',
 						'affecteduser'	=> 'affecteduser',
@@ -159,7 +159,7 @@ class GroupHelperTest extends \PHPUnit_Framework_TestCase {
 				true,
 				array(
 					array(
-						'activity_id'	=> 3,
+						'log_id'	=> 3,
 						'user'			=> 'user',
 						'affecteduser'	=> 'affecteduser',
 						'app'			=> 'files',
@@ -172,7 +172,7 @@ class GroupHelperTest extends \PHPUnit_Framework_TestCase {
 						'timestamp'		=> time(),
 					),
 					array(
-						'activity_id'	=> 2,
+						'log_id'	=> 2,
 						'user'			=> 'user',
 						'affecteduser'	=> 'affecteduser',
 						'app'			=> 'files',
@@ -185,7 +185,7 @@ class GroupHelperTest extends \PHPUnit_Framework_TestCase {
 						'timestamp'		=> time(),
 					),
 					array(
-						'activity_id'	=> 1,
+						'log_id'	=> 1,
 						'user'			=> 'user',
 						'affecteduser'	=> 'affecteduser',
 						'app'			=> 'files',
@@ -200,7 +200,7 @@ class GroupHelperTest extends \PHPUnit_Framework_TestCase {
 				),
 				array(
 					array(
-						'activity_id'	=> 3,
+						'log_id'	=> 3,
 						'activity_ids'	=> array(3, 2),
 						'user'			=> 'user',
 						'affecteduser'	=> 'affecteduser',
@@ -217,7 +217,7 @@ class GroupHelperTest extends \PHPUnit_Framework_TestCase {
 						'typeicon'		=> 'icon-add-color',
 					),
 					array(
-						'activity_id'	=> 1,
+						'log_id'	=> 1,
 						'user'			=> 'user',
 						'affecteduser'	=> 'affecteduser',
 						'app'			=> 'files',
@@ -235,7 +235,7 @@ class GroupHelperTest extends \PHPUnit_Framework_TestCase {
 				true,
 				array(
 					array(
-						'activity_id'	=> 2,
+						'log_id'	=> 2,
 						'user'			=> 'user',
 						'affecteduser'	=> 'affecteduser',
 						'app'			=> 'files',
@@ -248,7 +248,7 @@ class GroupHelperTest extends \PHPUnit_Framework_TestCase {
 						'timestamp'		=> time(),
 					),
 					array(
-						'activity_id'	=> 1,
+						'log_id'	=> 1,
 						'user'			=> 'user',
 						'affecteduser'	=> 'affecteduser',
 						'app'			=> 'files',
@@ -263,7 +263,7 @@ class GroupHelperTest extends \PHPUnit_Framework_TestCase {
 				),
 				array(
 					array(
-						'activity_id'	=> 2,
+						'log_id'	=> 2,
 						'user'			=> 'user',
 						'affecteduser'	=> 'affecteduser',
 						'app'			=> 'files',
@@ -276,7 +276,7 @@ class GroupHelperTest extends \PHPUnit_Framework_TestCase {
 						'typeicon'		=> 'icon-add-color',
 					),
 					array(
-						'activity_id'	=> 1,
+						'log_id'	=> 1,
 						'user'			=> 'user',
 						'affecteduser'	=> 'affecteduser',
 						'app'			=> 'files',
@@ -294,7 +294,7 @@ class GroupHelperTest extends \PHPUnit_Framework_TestCase {
 				false,
 				array(
 					array(
-						'activity_id'	=> 2,
+						'log_id'	=> 2,
 						'user'			=> 'user',
 						'affecteduser'	=> 'affecteduser',
 						'app'			=> 'files',
@@ -307,7 +307,7 @@ class GroupHelperTest extends \PHPUnit_Framework_TestCase {
 						'timestamp'		=> time(),
 					),
 					array(
-						'activity_id'	=> 1,
+						'log_id'	=> 1,
 						'user'			=> 'user',
 						'affecteduser'	=> 'affecteduser',
 						'app'			=> 'files',
@@ -322,7 +322,7 @@ class GroupHelperTest extends \PHPUnit_Framework_TestCase {
 				),
 				array(
 					array(
-						'activity_id'	=> 2,
+						'log_id'	=> 2,
 						'user'			=> 'user',
 						'affecteduser'	=> 'affecteduser',
 						'app'			=> 'files',
@@ -335,7 +335,7 @@ class GroupHelperTest extends \PHPUnit_Framework_TestCase {
 						'typeicon'		=> 'icon-add-color',
 					),
 					array(
-						'activity_id'	=> 1,
+						'log_id'	=> 1,
 						'user'			=> 'user',
 						'affecteduser'	=> 'affecteduser',
 						'app'			=> 'files',
@@ -353,7 +353,7 @@ class GroupHelperTest extends \PHPUnit_Framework_TestCase {
 				true,
 				array(
 					array(
-						'activity_id'	=> 2,
+						'log_id'	=> 2,
 						'user'			=> 'user',
 						'affecteduser'	=> 'affecteduser',
 						'app'			=> 'NOTfiles',
@@ -366,7 +366,7 @@ class GroupHelperTest extends \PHPUnit_Framework_TestCase {
 						'timestamp'		=> time(),
 					),
 					array(
-						'activity_id'	=> 1,
+						'log_id'	=> 1,
 						'user'			=> 'user',
 						'affecteduser'	=> 'affecteduser',
 						'app'			=> 'NOTfiles',
@@ -381,7 +381,7 @@ class GroupHelperTest extends \PHPUnit_Framework_TestCase {
 				),
 				array(
 					array(
-						'activity_id'	=> 2,
+						'log_id'	=> 2,
 						'user'			=> 'user',
 						'affecteduser'	=> 'affecteduser',
 						'app'			=> 'NOTfiles',
@@ -394,7 +394,7 @@ class GroupHelperTest extends \PHPUnit_Framework_TestCase {
 						'typeicon'		=> 'icon-add-color',
 					),
 					array(
-						'activity_id'	=> 1,
+						'log_id'	=> 1,
 						'user'			=> 'user',
 						'affecteduser'	=> 'affecteduser',
 						'app'			=> 'NOTfiles',
@@ -412,7 +412,7 @@ class GroupHelperTest extends \PHPUnit_Framework_TestCase {
 				true,
 				array(
 					array(
-						'activity_id'	=> 2,
+						'log_id'	=> 2,
 						'user'			=> 'user',
 						'affecteduser'	=> 'affecteduser',
 						'app'			=> 'files',
@@ -425,7 +425,7 @@ class GroupHelperTest extends \PHPUnit_Framework_TestCase {
 						'timestamp'		=> time(),
 					),
 					array(
-						'activity_id'	=> 1,
+						'log_id'	=> 1,
 						'user'			=> 'user',
 						'affecteduser'	=> 'affecteduser',
 						'app'			=> 'files',
@@ -440,7 +440,7 @@ class GroupHelperTest extends \PHPUnit_Framework_TestCase {
 				),
 				array(
 					array(
-						'activity_id'	=> 2,
+						'log_id'	=> 2,
 						'user'			=> 'user',
 						'affecteduser'	=> 'affecteduser',
 						'app'			=> 'files',
@@ -453,7 +453,7 @@ class GroupHelperTest extends \PHPUnit_Framework_TestCase {
 						'typeicon'		=> 'icon-add-color',
 					),
 					array(
-						'activity_id'	=> 1,
+						'log_id'	=> 1,
 						'user'			=> 'user',
 						'affecteduser'	=> 'affecteduser',
 						'app'			=> 'files',

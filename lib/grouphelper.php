@@ -98,12 +98,12 @@ class GroupHelper
 					$this->openGroup['subjectparams_array'][$parameter] = array($this->openGroup['subjectparams_array'][$parameter]);
 				}
 				if (!isset($this->openGroup['activity_ids'])) {
-					$this->openGroup['activity_ids'] = array((int) $this->openGroup['activity_id']);
+					$this->openGroup['activity_ids'] = array((int) $this->openGroup['log_id']);
 				}
 
 				$this->openGroup['subjectparams_array'][$parameter][] = $activity['subjectparams_array'][$parameter];
 				$this->openGroup['subjectparams_array'][$parameter] = array_unique($this->openGroup['subjectparams_array'][$parameter]);
-				$this->openGroup['activity_ids'][] = (int) $activity['activity_id'];
+				$this->openGroup['activity_ids'][] = (int) $activity['log_id'];
 			}
 		} else {
 			if (!empty($this->openGroup)) {

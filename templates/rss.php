@@ -19,7 +19,7 @@ echo '<?xml version="1.0" encoding="UTF-8"?>';
 		<atom:link href="<?php p($_['rssLink']); ?>" rel="self" type="application/rss+xml" />
 <?php foreach ($_['activities'] as $activity) { ?>
 		<item>
-			<guid isPermaLink="false"><?php p($activity['activity_id']); ?></guid>
+			<guid isPermaLink="false"><?php p($activity['log_id']); ?></guid>
 <?php if (!empty($activity['subject'])): ?>
 			<title><?php p($activity['subjectformatted']['full']); ?></title>
 <?php endif; ?>

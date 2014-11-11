@@ -1,10 +1,10 @@
 <?xml version="1.0"?>
 <info>
-		<id>activity</id>
-		<name>Activity</name>
-		<description>Provides an activity feed showing your file changes and other interesting things going on in your ownCloud.</description>
+		<id>audit_log</id>
+		<name>Audit Log</name>
+		<description>Provides an Audit Log file changes and other interesting things going on in your ownCloud.</description>
 		<licence>AGPL</licence>
-		<author>Frank Karlitschek</author>
+		<author>SGcom</author>
 		<shipped>true</shipped>
 		<default_enable/>
 		<require>4.9</require>
