@@ -24,19 +24,19 @@
 $l = OC_L10N::get('audit_log');
 
 // add an navigation entry
-OCP\App::addNavigationEntry(array(
-	'id' => 'audit_log',
-	'order' => 1,
-	'href' => OCP\Util::linkToRoute('activity.index'),
-	'icon' => OCP\Util::imagePath('audit_log', 'activity.svg'),
-	'name' => $l->t('Audit_log'),
-));
+// OCP\App::addNavigationEntry(array(
+// 	'id' => 'audit_log',
+// 	'order' => 1,
+// 	'href' => OCP\Util::linkToRoute('activity.index'),
+// 	'icon' => OCP\Util::imagePath('audit_log', 'activity.svg'),
+// 	'name' => $l->t('Audit_log'),
+// ));
 
 // register the hooks for filesystem operations. All other events from other apps has to be send via the public api
 OCA\Audit_log\Hooks::register();
 
 // Personal settings for notifications and emails
-OCP\App::registerPersonal('audit_log', 'personal');
+//OCP\App::registerPersonal('audit_log', 'personal');
 
 // Cron job for sending Emails
 OCP\Backgroundjob::registerJob('OCA\Audit_log\BackgroundJob\EmailNotification');
