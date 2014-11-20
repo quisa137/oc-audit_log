@@ -1,8 +1,8 @@
 <?xml version="1.0"?>
 <info>
-		<id>audit_log</id>
+		<id>oc-audit_log</id>
 		<name>Audit Log</name>
-		<description>Provides an Audit Log file changes and other interesting things going on in your ownCloud.</description>
+		<description>Provides an Audit Log file upload/download and other interesting things going on in your ownCloud.</description>
 		<licence>AGPL</licence>
 		<author>SGcom</author>
 		<shipped>true</shipped>
@@ -11,5 +11,5 @@
 		<types>
 				<filesystem/>
 		</types>
-		<ocsid>166038</ocsid>
+		<ocsid>999999</ocsid>
 </info>
