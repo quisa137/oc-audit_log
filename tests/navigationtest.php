@@ -1,7 +1,7 @@
 <?php
 
 /**
- * ownCloud - Activity App
+ * ownCloud - Audit_log App
  *
  * @author Joas Schilling
  * @copyright 2014 Joas Schilling nickvergessen@owncloud.com
@@ -20,9 +20,9 @@
  * License along with this library.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-namespace OCA\Activity\Tests;
+namespace OCA\Audit_log\Tests;
 
-use OCA\Activity\Navigation;
+use OCA\Audit_log\Navigation;
 
 class NavigationTest extends \PHPUnit_Framework_TestCase {
 	public function getTemplateData() {
@@ -38,7 +38,7 @@ class NavigationTest extends \PHPUnit_Framework_TestCase {
 	 */
 	public function testHooksDeleteUser($constructorActive, $forceActive) {
 		$l = \OCP\Util::getL10N('audit_log');
-		$navigation = new Navigation($l, \OC::$server->getActivityManager(), \OC::$server->getURLGenerator(), $constructorActive);
+		$navigation = new Navigation($l, \OC::$server->getAudit_logManager(), \OC::$server->getURLGenerator(), $constructorActive);
 		$output = $navigation->getTemplate($forceActive)->fetchPage();
 
 		// Get only the template part with the navigation links

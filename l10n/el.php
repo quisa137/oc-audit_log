@@ -1,7 +1,7 @@
 <?php
 $TRANSLATIONS = array(
 "Your settings have been updated." => "Οι ρυθμίσεις σας έχουν ενημερωθεί.",
-"Activity" => "Δραστηριότητα",
+"Audit_log" => "Δραστηριότητα",
 "A file or folder has been <strong>shared</strong>" => "Ένα αρχείο ή φάκελος <strong>διαμοιράστηκε</strong>",
 "A new file or folder has been <strong>created</strong>" => "Ένα νέο αρχείο ή κατάλογος έχουν <strong>δημιουργηθεί</strong>",
 "A file or folder has been <strong>changed</strong>" => "Ένα αρχείο ή κατάλογος έχουν <strong>αλλάξει</strong>",
@@ -17,7 +17,7 @@ $TRANSLATIONS = array(
 "You shared %1\$s with group %2\$s" => "Διαμοιραστήκατε %1\$s με την ομάδα %2\$s",
 "%2\$s shared %1\$s with you" => "Ο %2\$s διαμοιράστηκε το %1\$s με εσάς",
 "You shared %1\$s via link" => "Μοιραστήκατε το %1\$s μέσω συνδέσμου",
-"Activity notification" => "Ειδοποίηση δραστηριότητας",
+"Audit_log notification" => "Ειδοποίηση δραστηριότητας",
 "All Activities" => "Όλες οι Δραστηριότητες",
 "Activities by you" => "Δραστηριότητες από εσάς",
 "Activities by others" => "Δραστηριότητες από άλλους",
@@ -45,7 +45,7 @@ $TRANSLATIONS = array(
 "Hourly" => "Ωριαίως",
 "Daily" => "Καθημερινώς",
 "Weekly" => "Εβδομαδιαίως",
-"Activity feed" => "Ροή Δραστηριότητας",
+"Audit_log feed" => "Ροή Δραστηριότητας",
 "Personal activity feed for %s" => "Προσωπική ροή δραστηριότητας για %s"
 );
 $PLURAL_FORMS = "nplurals=2; plural=(n != 1);";

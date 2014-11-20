@@ -1,7 +1,7 @@
 <?php
 $TRANSLATIONS = array(
 "Your settings have been updated." => "Innstillingane dine har blitt oppdaterte",
-"Activity" => "Aktivitet",
+"Audit_log" => "Aktivitet",
 "A file or folder has been <strong>shared</strong>" => "Ei fil eller ei mappe har blitt <strong>delt</strong>",
 "A new file or folder has been <strong>created</strong>" => "Ei ny fil eller mappe er <strong>oppretta</strong>",
 "A file or folder has been <strong>changed</strong>" => "Ei fil eller mappe er <strong>endra</strong>",
@@ -44,7 +44,7 @@ $TRANSLATIONS = array(
 "Hourly" => "Kvar time",
 "Daily" => "Kvar dag",
 "Weekly" => "Kvar veke",
-"Activity feed" => "Aktivitetsstraum",
+"Audit_log feed" => "Aktivitetsstraum",
 "Personal activity feed for %s" => "Personleg aktivitetsstraum for %s"
 );
 $PLURAL_FORMS = "nplurals=2; plural=(n != 1);";

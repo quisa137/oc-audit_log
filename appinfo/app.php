@@ -1,7 +1,7 @@
 <?php
 
 /**
- * ownCloud - Activity App
+ * ownCloud - Audit_log App
  *
  * @author Frank Karlitschek
  * @copyright 2013 Frank Karlitschek frank@owncloud.org
@@ -29,14 +29,14 @@ OCP\App::addNavigationEntry(array(
 	'order' => 1,
 	'href' => OCP\Util::linkToRoute('activity.index'),
 	'icon' => OCP\Util::imagePath('audit_log', 'activity.svg'),
-	'name' => $l->t('Activity'),
+	'name' => $l->t('Audit_log'),
 ));
 
 // register the hooks for filesystem operations. All other events from other apps has to be send via the public api
-OCA\Activity\Hooks::register();
+OCA\Audit_log\Hooks::register();
 
 // Personal settings for notifications and emails
 OCP\App::registerPersonal('audit_log', 'personal');
 
 // Cron job for sending Emails
-OCP\Backgroundjob::registerJob('OCA\Activity\BackgroundJob\EmailNotification');
+OCP\Backgroundjob::registerJob('OCA\Audit_log\BackgroundJob\EmailNotification');

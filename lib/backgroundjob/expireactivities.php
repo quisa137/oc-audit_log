@@ -1,7 +1,7 @@
 <?php
 
 /**
- * ownCloud - Activity App
+ * ownCloud - Audit_log App
  *
  * @author Joas Schilling
  * @copyright 2014 Joas Schilling nickvergessen@owncloud.com
@@ -21,12 +21,12 @@
  *
  */
 
-namespace OCA\Activity\BackgroundJob;
+namespace OCA\Audit_log\BackgroundJob;
 
 /**
  * Class ExpireActivities
  *
- * @package OCA\Activity\BackgroundJob
+ * @package OCA\Audit_log\BackgroundJob
  */
 class ExpireActivities extends \OC\BackgroundJob\TimedJob {
 	public function __construct() {
@@ -37,8 +37,8 @@ class ExpireActivities extends \OC\BackgroundJob\TimedJob {
 	protected function run($argument) {
 		// Remove activities that are older then one year
 		$expireDays = \OCP\Config::getSystemValue('activity_expire_days', 365);
-		$data = new \OCA\Activity\Data(
-			\OC::$server->getActivityManager()
+		$data = new \OCA\Audit_log\Data(
+			\OC::$server->getAudit_logManager()
 		);
 		$data->expire($expireDays);
 	}

@@ -1,7 +1,7 @@
 <?php
 
 /**
- * ownCloud - Activity App
+ * ownCloud - Audit_log App
  *
  * @author Joas Schilling
  * @copyright 2014 Joas Schilling nickvergessen@owncloud.com
@@ -20,7 +20,7 @@
  * License along with this library.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-namespace OCA\Activity\Tests;
+namespace OCA\Audit_log\Tests;
 
 class DataTest extends \PHPUnit_Framework_TestCase {
 	public function getFilterFromParamData() {
@@ -44,8 +44,8 @@ class DataTest extends \PHPUnit_Framework_TestCase {
 			$_GET['filter'] = $globalValue;
 		}
 
-		$data = new \OCA\Activity\Data(
-			$this->getMock('\OCP\Activity\IManager')
+		$data = new \OCA\Audit_log\Data(
+			$this->getMock('\OCP\Audit_log\IManager')
 		);
 		$this->assertEquals(
 			$expected,

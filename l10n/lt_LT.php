@@ -1,7 +1,7 @@
 <?php
 $TRANSLATIONS = array(
 "Your settings have been updated." => "Jūsų nustatymai buvo atnaujinti.",
-"Activity" => "Veikla",
+"Audit_log" => "Veikla",
 "A file or folder has been <strong>shared</strong>" => "Failas ar aplankas buvo <strong>pasidalintas</strong>",
 "A new file or folder has been <strong>created</strong>" => "Naujas failas ar aplankas buvo <strong>sukurtas</strong>",
 "A file or folder has been <strong>changed</strong>" => "Failas ar aplankas buvo <strong>pakeistas</strong>",
@@ -16,7 +16,7 @@ $TRANSLATIONS = array(
 "You shared %1\$s with group %2\$s" => "Jūs pasidalinote %1\$s su grupe %2\$s",
 "%2\$s shared %1\$s with you" => "%2\$s pasidalino %1\$s su jumis",
 "You shared %1\$s via link" => "Pasidalinote %1\$s per nuorodą",
-"Activity notification" => "Veiklos perspėjimai",
+"Audit_log notification" => "Veiklos perspėjimai",
 "All Activities" => "Visa veikla",
 "Activities by you" => "Jūsų veikla",
 "Activities by others" => "Kitų veikla",
@@ -43,7 +43,7 @@ $TRANSLATIONS = array(
 "Hourly" => "Kas valandą",
 "Daily" => "Kasdien",
 "Weekly" => "Kiekvieną savaitę",
-"Activity feed" => "Veiklos srautas",
+"Audit_log feed" => "Veiklos srautas",
 "Personal activity feed for %s" => "Asmeninis veiklos srautas skirtas %s"
 );
 $PLURAL_FORMS = "nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && (n%100<10 || n%100>=20) ? 1 : 2);";

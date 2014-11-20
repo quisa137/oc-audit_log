@@ -1,7 +1,7 @@
 <?php
 $TRANSLATIONS = array(
 "Your settings have been updated." => "Tu configuración ha sido actualizada",
-"Activity" => "Actividad",
+"Audit_log" => "Actividad",
 "A file or folder has been <strong>shared</strong>" => "Un archivo o carpeta ha sido <strong>compartido</strong>",
 "A new file or folder has been <strong>created</strong>" => "Un archivo o carpeta ha sido <strong>creado</strong>",
 "A file or folder has been <strong>changed</strong>" => "Un archivo o carpeta ha sido <strong>modificado</strong>",
@@ -16,7 +16,7 @@ $TRANSLATIONS = array(
 "You shared %1\$s with group %2\$s" => "Has compartido %1\$s en el grupo %2\$s",
 "%2\$s shared %1\$s with you" => "%2\$s compartió %1\$s contigo",
 "You shared %1\$s via link" => "Has compartido %1\$s a través del enlace",
-"Activity notification" => "Notificación de Actividad",
+"Audit_log notification" => "Notificación de Actividad",
 "All Activities" => "Todas las Actividades",
 "Activities by you" => "Tus Actividades",
 "Activities by others" => "Actividades de tus amigos",
@@ -44,7 +44,7 @@ $TRANSLATIONS = array(
 "Hourly" => "Horas",
 "Daily" => "Diariamente",
 "Weekly" => "Semanalmente",
-"Activity feed" => "Secuencia de Actividad",
+"Audit_log feed" => "Secuencia de Actividad",
 "Personal activity feed for %s" => "Secuencia de actividad Personal para %s"
 );
 $PLURAL_FORMS = "nplurals=2; plural=(n != 1);";

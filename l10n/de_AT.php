@@ -1,7 +1,7 @@
 <?php
 $TRANSLATIONS = array(
 "Your settings have been updated." => "Deine Einstellungen wurden aktualisiert",
-"Activity" => "Aktivitäten",
+"Audit_log" => "Aktivitäten",
 "A file or folder has been <strong>shared</strong>" => "Eine Datei oder ein Ordner wurde <strong>geteilt</strong>",
 "A new file or folder has been <strong>created</strong>" => "Eine neue Datei oder ein neuer Ordner wurde <strong>erstellt</strong>",
 "A file or folder has been <strong>changed</strong>" => "Eine Datei oder ein Ordner hat sich <strong>geändert</strong>",
@@ -16,7 +16,7 @@ $TRANSLATIONS = array(
 "You shared %1\$s with group %2\$s" => "Du teilst %1\$s mit der Gruppe %2\$s",
 "%2\$s shared %1\$s with you" => "%2\$s hat %1\$s mit dir geteilt",
 "You shared %1\$s via link" => "Du hast %1\$s mithilfe eines Link geteilt",
-"Activity notification" => "Aktivitäten Mitteilung",
+"Audit_log notification" => "Aktivitäten Mitteilung",
 "All Activities" => "Alle Aktivitäten",
 "Activities by you" => "Aktivitäten von dir",
 "Activities by others" => "Aktivitäten anderer",

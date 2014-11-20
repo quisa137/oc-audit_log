@@ -1,7 +1,7 @@
 <?php
 $TRANSLATIONS = array(
 "Your settings have been updated." => "ការ​កំណត់​របស់​អ្នក​ត្រូវ​បាន​ធ្វើ​បច្ចុប្បន្នភាព។",
-"Activity" => "សកម្មភាព",
+"Audit_log" => "សកម្មភាព",
 "A file or folder has been <strong>shared</strong>" => "<strong>បាន​ចែករំលែក</strong> ឯកសារ​ឬ​ថត",
 "You created %1\$s" => "អ្នក​បាន​បង្កើត %1\$s",
 "%2\$s created %1\$s" => "%2\$s បាន​បង្កើត %1\$s",
@@ -13,7 +13,7 @@ $TRANSLATIONS = array(
 "You shared %1\$s with group %2\$s" => "អ្នក​បាន​ចែករំលែក %1\$s ជាមួយ​ក្រុម %2\$s",
 "%2\$s shared %1\$s with you" => "%2\$s បាន​ចែករំលែក %1\$s ជាមួយ​អ្នក",
 "You shared %1\$s via link" => "អ្នក​បាន​ចែក​រំលែក %1\$s តាម​រយៈ​តំណរភ្ជាប់",
-"Activity notification" => "សេចក្ដីជូន​ដំណឺង​ស្ដីពីសកម្មភាព",
+"Audit_log notification" => "សេចក្ដីជូន​ដំណឺង​ស្ដីពីសកម្មភាព",
 "All Activities" => "សកម្មភាព​ទាំង​អស់",
 "Activities by you" => "សកម្មភាព​ធ្វើ​ដោយ​អ្នក",
 "Activities by others" => "សកម្មភាព​ធ្វើ​ដោយ​អ្នក​ដទៃ",
@@ -39,7 +39,7 @@ $TRANSLATIONS = array(
 "Hourly" => "រាល់​ម៉ោង",
 "Daily" => "រាល់ថ្ងៃ",
 "Weekly" => "រាល់​សប្ដាហ៍",
-"Activity feed" => "សកម្មភាព feed",
+"Audit_log feed" => "សកម្មភាព feed",
 "Personal activity feed for %s" => "សកម្មភាព feed ផ្ទាល់​ខ្លួន​សម្រាប់ %s"
 );
 $PLURAL_FORMS = "nplurals=1; plural=0;";

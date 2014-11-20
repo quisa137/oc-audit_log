@@ -1,7 +1,7 @@
 <?php
 
 /**
-* ownCloud - Activity App
+* ownCloud - Audit_log App
 *
 * @author Joas Schilling
 * @copyright 2014 Joas Schilling nickvergessen@owncloud.com

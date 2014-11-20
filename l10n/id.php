@@ -1,7 +1,7 @@
 <?php
 $TRANSLATIONS = array(
 "Your settings have been updated." => "Pengaturan Anda telah diperbarui.",
-"Activity" => "Kegiatan",
+"Audit_log" => "Kegiatan",
 "A file or folder has been <strong>shared</strong>" => "Sebuah berkas atau folder telah <strong>dibagikan</strong>",
 "Files" => "Berkas",
 "_%s and <strong class=\_tooltip\_ title=\_%s\_>%n more</strong>_::_%s and <strong class=\_tooltip\_ title=\_%s\_>%n more</strong>_" => array(""),

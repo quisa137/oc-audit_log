@@ -1,7 +1,7 @@
 <?php
 $TRANSLATIONS = array(
 "Your settings have been updated." => "Seaded on uuendatud.",
-"Activity" => "Toimingud",
+"Audit_log" => "Toimingud",
 "A file or folder has been <strong>shared</strong>" => "Fail või kataloog on <strong>jagatud</strong>",
 "A new file or folder has been <strong>created</strong>" => "Uus fail või kataloog on <strong>loodud</strong>",
 "A file or folder has been <strong>changed</strong>" => "Fail või kataloog on <strong>muudetud</strong>",
@@ -17,7 +17,7 @@ $TRANSLATIONS = array(
 "You shared %1\$s with group %2\$s" => "Jagasid %1\$s %2\$s grupiga",
 "%2\$s shared %1\$s with you" => "%2\$s jagas sinuga %1\$s",
 "You shared %1\$s via link" => "Jagasid %1\$s lingiga",
-"Activity notification" => "Tegvuste teavitused",
+"Audit_log notification" => "Tegvuste teavitused",
 "All Activities" => "Kõik tegevused",
 "Activities by you" => "Sinu toimingud",
 "Activities by others" => "Teiste toimingud",
@@ -45,7 +45,7 @@ $TRANSLATIONS = array(
 "Hourly" => "Iga tund",
 "Daily" => "Iga päev",
 "Weekly" => "Iga nädal",
-"Activity feed" => "Toimingute voog",
+"Audit_log feed" => "Toimingute voog",
 "Personal activity feed for %s" => "Isiklik toimingute voog %s"
 );
 $PLURAL_FORMS = "nplurals=2; plural=(n != 1);";

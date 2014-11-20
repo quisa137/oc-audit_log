@@ -1,7 +1,7 @@
 <?php
 $TRANSLATIONS = array(
 "Your settings have been updated." => "Настройки обновлены.",
-"Activity" => "Журнал",
+"Audit_log" => "Журнал",
 "A file or folder has been <strong>shared</strong>" => "Файл или папка был(а) <strong> опубликована </strong>",
 "A new file or folder has been <strong>created</strong>" => "<strong>Создан</strong> новый файл или папка",
 "A file or folder has been <strong>changed</strong>" => "<strong>Изменен</strong> файл или папка",
@@ -17,7 +17,7 @@ $TRANSLATIONS = array(
 "You shared %1\$s with group %2\$s" => "Вы открыли доступ к %1\$s группе %2\$s",
 "%2\$s shared %1\$s with you" => "%2\$s открыл Вам доступ к %1\$s",
 "You shared %1\$s via link" => "Вы открыли доступ к %1\$s по ссылке",
-"Activity notification" => "Уведомление об активности",
+"Audit_log notification" => "Уведомление об активности",
 "All Activities" => "Все действия",
 "Activities by you" => "Ваши действия",
 "Activities by others" => "Действия других пользователей",
@@ -45,7 +45,7 @@ $TRANSLATIONS = array(
 "Hourly" => "Ежечасно",
 "Daily" => "Ежедневно",
 "Weekly" => "Еженедельно",
-"Activity feed" => "Лента действий",
+"Audit_log feed" => "Лента действий",
 "Personal activity feed for %s" => "Лента действий - %s"
 );
 $PLURAL_FORMS = "nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);";

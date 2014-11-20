@@ -1,7 +1,7 @@
 <?php
 $TRANSLATIONS = array(
 "Your settings have been updated." => "আপনার সেটিংস আপডেট করা হয়েছে।",
-"Activity" => "কার্যকলাপ",
+"Audit_log" => "কার্যকলাপ",
 "A file or folder has been <strong>shared</strong>" => "ফাইল অথবা ফোল্ডার <strong>শেয়ার করা হয়েছে</strong>",
 "A new file or folder has been <strong>created</strong>" => "একটি নতুন ফাইল বা ফোল্ডার হয়েছে <strong>তৈরি</strong>",
 "A file or folder has been <strong>changed</strong>" => "একটি নতুন ফাইল বা ফোল্ডার <strong>বদলানো হয়েছে</strong>",
@@ -16,7 +16,7 @@ $TRANSLATIONS = array(
 "You shared %1\$s with group %2\$s" => "আপনি %1\$s কে %2\$s গ্রুপের সাথে শেয়ার করেছেন",
 "%2\$s shared %1\$s with you" => "%2\$s শেয়ার করেছে %1\$s কে আপনার সাথে ",
 "You shared %1\$s via link" => "আপনি লিঙ্ক দ্বারা %1\$s শেয়ার করুন ",
-"Activity notification" => "কার্যকলাপের সূচনা",
+"Audit_log notification" => "কার্যকলাপের সূচনা",
 "All Activities" => "সমস্ত ক্রিয়াকলাপ",
 "Activities by you" => "আপনার দ্বারা ক্রিয়াকলাপ",
 "Activities by others" => "অন্যদের দ্বারা ক্রিয়াকলাপ",
@@ -44,7 +44,7 @@ $TRANSLATIONS = array(
 "Hourly" => "প্রতি ঘণ্টায়",
 "Daily" => "প্রতিদিন",
 "Weekly" => "সাপ্তাহিক",
-"Activity feed" => "কার্যকলাপ ফিড",
+"Audit_log feed" => "কার্যকলাপ ফিড",
 "Personal activity feed for %s" => "নিজস্ব কার্যকলাপ ফিড %s এর জন্যে"
 );
 $PLURAL_FORMS = "nplurals=2; plural=(n != 1);";

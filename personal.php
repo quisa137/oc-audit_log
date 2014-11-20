@@ -1,7 +1,7 @@
 <?php
 
 /**
-* ownCloud - Activity App
+* ownCloud - Audit_log App
 *
 * @author Joas Schilling
 * @copyright 2014 Joas Schilling nickvergessen@owncloud.com
@@ -24,7 +24,7 @@
 \OCP\Util::addStyle('audit_log', 'settings');
 
 $l = \OCP\Util::getL10N('audit_log');
-$data = new \OCA\Activity\Data(\OC::$server->getActivityManager());
+$data = new \OCA\Audit_log\Data(\OC::$server->getAudit_logManager());
 $types = $data->getNotificationTypes($l);
 
 $user = \OCP\User::getUser();
@@ -32,23 +32,23 @@ $activities = array();
 foreach ($types as $type => $desc) {
 	$activities[$type] = array(
 		'desc'		=> $desc,
-		'email'		=> \OCA\Activity\UserSettings::getUserSetting($user, 'email', $type),
-		'stream'	=> \OCA\Activity\UserSettings::getUserSetting($user, 'stream', $type),
+		'email'		=> \OCA\Audit_log\UserSettings::getUserSetting($user, 'email', $type),
+		'stream'	=> \OCA\Audit_log\UserSettings::getUserSetting($user, 'stream', $type),
 	);
 }
 
 $template = new \OCP\Template('audit_log', 'personal');
 $template->assign('activities', $activities);
-if (\OCA\Activity\UserSettings::getUserSetting($user, 'setting', 'batchtime') == 3600 * 24 * 7) {
-	$template->assign('setting_batchtime', \OCA\Activity\UserSettings::EMAIL_SEND_WEEKLY);
+if (\OCA\Audit_log\UserSettings::getUserSetting($user, 'setting', 'batchtime') == 3600 * 24 * 7) {
+	$template->assign('setting_batchtime', \OCA\Audit_log\UserSettings::EMAIL_SEND_WEEKLY);
 }
-else if (\OCA\Activity\UserSettings::getUserSetting($user, 'setting', 'batchtime') == 3600 * 24) {
-	$template->assign('setting_batchtime', \OCA\Activity\UserSettings::EMAIL_SEND_DAILY);
+else if (\OCA\Audit_log\UserSettings::getUserSetting($user, 'setting', 'batchtime') == 3600 * 24) {
+	$template->assign('setting_batchtime', \OCA\Audit_log\UserSettings::EMAIL_SEND_DAILY);
 }
 else {
-	$template->assign('setting_batchtime', \OCA\Activity\UserSettings::EMAIL_SEND_HOURLY);
+	$template->assign('setting_batchtime', \OCA\Audit_log\UserSettings::EMAIL_SEND_HOURLY);
 }
 $template->assign('activity_email', \OCP\Config::getUserValue($user, 'settings', 'email', ''));
-$template->assign('notify_self', \OCA\Activity\UserSettings::getUserSetting($user, 'setting', 'self'));
+$template->assign('notify_self', \OCA\Audit_log\UserSettings::getUserSetting($user, 'setting', 'self'));
 
 return $template->fetchPage();

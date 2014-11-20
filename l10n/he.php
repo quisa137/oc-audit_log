@@ -1,7 +1,7 @@
 <?php
 $TRANSLATIONS = array(
 "Your settings have been updated." => "ההגדרות שלך עודכנו",
-"Activity" => "פעילות",
+"Audit_log" => "פעילות",
 "A file or folder has been <strong>shared</strong>" => "קובץ או תיקייה <strong>שותפו<strong/>",
 "A new file or folder has been <strong>created</strong>" => "קובץ או תיקייה חדשים <strong>נוצרו<strong/>",
 "A file or folder has been <strong>changed</strong>" => "קובץ או תיקייה <strong>שונו<strong/>",
@@ -17,7 +17,7 @@ $TRANSLATIONS = array(
 "You shared %1\$s with group %2\$s" => "שיתפת %1\$s עם קבוצת %2\$s",
 "%2\$s shared %1\$s with you" => "%2\$s שיתפו %1\$s אתך",
 "You shared %1\$s via link" => "שיתפת %1\$s על בסיס קישור",
-"Activity notification" => "דיווח פעילות",
+"Audit_log notification" => "דיווח פעילות",
 "All Activities" => "כל הפעילויות",
 "Activities by you" => "פעילות שלך",
 "Activities by others" => "פעילות של אחרים",
@@ -44,7 +44,7 @@ $TRANSLATIONS = array(
 "Hourly" => "שעתי",
 "Daily" => "יומי",
 "Weekly" => "שבועי",
-"Activity feed" => "דיווחי פעילות",
+"Audit_log feed" => "דיווחי פעילות",
 "Personal activity feed for %s" => "הזנת פעילות עצמית עבור %s"
 );
 $PLURAL_FORMS = "nplurals=2; plural=(n != 1);";

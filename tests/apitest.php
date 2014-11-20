@@ -1,7 +1,7 @@
 <?php
 
 /**
- * ownCloud - Activity App
+ * ownCloud - Audit_log App
  *
  * @author Joas Schilling
  * @copyright 2014 Joas Schilling nickvergessen@owncloud.com
@@ -20,8 +20,8 @@
  * License along with this library.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-namespace OCA\Activity\Tests;
-use OCA\Activity\Data;
+namespace OCA\Audit_log\Tests;
+use OCA\Audit_log\Data;
 
 class ApiTest extends \PHPUnit_Framework_TestCase {
 	protected $originalWEBROOT;
@@ -48,10 +48,10 @@ class ApiTest extends \PHPUnit_Framework_TestCase {
 			),
 		);
 
-		$queryActivity = \OCP\DB::prepare('INSERT INTO `*PREFIX*activity`(`app`, `subject`, `subjectparams`, `message`, `messageparams`, `file`, `link`, `user`, `affecteduser`, `timestamp`, `priority`, `type`)' . ' VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ? )');
+		$queryAudit_log = \OCP\DB::prepare('INSERT INTO `*PREFIX*activity`(`app`, `subject`, `subjectparams`, `message`, `messageparams`, `file`, `link`, `user`, `affecteduser`, `timestamp`, `priority`, `type`)' . ' VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ? )');
 		$loop = 0;
 		foreach ($activities as $activity) {
-			$queryActivity->execute(array(
+			$queryAudit_log->execute(array(
 				'files',
 				$activity['subject'],
 				serialize($activity['subjectparams']),
@@ -71,7 +71,7 @@ class ApiTest extends \PHPUnit_Framework_TestCase {
 
 	public function tearDown() {
 		$data = new Data(
-			$this->getMock('\OCP\Activity\IManager')
+			$this->getMock('\OCP\Audit_log\IManager')
 		);
 
 		$data->deleteActivities(array(
@@ -141,7 +141,7 @@ class ApiTest extends \PHPUnit_Framework_TestCase {
 		$_GET['count'] = $count;
 		\OC_User::setUserId($user);
 		$this->assertEquals($user, \OC_User::getUser());
-		$result = \OCA\Activity\Api::get(array('_route' => 'get_cloud_activity'));
+		$result = \OCA\Audit_log\Api::get(array('_route' => 'get_cloud_activity'));
 
 		$this->assertEquals(100, $result->getStatusCode());
 		$data = $result->getData();

@@ -1,7 +1,7 @@
 <?php
 
 /**
- * ownCloud - Activity App
+ * ownCloud - Audit_log App
  *
  * @author Joas Schilling
  * @copyright 2014 Joas Schilling nickvergessen@owncloud.com
@@ -21,24 +21,24 @@
  *
  */
 
-namespace OCA\Activity\BackgroundJob;
+namespace OCA\Audit_log\BackgroundJob;
 
 /**
  * Class EmailNotification
  *
- * @package OCA\Activity\BackgroundJob
+ * @package OCA\Audit_log\BackgroundJob
  */
 class EmailNotification extends \OC\BackgroundJob\TimedJob {
 	const CLI_EMAIL_BATCH_SIZE = 500;
 	const WEB_EMAIL_BATCH_SIZE = 25;
 
-	/** @var \OCA\Activity\MailQueueHandler */
+	/** @var \OCA\Audit_log\MailQueueHandler */
 	protected $mqHandler;
 
 	public function __construct() {
 		// Run all 15 Minutes
 		$this->setInterval(15 * 60);
-		$this->mqHandler = new \OCA\Activity\MailQueueHandler();
+		$this->mqHandler = new \OCA\Audit_log\MailQueueHandler();
 	}
 
 	protected function run($argument) {

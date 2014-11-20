@@ -1,7 +1,7 @@
 <?php
 
 /**
- * ownCloud - Activity App
+ * ownCloud - Audit_log App
  *
  * @author Frank Karlitschek
  * @copyright 2013 Frank Karlitschek frank@owncloud.org
@@ -52,7 +52,7 @@ foreach ($_['audit_log'] as $event) {
 	<div class="boxcontainer">
 <?php
 	}
-	echo \OCA\Activity\Display::show($event);
+	echo \OCA\Audit_log\Display::show($event);
 }
 if (!empty($_['audit_log'])): ?>
 	</div>

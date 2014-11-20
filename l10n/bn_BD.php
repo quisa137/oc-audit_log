@@ -1,7 +1,7 @@
 <?php
 $TRANSLATIONS = array(
 "Your settings have been updated." => "আপনার সেটিং নবায়ন করা হয়েছে৷",
-"Activity" => "সক্রিয়তা",
+"Audit_log" => "সক্রিয়তা",
 "A file or folder has been <strong>shared</strong>" => "একটি ফাইল বা ফোলডার <strong>ভাগাভাগি</strong> করা হয়েছে",
 "A new file or folder has been <strong>created</strong>" => "একটি ফাইল বা ফোলডার <strong>তৈরি</strong> করা হয়েছে",
 "A file or folder has been <strong>changed</strong>" => "একটি ফাইল বা ফোলডার <strong>পরিবরতন</strong> করা হয়েছে",
@@ -17,7 +17,7 @@ $TRANSLATIONS = array(
 "You shared %1\$s with group %2\$s" => "আপনি %1\$s কে %2\$s দলের সাথে ভাগাভাগি করেছেন",
 "%2\$s shared %1\$s with you" => "%2\$s আপনার সাথে %1\$s ভাগাভাগি করেছেন",
 "You shared %1\$s via link" => "আপনি %1\$s লিংকের মাধধমে ভাগাভাগি করেছেন",
-"Activity notification" => "সক্রিয়তা বিগগপতি",
+"Audit_log notification" => "সক্রিয়তা বিগগপতি",
 "All Activities" => "সকল সক্রিয়তা",
 "Activities by you" => "আপনার সক্রিয়তা",
 "Activities by others" => "অনငদের সক্রিয়তা",
@@ -45,7 +45,7 @@ $TRANSLATIONS = array(
 "Hourly" => "ঘনটাভিততিক",
 "Daily" => "দৈনিক",
 "Weekly" => "সাপ্তাহিক",
-"Activity feed" => "সক্রিয়তা বারতা",
+"Audit_log feed" => "সক্রিয়তা বারতা",
 "Personal activity feed for %s" => "%s এর জনন সক্রিয়তা বারতা"
 );
 $PLURAL_FORMS = "nplurals=2; plural=(n != 1);";

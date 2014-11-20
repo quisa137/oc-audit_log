@@ -1,7 +1,7 @@
 <?php
 $TRANSLATIONS = array(
 "Your settings have been updated." => "Asetuksesi on päivitetty.",
-"Activity" => "Toimet",
+"Audit_log" => "Toimet",
 "A file or folder has been <strong>shared</strong>" => "Tiedosto tai kansio on <strong>jaettu</strong>",
 "A new file or folder has been <strong>created</strong>" => "Uusi tiedosto tai kansio on <strong>luotu</strong>",
 "A file or folder has been <strong>changed</strong>" => "Tiedostoa tai kansiota on <strong>muutettu</strong>",
@@ -17,7 +17,7 @@ $TRANSLATIONS = array(
 "You shared %1\$s with group %2\$s" => "Jaoit kohteen %1\$s ryhmän %2\$s kanssa",
 "%2\$s shared %1\$s with you" => "%2\$s jakoi kohteen %1\$s kanssasi",
 "You shared %1\$s via link" => "Jaoit kohteen %1\$s linkin kautta",
-"Activity notification" => "Ilmoitus toiminnasta",
+"Audit_log notification" => "Ilmoitus toiminnasta",
 "All Activities" => "Kaikki toimet",
 "Activities by you" => "Omat toimet",
 "Activities by others" => "Muiden toimet",
@@ -43,7 +43,7 @@ $TRANSLATIONS = array(
 "Hourly" => "Tunneittain",
 "Daily" => "Päivittäin",
 "Weekly" => "Viikottain",
-"Activity feed" => "Toiminnan syöte",
+"Audit_log feed" => "Toiminnan syöte",
 "Personal activity feed for %s" => "Käyttäjän %s henkilökohtainen toimintasyöte"
 );
 $PLURAL_FORMS = "nplurals=2; plural=(n != 1);";

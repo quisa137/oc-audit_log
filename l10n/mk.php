@@ -1,7 +1,7 @@
 <?php
 $TRANSLATIONS = array(
 "Your settings have been updated." => "Вашите нагодувања беа освежени.",
-"Activity" => "Активност",
+"Audit_log" => "Активност",
 "A file or folder has been <strong>shared</strong>" => "Датотека или фолдер беше <strong>споделен</strong>",
 "You created %1\$s" => "Вие креиравте %1\$s",
 "%2\$s created %1\$s" => "%2\$s креирано %1\$s",
@@ -12,7 +12,7 @@ $TRANSLATIONS = array(
 "You shared %1\$s with %2\$s" => "Вие споделивте %1\$s со %2\$s",
 "You shared %1\$s with group %2\$s" => "Вие споделивте %1\$s со групата %2\$s",
 "%2\$s shared %1\$s with you" => "%2\$s споделено %1\$s со вас",
-"Activity notification" => "Известување за Активности",
+"Audit_log notification" => "Известување за Активности",
 "All Activities" => "Сите активности",
 "Activities by you" => "Ваши активности",
 "Activities by others" => "Активности на други",
@@ -33,7 +33,7 @@ $TRANSLATIONS = array(
 "Hourly" => "Часовно",
 "Daily" => "Дневно",
 "Weekly" => "Седмично",
-"Activity feed" => "Feed на активности",
+"Audit_log feed" => "Feed на активности",
 "Personal activity feed for %s" => "Feed на лични активности за %s"
 );
 $PLURAL_FORMS = "nplurals=2; plural=(n % 10 == 1 && n % 100 != 11) ? 0 : 1;";

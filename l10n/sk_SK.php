@@ -1,7 +1,7 @@
 <?php
 $TRANSLATIONS = array(
 "Your settings have been updated." => "Vaše nastavenia boli aktualizované.",
-"Activity" => "Aktivita",
+"Audit_log" => "Aktivita",
 "A file or folder has been <strong>shared</strong>" => "Súbor alebo priečinok bol <strong>zdieľaný</strong>",
 "A new file or folder has been <strong>created</strong>" => "Nový súbor alebo priečinok bol <strong>vytvorený</strong>",
 "A file or folder has been <strong>changed</strong>" => "Súbor alebo priečinok bol <strong>zmenený</strong>",
@@ -16,7 +16,7 @@ $TRANSLATIONS = array(
 "You shared %1\$s with group %2\$s" => "Bol zdieľaný %1\$s so skupinou %2\$s",
 "%2\$s shared %1\$s with you" => "%2\$s vám zdieľal %1\$s",
 "You shared %1\$s via link" => "Zdieľali ste %1\$s prostredníctvom odkazu",
-"Activity notification" => "Upozornenia na aktivity",
+"Audit_log notification" => "Upozornenia na aktivity",
 "All Activities" => "Všetky aktivity",
 "Activities by you" => "Vaše aktivity",
 "Activities by others" => "Aktivity ostatných",
@@ -44,7 +44,7 @@ $TRANSLATIONS = array(
 "Hourly" => "Každú hodinu",
 "Daily" => "Denne",
 "Weekly" => "Týždenne",
-"Activity feed" => "Prehľad aktivít",
+"Audit_log feed" => "Prehľad aktivít",
 "Personal activity feed for %s" => "Prehľad aktivít pre používateľa %s"
 );
 $PLURAL_FORMS = "nplurals=3; plural=(n==1) ? 0 : (n>=2 && n<=4) ? 1 : 2;";

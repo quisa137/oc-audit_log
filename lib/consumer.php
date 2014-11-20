@@ -1,6 +1,6 @@
 <?php
 /**
- * ownCloud - Activity App
+ * ownCloud - Audit_log App
  *
  * @author Thomas Müller
  * @copyright 2013 Thomas Müller deepdiver@owncloud.com
@@ -20,9 +20,9 @@
  *
  */
 
-namespace OCA\Activity;
+namespace OCA\Audit_log;
 
-use OCP\Activity\IConsumer;
+use OCP\Audit_log\IConsumer;
 
 class Consumer implements IConsumer
 {

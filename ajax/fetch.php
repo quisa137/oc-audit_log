@@ -1,7 +1,7 @@
 <?php
 
 /**
-* ownCloud - Activity App
+* ownCloud - Audit_log App
 *
 * @author Frank Karlitschek
 * @copyright 2013 Frank Karlitschek frank@owncloud.org
@@ -26,12 +26,12 @@
 \OCP\JSON::checkAppEnabled('audit_log');
 
 $l = \OCP\Util::getL10N('audit_log');
-$data = new \OCA\Activity\Data(\OC::$server->getActivityManager());
-$groupHelper = new \OCA\Activity\GroupHelper(
-	\OC::$server->getActivityManager(),
-	new \OCA\Activity\DataHelper(
-		\OC::$server->getActivityManager(),
-		new \OCA\Activity\ParameterHelper(new \OC\Files\View(''), $l),
+$data = new \OCA\Audit_log\Data(\OC::$server->getAudit_logManager());
+$groupHelper = new \OCA\Audit_log\GroupHelper(
+	\OC::$server->getAudit_logManager(),
+	new \OCA\Audit_log\DataHelper(
+		\OC::$server->getAudit_logManager(),
+		new \OCA\Audit_log\ParameterHelper(new \OC\Files\View(''), $l),
 		$l
 	),
 	true

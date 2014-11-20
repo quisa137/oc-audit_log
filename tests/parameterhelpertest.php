@@ -1,7 +1,7 @@
 <?php
 
 /**
- * ownCloud - Activity App
+ * ownCloud - Audit_log App
  *
  * @author Joas Schilling
  * @copyright 2014 Joas Schilling nickvergessen@owncloud.com
@@ -20,12 +20,12 @@
  * License along with this library.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-namespace OCA\Activity\Tests;
+namespace OCA\Audit_log\Tests;
 
 class ParameterHelperTest extends \PHPUnit_Framework_TestCase {
 	/** @var string */
 	protected $originalWEBROOT;
-	/** @var \OCA\Activity\ParameterHelper */
+	/** @var \OCA\Audit_log\ParameterHelper */
 	protected $parameterHelper;
 	/** @var \OC\Files\View */
 	protected $view;
@@ -36,7 +36,7 @@ class ParameterHelperTest extends \PHPUnit_Framework_TestCase {
 		\OC::$WEBROOT = '';
 		$l = \OCP\Util::getL10N('audit_log');
 		$this->view = new \OC\Files\View('');
-		$this->parameterHelper = new \OCA\Activity\ParameterHelper($this->view, $l);
+		$this->parameterHelper = new \OCA\Audit_log\ParameterHelper($this->view, $l);
 	}
 
 	public function tearDown() {

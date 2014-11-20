@@ -2,7 +2,7 @@
 
 The Audit Log app for ownCloud
 
-Provides an Audit Log 
+Provides an Audit Log
 going on in your ownCloud.
 
 ## QA metrics on master branch:
@@ -15,6 +15,6 @@ going on in your ownCloud.
 
 With the activity manager extensions can be registered which allow any app to extend the activity behavior.
 
-In order to implement an extension create a class which implements the interface `\OCP\Activity\IExtension`.
+In order to implement an extension create a class which implements the interface `\OCP\Audit_log\IExtension`.
 
 The PHPDoc comments on each method should give enough information to the developer on how to implement them.

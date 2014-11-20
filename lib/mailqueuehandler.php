@@ -1,7 +1,7 @@
 <?php
 
 /**
- * ownCloud - Activity App
+ * ownCloud - Audit_log App
  *
  * @author Joas Schilling
  * @copyright 2014 Joas Schilling nickvergessen@owncloud.com
@@ -21,13 +21,13 @@
  *
  */
 
-namespace OCA\Activity;
+namespace OCA\Audit_log;
 
 /**
  * Class MailQueueHandler
  * Gets the users from the database and
  *
- * @package OCA\Activity
+ * @package OCA\Audit_log
  */
 class MailQueueHandler {
 	/** @var array */
@@ -59,7 +59,7 @@ class MailQueueHandler {
 
 		$affectedUsers = array();
 		if (\OCP\DB::isError($result)) {
-			\OCP\Util::writeLog('OCA\Activity', \OCP\DB::getErrorMessage($result), \OCP\Util::ERROR);
+			\OCP\Util::writeLog('OCA\Audit_log', \OCP\DB::getErrorMessage($result), \OCP\Util::ERROR);
 		} else {
 			while ($row = $result->fetchRow()) {
 				$affectedUsers[] = $row['amq_affecteduser'];
@@ -90,16 +90,16 @@ class MailQueueHandler {
 		);
 		$result = $query->execute($queryParams);
 
-		$userActivityMap = array();
+		$userAudit_logMap = array();
 		if (\OCP\DB::isError($result)) {
-			\OCP\Util::writeLog('Activity', \OCP\DB::getErrorMessage($result), \OCP\Util::ERROR);
+			\OCP\Util::writeLog('Audit_log', \OCP\DB::getErrorMessage($result), \OCP\Util::ERROR);
 		} else {
 			while ($row = $result->fetchRow()) {
-				$userActivityMap[$row['amq_affecteduser']][] = $row;
+				$userAudit_logMap[$row['amq_affecteduser']][] = $row;
 			}
 		}
 
-		return $userActivityMap;
+		return $userAudit_logMap;
 	}
 
 	/**
@@ -164,7 +164,7 @@ class MailQueueHandler {
 	 */
 	public function sendEmailToUser($user, $email, $lang, $mailData) {
 		$l = $this->getLanguage($lang);
-		$dataHelper = new DataHelper(\OC::$server->getActivityManager(), new ParameterHelper(new \OC\Files\View(''), $l), $l);
+		$dataHelper = new DataHelper(\OC::$server->getAudit_logManager(), new ParameterHelper(new \OC\Files\View(''), $l), $l);
 
 		$activityList = array();
 		foreach ($mailData as $activity) {
@@ -183,12 +183,12 @@ class MailQueueHandler {
 		try {
 			\OCP\Util::sendMail(
 				$email, $user,
-				$l->t('Activity notification'), $emailText,
+				$l->t('Audit_log notification'), $emailText,
 				$this->getSenderData('email'), $this->getSenderData('name'),
 				true
 			);
 		} catch (\Exception $e) {
-			\OCP\Util::writeLog('Activity', 'A problem occurred while sending the e-mail. Please revisit your settings.', \OCP\Util::ERROR);
+			\OCP\Util::writeLog('Audit_log', 'A problem occurred while sending the e-mail. Please revisit your settings.', \OCP\Util::ERROR);
 		}
 	}
 
@@ -210,7 +210,7 @@ class MailQueueHandler {
 		$result = $query->execute($queryParams);
 
 		if (\OCP\DB::isError($result)) {
-			\OCP\Util::writeLog('Activity', \OCP\DB::getErrorMessage($result), \OCP\Util::ERROR);
+			\OCP\Util::writeLog('Audit_log', \OCP\DB::getErrorMessage($result), \OCP\Util::ERROR);
 		}
 	}
 }

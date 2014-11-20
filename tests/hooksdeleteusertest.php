@@ -1,7 +1,7 @@
 <?php
 
 /**
- * ownCloud - Activity App
+ * ownCloud - Audit_log App
  *
  * @author Joas Schilling
  * @copyright 2014 Joas Schilling nickvergessen@owncloud.com
@@ -20,10 +20,10 @@
  * License along with this library.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-namespace OCA\Activity\Tests;
+namespace OCA\Audit_log\Tests;
 
-use OCA\Activity\Data;
-use OCA\Activity\Hooks;
+use OCA\Audit_log\Data;
+use OCA\Audit_log\Hooks;
 
 class HooksDeleteUserTest extends \PHPUnit_Framework_TestCase {
 	public function setUp() {
@@ -36,10 +36,10 @@ class HooksDeleteUserTest extends \PHPUnit_Framework_TestCase {
 			array('affectedUser' => 'otherUser', 'subject' => 'subject2'),
 		);
 
-		$queryActivity = \OCP\DB::prepare('INSERT INTO `*PREFIX*activity`(`app`, `subject`, `subjectparams`, `message`, `messageparams`, `file`, `link`, `user`, `affecteduser`, `timestamp`, `priority`, `type`)' . ' VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ? )');
+		$queryAudit_log = \OCP\DB::prepare('INSERT INTO `*PREFIX*activity`(`app`, `subject`, `subjectparams`, `message`, `messageparams`, `file`, `link`, `user`, `affecteduser`, `timestamp`, `priority`, `type`)' . ' VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ? )');
 		$queryMailQueue = \OCP\DB::prepare('INSERT INTO `*PREFIX*activity_mq`(`amq_appid`, `amq_subject`, `amq_subjectparams`, `amq_affecteduser`, `amq_timestamp`, `amq_type`, `amq_latest_send`)' . ' VALUES(?, ?, ?, ?, ?, ?, ?)');
 		foreach ($activities as $activity) {
-			$queryActivity->execute(array(
+			$queryAudit_log->execute(array(
 				'app',
 				$activity['subject'],
 				serialize(array()),
@@ -69,7 +69,7 @@ class HooksDeleteUserTest extends \PHPUnit_Framework_TestCase {
 		parent::tearDown();
 
 		$data = new Data(
-			$this->getMock('\OCP\Activity\IManager')
+			$this->getMock('\OCP\Audit_log\IManager')
 		);
 		$data->deleteActivities(array(
 			'type' => 'test',

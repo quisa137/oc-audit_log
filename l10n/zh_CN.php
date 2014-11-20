@@ -1,7 +1,7 @@
 <?php
 $TRANSLATIONS = array(
 "Your settings have been updated." => "您的设置已更新。",
-"Activity" => "动态",
+"Audit_log" => "动态",
 "A file or folder has been <strong>shared</strong>" => "一个文件或文件夹已<strong>共享</strong>。",
 "A new file or folder has been <strong>created</strong>" => "一个新的文件或文件夹已被<strong>创建</strong>",
 "A file or folder has been <strong>changed</strong>" => "一个文件或文件夹已被<strong>修改</strong>",
@@ -16,7 +16,7 @@ $TRANSLATIONS = array(
 "You shared %1\$s with group %2\$s" => "你把 %1\$s 分享给了 %2\$s组",
 "%2\$s shared %1\$s with you" => "%2\$s 把 %1\$s 分享给了您",
 "You shared %1\$s via link" => "您通过链接共享了 %1\$s",
-"Activity notification" => "动态通知",
+"Audit_log notification" => "动态通知",
 "All Activities" => "所有动态",
 "Activities by you" => "你的动态",
 "Activities by others" => "别人的动态",
@@ -43,7 +43,7 @@ $TRANSLATIONS = array(
 "Hourly" => "每小时",
 "Daily" => "每天",
 "Weekly" => "每周",
-"Activity feed" => "动态 Feed",
+"Audit_log feed" => "动态 Feed",
 "Personal activity feed for %s" => "%s 的个人动态 Feed"
 );
 $PLURAL_FORMS = "nplurals=1; plural=0;";

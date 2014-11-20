@@ -1,7 +1,7 @@
 <?php
 $TRANSLATIONS = array(
 "Your settings have been updated." => "Beállításait sikeresen frissítettük.",
-"Activity" => "Aktivitás",
+"Audit_log" => "Aktivitás",
 "A file or folder has been <strong>shared</strong>" => "Fájl vagy könyvtár <strong>megosztása</strong>",
 "A new file or folder has been <strong>created</strong>" => "Új fájl vagy könyvtár <strong>létrehozása</strong>",
 "A file or folder has been <strong>changed</strong>" => "Fájl vagy könyvtár <strong>módosítása</strong>",
@@ -17,7 +17,7 @@ $TRANSLATIONS = array(
 "You shared %1\$s with group %2\$s" => "%1\$s-t megosztottam ezzel a csoporttal: %2\$s",
 "%2\$s shared %1\$s with you" => "%2\$s megosztotta velem ezt: %1\$s",
 "You shared %1\$s via link" => "Megosztottam link segítségével: %1\$s",
-"Activity notification" => "Aktivitási értesítés",
+"Audit_log notification" => "Aktivitási értesítés",
 "All Activities" => "Minden tevékenység",
 "Activities by you" => "Saját tevékenységem",
 "Activities by others" => "Mások tevékenysége",
@@ -45,7 +45,7 @@ $TRANSLATIONS = array(
 "Hourly" => "óránként",
 "Daily" => "naponta",
 "Weekly" => "hetente",
-"Activity feed" => "Aktivitási hírcsatorna",
+"Audit_log feed" => "Aktivitási hírcsatorna",
 "Personal activity feed for %s" => "Személyes aktivitásom hírcsatornája a %s szolgáltatáson"
 );
 $PLURAL_FORMS = "nplurals=2; plural=(n != 1);";

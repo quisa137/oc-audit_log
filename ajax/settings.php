@@ -1,7 +1,7 @@
 <?php
 
 /**
-* ownCloud - Activity App
+* ownCloud - Audit_log App
 *
 * @author Joas Schilling
 * @copyright 2014 Joas Schilling nickvergessen@owncloud.com
@@ -28,7 +28,7 @@
 $notify_email = $notify_stream = array();
 
 $l = \OCP\Util::getL10N('audit_log');
-$data = new \OCA\Activity\Data(\OC::$server->getActivityManager());
+$data = new \OCA\Audit_log\Data(\OC::$server->getActivityManager());
 $types = $data->getNotificationTypes($l);
 foreach ($types as $type => $desc) {
 	\OCP\Config::setUserValue(\OCP\User::getUser(), 'audit_log', 'notify_email_' . $type, !empty($_POST[$type . '_email']));
@@ -36,10 +36,10 @@ foreach ($types as $type => $desc) {
 }
 
 $email_batch_time = 3600;
-if ($_POST['notify_setting_batchtime'] == \OCA\Activity\UserSettings::EMAIL_SEND_DAILY) {
+if ($_POST['notify_setting_batchtime'] == \OCA\Audit_log\UserSettings::EMAIL_SEND_DAILY) {
 	$email_batch_time = 3600 * 24;
 }
-if ($_POST['notify_setting_batchtime'] == \OCA\Activity\UserSettings::EMAIL_SEND_WEEKLY) {
+if ($_POST['notify_setting_batchtime'] == \OCA\Audit_log\UserSettings::EMAIL_SEND_WEEKLY) {
 	$email_batch_time = 3600 * 24 * 7;
 }
 \OCP\Config::setUserValue(\OCP\User::getUser(), 'audit_log', 'notify_setting_batchtime', $email_batch_time);

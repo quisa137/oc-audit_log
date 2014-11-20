@@ -1,7 +1,7 @@
 <?php
 
 /**
- * ownCloud - Activity App
+ * ownCloud - Audit_log App
  *
  * @author Joas Schilling
  * @copyright 2014 Joas Schilling nickvergessen@owncloud.com
@@ -21,9 +21,9 @@
  *
  */
 
-namespace OCA\Activity;
+namespace OCA\Audit_log;
 
-use \OCP\Activity\IManager;
+use \OCP\Audit_log\IManager;
 use \OCP\IURLGenerator;
 use \OCP\Template;
 use \OCP\Util;
@@ -31,13 +31,13 @@ use \OCP\Util;
 /**
  * Class Navigation
  *
- * @package OCA\Activity
+ * @package OCA\Audit_log
  */
 class Navigation {
 	/** @var \OC_L10N */
 	protected $l;
 
-	/** @var \OCP\Activity\IManager */
+	/** @var \OCP\Audit_log\IManager */
 	protected $activityManager;
 
 	/** @var \OCP\IURLGenerator */
@@ -53,7 +53,7 @@ class Navigation {
 	 * Construct
 	 *
 	 * @param \OC_L10N $l
-	 * @param \OCP\Activity\IManager $manager
+	 * @param \OCP\Audit_log\IManager $manager
 	 * @param \OCP\IURLGenerator $URLGenerator
 	 * @param null|string $active Navigation entry that should be marked as active
 	 */

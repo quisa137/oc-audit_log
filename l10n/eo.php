@@ -1,7 +1,7 @@
 <?php
 $TRANSLATIONS = array(
 "Your settings have been updated." => "Via agordo ĝisdatigitas.",
-"Activity" => "Agoj",
+"Audit_log" => "Agoj",
 "A file or folder has been <strong>shared</strong>" => "Dosiero aŭ dosierujo <strong>kunhaviĝis</strong>",
 "You created %1\$s" => "Vi kreis %1\$s",
 "%2\$s created %1\$s" => "%2\$s kreis %1\$s",

@@ -1,7 +1,7 @@
 <?php
 $TRANSLATIONS = array(
 "Your settings have been updated." => "Uw instellingen zijn bijgewerkt",
-"Activity" => "Activiteit",
+"Audit_log" => "Activiteit",
 "A file or folder has been <strong>shared</strong>" => "Een bestand of map is <strong>gedeeld</strong>",
 "A new file or folder has been <strong>created</strong>" => "Een nieuw bestand of map is <strong>aangemaakt</strong>",
 "A file or folder has been <strong>changed</strong>" => "Een bestand of map is <strong>gewijzigd</strong>",
@@ -17,7 +17,7 @@ $TRANSLATIONS = array(
 "You shared %1\$s with group %2\$s" => "U deelde %1\$s met groep %2\$s",
 "%2\$s shared %1\$s with you" => "%2\$s deelde %1\$s met u",
 "You shared %1\$s via link" => "U deelde %1\$s via link",
-"Activity notification" => "Activiteitenmelding",
+"Audit_log notification" => "Activiteitenmelding",
 "All Activities" => "Alle activiteiten",
 "Activities by you" => "Activiteiten van uzelf",
 "Activities by others" => "Activiteiten van anderen",
@@ -45,7 +45,7 @@ $TRANSLATIONS = array(
 "Hourly" => "Per uur",
 "Daily" => "Dagelijks",
 "Weekly" => "Wekelijks",
-"Activity feed" => "Activiteitenkanaal",
+"Audit_log feed" => "Activiteitenkanaal",
 "Personal activity feed for %s" => "Persoonlijk activiteitenkanaal voor %s"
 );
 $PLURAL_FORMS = "nplurals=2; plural=(n != 1);";

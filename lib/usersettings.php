@@ -1,7 +1,7 @@
 <?php
 
 /**
- * ownCloud - Activity App
+ * ownCloud - Audit_log App
  *
  * @author Joas Schilling
  * @copyright 2014 Joas Schilling nickvergessen@owncloud.com
@@ -21,14 +21,14 @@
  *
  */
 
-namespace OCA\Activity;
+namespace OCA\Audit_log;
 
 use \OCP\Config;
 
 /**
  * Class UserSettings
  *
- * @package OCA\Activity
+ * @package OCA\Audit_log
  */
 class UserSettings
 {
@@ -105,7 +105,7 @@ class UserSettings
 		}
 
 		// Allow other apps to add notification types to the default setting
-		$additionalSettings = \OC::$server->getActivityManager()->getDefaultTypes($method);
+		$additionalSettings = \OC::$server->getAudit_logManager()->getDefaultTypes($method);
 		$settings = array_merge($settings, $additionalSettings);
 
 		return $settings;
@@ -120,7 +120,7 @@ class UserSettings
 	 */
 	public static function getNotificationTypes($user, $method) {
 		$l = \OC_L10N::get('audit_log');
-		$data = new Data(\OC::$server->getActivityManager());
+		$data = new Data(\OC::$server->getAudit_logManager());
 		$types = $data->getNotificationTypes($l);
 
 		$notificationTypes = array();

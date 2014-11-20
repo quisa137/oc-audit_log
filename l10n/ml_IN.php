@@ -1,7 +1,7 @@
 <?php
 $TRANSLATIONS = array(
 "Your settings have been updated." => "നിങ്ങളുടെ താത്പര്യങ്ങൾ പരിഷ്കരിച്ചു",
-"Activity" => "പ്രവൃത്തി",
+"Audit_log" => "പ്രവൃത്തി",
 "A file or folder has been <strong>shared</strong>" => "ഒരു ഫയലോ അറയോ <strong>പങ്കിട്ടിരിക്കുന്നു</strong>",
 "You created %1\$s" => "നിങ്ങൾ %1\$s സൃഷ്ടിച്ചു",
 "%2\$s created %1\$s" => "%2\$s %1\$s സൃഷ്ടിച്ചു",
@@ -13,7 +13,7 @@ $TRANSLATIONS = array(
 "You shared %1\$s with group %2\$s" => "നിങ്ങൾ %1\$s %2\$s കൂട്ടത്തിന് പങ്കുവെച്ചു",
 "%2\$s shared %1\$s with you" => "%2\$s %1\$s നിങ്ങൾക്ക് പങ്കുവെച്ചു",
 "You shared %1\$s via link" => "താങ്കൾ %1\$s ലിങ്കിലൂടെ പങ്കുവെച്ചിരിക്കുന്നു",
-"Activity notification" => "പ്രവർത്തന അറിയിപ്പ്",
+"Audit_log notification" => "പ്രവർത്തന അറിയിപ്പ്",
 "All Activities" => "എല്ലാ പ്രവൃത്തികളും",
 "Activities by you" => "താങ്കളുടെ പ്രവൃത്തികൾ",
 "Activities by others" => "മറ്റുള്ളവരുടെ പ്രവൃത്തികൾ",
@@ -39,7 +39,7 @@ $TRANSLATIONS = array(
 "Hourly" => "ഓരോ മണിക്കൂറും",
 "Daily" => "ദിവസേന",
 "Weekly" => "ആഴ്ച ",
-"Activity feed" => "പ്രവൃത്തികളുടെ ഫീഡ്",
+"Audit_log feed" => "പ്രവൃത്തികളുടെ ഫീഡ്",
 "Personal activity feed for %s" => "%sനു് വേണ്ടിയുള്ള സ്വകാര്യ പ്രവൃത്തികളുടെ ഫീഡ്"
 );
 $PLURAL_FORMS = "nplurals=2; plural=(n != 1);";

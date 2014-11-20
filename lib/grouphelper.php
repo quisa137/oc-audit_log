@@ -1,7 +1,7 @@
 <?php
 
 /**
- * ownCloud - Activity App
+ * ownCloud - Audit_log App
  *
  * @author Joas Schilling
  * @copyright 2014 Joas Schilling nickvergessen@owncloud.com
@@ -21,9 +21,9 @@
  *
  */
 
-namespace OCA\Activity;
+namespace OCA\Audit_log;
 
-use \OCP\Activity\IManager;
+use \OCP\Audit_log\IManager;
 
 class GroupHelper
 {
@@ -42,15 +42,15 @@ class GroupHelper
 	/** @var bool */
 	protected $allowGrouping;
 
-	/** @var \OCP\Activity\IManager */
+	/** @var \OCP\Audit_log\IManager */
 	protected $activityManager;
 
-	/** @var \OCA\Activity\DataHelper */
+	/** @var \OCA\Audit_log\DataHelper */
 	protected $dataHelper;
 
 	/**
-	 * @param \OCP\Activity\IManager $activityManager
-	 * @param \OCA\Activity\DataHelper $dataHelper
+	 * @param \OCP\Audit_log\IManager $activityManager
+	 * @param \OCA\Audit_log\DataHelper $dataHelper
 	 * @param bool $allowGrouping
 	 */
 	public function __construct(IManager $activityManager, DataHelper $dataHelper, $allowGrouping) {
@@ -65,7 +65,7 @@ class GroupHelper
 	 *
 	 * @param array $activity
 	 */
-	public function addActivity($activity) {
+	public function addAudit_log($activity) {
 		$activity['subjectparams_array'] = unserialize($activity['subjectparams']);
 		if (!is_array($activity['subjectparams_array'])) {
 			$activity['subjectparams_array'] = array($activity['subjectparams_array']);

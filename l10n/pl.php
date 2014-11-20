@@ -1,7 +1,7 @@
 <?php
 $TRANSLATIONS = array(
 "Your settings have been updated." => "Twoje ustawienia zostały zaktualizowane",
-"Activity" => "Aktywność",
+"Audit_log" => "Aktywność",
 "A file or folder has been <strong>shared</strong>" => "Plik lub folder stał się <strong>współdzielony</strong>",
 "A new file or folder has been <strong>created</strong>" => "Nowy plik lub folder został <strong>utworzony</strong>",
 "A file or folder has been <strong>changed</strong>" => "Plik lub folder został <strong>zmieniony</strong>",
@@ -17,7 +17,7 @@ $TRANSLATIONS = array(
 "You shared %1\$s with group %2\$s" => "Współdzielisz %1\$s z grupą %2\$s",
 "%2\$s shared %1\$s with you" => "%2\$s współdzieli %1\$s z Tobą",
 "You shared %1\$s via link" => "Udostępniasz %1\$s przez link",
-"Activity notification" => "Powiadomienie o aktywności",
+"Audit_log notification" => "Powiadomienie o aktywności",
 "All Activities" => "Wszystkie aktywności",
 "Activities by you" => "Twoje aktywności",
 "Activities by others" => "Aktywności innych",
@@ -45,7 +45,7 @@ $TRANSLATIONS = array(
 "Hourly" => "Co godzinę",
 "Daily" => "Codziennie",
 "Weekly" => "Cotygodniowo",
-"Activity feed" => "Strumień aktywności",
+"Audit_log feed" => "Strumień aktywności",
 "Personal activity feed for %s" => "Osobisty strumień aktywności dla %s"
 );
 $PLURAL_FORMS = "nplurals=3; plural=(n==1 ? 0 : n%10>=2 && n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);";

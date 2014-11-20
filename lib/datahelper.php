@@ -1,7 +1,7 @@
 <?php
 
 /**
- * ownCloud - Activity App
+ * ownCloud - Audit_log App
  *
  * @author Joas Schilling
  * @copyright 2014 Joas Schilling nickvergessen@owncloud.com
@@ -21,17 +21,17 @@
  *
  */
 
-namespace OCA\Activity;
+namespace OCA\Audit_log;
 
 use \OCP\Util;
-use \OCP\Activity\IManager;
+use \OCP\Audit_log\IManager;
 
 class DataHelper
 {
-	/** @var \OCP\Activity\IManager */
+	/** @var \OCP\Audit_log\IManager */
 	protected $activityManager;
 
-	/** @var \OCA\Activity\ParameterHelper */
+	/** @var \OCA\Audit_log\ParameterHelper */
 	protected $parameterHelper;
 
 	/** @var \OC_L10N */

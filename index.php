@@ -1,7 +1,7 @@
 <?php
 
 /**
- * ownCloud - Activity App
+ * ownCloud - Audit_log App
  *
  * @author Frank Karlitschek
  * @copyright 2013 Frank Karlitschek frank@owncloud.org
@@ -33,12 +33,12 @@
 \OCP\Util::addScript('audit_log', 'script');
 \OCP\Util::addStyle('audit_log', 'style');
 
-$navigation = new \OCA\Activity\Navigation(\OCP\Util::getL10N('audit_log'), \OC::$server->getActivityManager(), \OC::$server->getURLGenerator());
+$navigation = new \OCA\Audit_log\Navigation(\OCP\Util::getL10N('audit_log'), \OC::$server->getActivityManager(), \OC::$server->getURLGenerator());
 $navigation->setRSSToken(\OCP\Config::getUserValue(\OCP\User::getUser(), 'audit_log', 'rsstoken'));
 
 // get the page that is requested. Needed for endless scrolling
-$data = new \OCA\Activity\Data(
-	\OC::$server->getActivityManager()
+$data = new \OCA\Audit_log\Data(
+	\OC::$server->getAudit_logManager()
 );
 $page = $data->getPageFromParam() - 1;
 $filter = $data->getFilterFromParam();

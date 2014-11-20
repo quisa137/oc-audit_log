@@ -1,7 +1,7 @@
 <?php
 $TRANSLATIONS = array(
 "Your settings have been updated." => "Dina inställningar har uppdaterats.",
-"Activity" => "Aktivitet",
+"Audit_log" => "Aktivitet",
 "A file or folder has been <strong>shared</strong>" => "En fil eller mapp har <strong>delats</strong>",
 "You created %1\$s" => "Du skapade %1\$s",
 "%2\$s created %1\$s" => "%2\$s skapade %1\$s",
@@ -12,7 +12,7 @@ $TRANSLATIONS = array(
 "You shared %1\$s with %2\$s" => "Du delade %1\$s med %2\$s",
 "You shared %1\$s with group %2\$s" => "Du delade %1\$s med grupp %2\$s",
 "%2\$s shared %1\$s with you" => "%2\$s delade %1\$s med dig",
-"Activity notification" => "Aktivitet notifiering",
+"Audit_log notification" => "Aktivitet notifiering",
 "All Activities" => "Alla aktiviteter",
 "Activities by you" => "Aktivitet av dig",
 "Activities by others" => "Aktiviteter av andra",
@@ -39,7 +39,7 @@ $TRANSLATIONS = array(
 "Hourly" => "Timme",
 "Daily" => "Dagligen",
 "Weekly" => "Varje vecka",
-"Activity feed" => "Aktivitetsflöde",
+"Audit_log feed" => "Aktivitetsflöde",
 "Personal activity feed for %s" => "Personligt aktivitetsflöde för %s"
 );
 $PLURAL_FORMS = "nplurals=2; plural=(n != 1);";

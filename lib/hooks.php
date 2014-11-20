@@ -21,7 +21,7 @@
  *
  */
 
-namespace OCA\Activity;
+namespace OCA\Audit_log;
 
 /**
  * @brief The class to handle the filesystem hooks
@@ -32,17 +32,17 @@ class Hooks {
 	 * All other events has to be triggered by the apps.
 	 */
 	public static function register() {
-		\OCP\Util::connectHook('OC_Filesystem', 'post_create', 'OCA\Activity\Hooks', 'fileCreate');
-		\OCP\Util::connectHook('OC_Filesystem', 'post_update', 'OCA\Activity\Hooks', 'fileUpdate');
-		\OCP\Util::connectHook('OC_Filesystem', 'delete', 'OCA\Activity\Hooks', 'fileDelete');
-		\OCP\Util::connectHook('OC_Filesystem', 'read', 'OCA\Activity\Hooks', 'fileRead');
-		\OCP\Util::connectHook('\OCA\Files_Trashbin\Trashbin', 'post_restore', 'OCA\Activity\Hooks', 'fileRestore');
-		\OCP\Util::connectHook('OCP\Share', 'post_shared', 'OCA\Activity\Hooks', 'share');
+		\OCP\Util::connectHook('OC_Filesystem', 'post_create', 'OCA\Audit_log\Hooks', 'fileCreate');
+		\OCP\Util::connectHook('OC_Filesystem', 'post_update', 'OCA\Audit_log\Hooks', 'fileUpdate');
+		\OCP\Util::connectHook('OC_Filesystem', 'delete', 'OCA\Audit_log\Hooks', 'fileDelete');
+		\OCP\Util::connectHook('OC_Filesystem', 'read', 'OCA\Audit_log\Hooks', 'fileRead');
+		\OCP\Util::connectHook('\OCA\Files_Trashbin\Trashbin', 'post_restore', 'OCA\Audit_log\Hooks', 'fileRestore');
+		\OCP\Util::connectHook('OCP\Share', 'post_shared', 'OCA\Audit_log\Hooks', 'share');
 
-		\OCP\Util::connectHook('OC_User', 'post_deleteUser', 'OCA\Activity\Hooks', 'deleteUser');
+		\OCP\Util::connectHook('OC_User', 'post_deleteUser', 'OCA\Audit_log\Hooks', 'deleteUser');
 
 		// hooking up the activity manager
-		$am = \OC::$server->getActivityManager();
+		$am = \OC::$server->getAudit_logManager();
 		$am->registerConsumer(function() {
 			return new Consumer();
 		});
@@ -111,7 +111,7 @@ class Hooks {
 		$filteredEmailUsers = UserSettings::filterUsersBySetting(array_keys($affectedUsers), 'email', $activityType);
 
 		foreach ($affectedUsers as $user => $path) {
-// SGCOM MODIFIED :: 원래 세팅을 해야 데이터가 쌓이는 구조 였지만 
+// SGCOM MODIFIED :: 원래 세팅을 해야 데이터가 쌓이는 구조 였지만
 //  감사자료를 남기기 위해 무조건 데이터는 쌓게 하였다.
 // 			if (empty($filteredStreamUsers[$user]) && empty($filteredEmailUsers[$user])) {
 // 				continue;
@@ -129,7 +129,7 @@ class Hooks {
 				$userParams = array($path, \OCP\User::getUser());
 			}
 
-// SGCOM MODIFIED :: 원래 세팅을 해야 데이터가 쌓이는 구조 였지만 
+// SGCOM MODIFIED :: 원래 세팅을 해야 데이터가 쌓이는 구조 였지만
 //  감사자료를 남기기 위해 무조건 데이터는 쌓게 하였다.
 // 			self::addNotificationsForUser(
 // 				$user, $userSubject, $userParams,
@@ -144,7 +144,7 @@ class Hooks {
 					!empty($filteredEmailUsers[$user]) ? $filteredEmailUsers[$user] : 0,
 					$activityType, Data::PRIORITY_HIGH
 			);
-			
+
 		}
 	}
 
@@ -244,7 +244,7 @@ class Hooks {
 		$query = \OCP\DB::prepare('SELECT `share_with`, `file_target` FROM `*PREFIX*share` WHERE `parent` = ? ');
 		$result = $query->execute(array($params['id']));
 		if (\OCP\DB::isError($result)) {
-			\OCP\Util::writeLog('OCA\Activity\Hooks::shareFileOrFolderWithGroup', \OCP\DB::getErrorMessage($result), \OCP\Util::ERROR);
+			\OCP\Util::writeLog('OCA\Audit_log\Hooks::shareFileOrFolderWithGroup', \OCP\DB::getErrorMessage($result), \OCP\Util::ERROR);
 		} else {
 			while ($row = $result->fetchRow()) {
 				$affectedUsers[$row['share_with']] = $row['file_target'];
@@ -341,7 +341,7 @@ class Hooks {
 	public static function deleteUser($params) {
 		// Delete activity entries
 		$data = new Data(
-			\OC::$server->getActivityManager()
+			\OC::$server->getAudit_logManager()
 		);
 		$data->deleteActivities(array('affecteduser' => $params['uid']));
 

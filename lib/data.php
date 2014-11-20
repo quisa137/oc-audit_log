@@ -1,7 +1,7 @@
 <?php
 
 /**
- * ownCloud - Activity App
+ * ownCloud - Audit_log App
  *
  * @author Frank Karlitschek
  * @copyright 2013 Frank Karlitschek frank@owncloud.org
@@ -21,7 +21,7 @@
  *
  */
 
-namespace OCA\Activity;
+namespace OCA\Audit_log;
 
 use \OCP\DB;
 use \OCP\User;
@@ -32,12 +32,6 @@ use \OCP\Util;
  */
 class Data
 {
-	const PRIORITY_VERYLOW 	= 10;
-	const PRIORITY_LOW	= 20;
-	const PRIORITY_MEDIUM	= 30;
-	const PRIORITY_HIGH	= 40;
-	const PRIORITY_VERYHIGH	= 50;
-
 	const TYPE_SHARED = 'shared';
 	const TYPE_SHARE_EXPIRED = 'share_expired';
 	const TYPE_SHARE_UNSHARED = 'share_unshared';
@@ -54,10 +48,10 @@ class Data
 	const TYPE_STORAGE_QUOTA_90 = 'storage_quota_90';
 	const TYPE_STORAGE_FAILURE = 'storage_failure';
 
-	/** @var \OCP\Activity\IManager */
+	/** @var \OCP\Audit_log\IManager */
 	protected $activityManager;
 
-	public function __construct(\OCP\Activity\IManager $activityManager){
+	public function __construct(\OCP\Audit_log\IManager $activityManager){
 		$this->activityManager = $activityManager;
 	}
 
@@ -115,7 +109,7 @@ class Data
 	public static function send($app, $subject, $subjectparams = array(), $message = '', $messageparams = array(), $file = '', $link = '', $affecteduser = '', $type = '', $prio = Data::PRIORITY_MEDIUM) {
 		$timestamp = time();
 		$user = User::getUser();
-		
+
 		if ($affecteduser === '') {
 			$auser = $user;
 		} else {
@@ -127,7 +121,7 @@ class Data
 		$query->execute(array($app, $subject, serialize($subjectparams), $message, serialize($messageparams), $file, $link, $user, $auser, $timestamp, $prio, $type));
 
 		// fire a hook so that other apps like notification systems can connect
-		Util::emitHook('OC_Activity', 'post_event', array('app' => $app, 'subject' => $subject, 'user' => $user, 'affecteduser' => $affecteduser, 'message' => $message, 'file' => $file, 'link'=> $link, 'prio' => $prio, 'type' => $type));
+		Util::emitHook('OC_Audit_log', 'post_event', array('app' => $app, 'subject' => $subject, 'user' => $user, 'affecteduser' => $affecteduser, 'message' => $message, 'file' => $file, 'link'=> $link, 'prio' => $prio, 'type' => $type));
 
 		return true;
 	}
@@ -140,7 +134,7 @@ class Data
 	 * @param array  $subjectParams Array of parameters that are filled in the placeholders
 	 * @param string $affectedUser Name of the user we are sending the activity to
 	 * @param string $type Type of notification
-	 * @param int $latestSendTime Activity time() + batch setting of $affecteduser
+	 * @param int $latestSendTime Audit_log time() + batch setting of $affecteduser
 	 * @return bool
 	 */
 	public static function storeMail($app, $subject, array $subjectParams, $affectedUser, $type, $latestSendTime) {
@@ -161,7 +155,7 @@ class Data
 		));
 
 		// fire a hook so that other apps like notification systems can connect
-		Util::emitHook('OC_Activity', 'post_email', array(
+		Util::emitHook('OC_Audit_log', 'post_email', array(
 			'app'			=> $app,
 			'subject'		=> $subject,
 			'subjectparams'	=> $subjectParams,
@@ -258,15 +252,15 @@ class Data
 	 * Process the result and return the activities
 	 *
 	 * @param \OC_DB_StatementWrapper|int $result
-	 * @param \OCA\Activity\GroupHelper $groupHelper
+	 * @param \OCA\Audit_log\GroupHelper $groupHelper
 	 * @return array
 	 */
 	public function getActivitiesFromQueryResult($result, GroupHelper $groupHelper) {
 		if (DB::isError($result)) {
-			Util::writeLog('Activity', DB::getErrorMessage($result), Util::ERROR);
+			Util::writeLog('Audit_log', DB::getErrorMessage($result), Util::ERROR);
 		} else {
 			while ($row = $result->fetchRow()) {
-				$groupHelper->addActivity($row);
+				$groupHelper->addAudit_log($row);
 			}
 		}
 

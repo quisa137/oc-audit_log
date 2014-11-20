@@ -1,7 +1,7 @@
 <?php
 $TRANSLATIONS = array(
 "Your settings have been updated." => "Setarile au fost actualizate",
-"Activity" => "Activitate",
+"Audit_log" => "Activitate",
 "A file or folder has been <strong>shared</strong>" => "Un fisier sau folder a fost <strong>shared</strong>",
 "A new file or folder has been <strong>created</strong>" => "Un nou fisier sau folder a fost <strong>creat</strong>",
 "A file or folder has been <strong>changed</strong>" => "Un nou fisier sau folder a fost <strong>modificat</strong>",
@@ -16,7 +16,7 @@ $TRANSLATIONS = array(
 "You shared %1\$s with group %2\$s" => "Ati dat share la %1\$s grupului %2\$s",
 "%2\$s shared %1\$s with you" => "%2\$s a dat share la  %1\$s pentru tine",
 "You shared %1\$s via link" => "Ai partajat %1\$s prin link",
-"Activity notification" => "Notificări ",
+"Audit_log notification" => "Notificări ",
 "All Activities" => "Toate actiunile",
 "Activities by you" => "Actiunile tale",
 "Activities by others" => "Activitatile altora",
@@ -44,7 +44,7 @@ $TRANSLATIONS = array(
 "Hourly" => "In fiecare ora",
 "Daily" => "Zilnic",
 "Weekly" => "Săptămânal",
-"Activity feed" => "Activitate recenta",
+"Audit_log feed" => "Activitate recenta",
 "Personal activity feed for %s" => "Activitate recenta personala pentru %s"
 );
 $PLURAL_FORMS = "nplurals=3; plural=(n==1?0:(((n%100>19)||((n%100==0)&&(n!=0)))?2:1));";

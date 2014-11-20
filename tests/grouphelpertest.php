@@ -1,7 +1,7 @@
 <?php
 
 /**
- * ownCloud - Activity App
+ * ownCloud - Audit_log App
  *
  * @author Joas Schilling
  * @copyright 2014 Joas Schilling nickvergessen@owncloud.com
@@ -20,11 +20,11 @@
  * License along with this library.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-namespace OCA\Activity\Tests;
+namespace OCA\Audit_log\Tests;
 
-use OCA\Activity\DataHelper;
-use OCA\Activity\GroupHelper;
-use OCA\Activity\ParameterHelper;
+use OCA\Audit_log\DataHelper;
+use OCA\Audit_log\GroupHelper;
+use OCA\Audit_log\ParameterHelper;
 
 class GroupHelperTest extends \PHPUnit_Framework_TestCase {
 	public function groupHelperData() {
@@ -474,7 +474,7 @@ class GroupHelperTest extends \PHPUnit_Framework_TestCase {
 	 * @dataProvider groupHelperData
 	 */
 	public function testGroupHelper($allowGrouping, $activities, $expected) {
-		$activityManager = $this->getMock('\OCP\Activity\IManager');
+		$activityManager = $this->getMock('\OCP\Audit_log\IManager');
 		$activityManager->expects($this->any())
 			->method('getGroupParameter')
 			->with($this->anything())
@@ -495,7 +495,7 @@ class GroupHelperTest extends \PHPUnit_Framework_TestCase {
 		);
 
 		foreach ($activities as $activity) {
-			$helper->addActivity($activity);
+			$helper->addAudit_log($activity);
 		}
 
 		$result = $helper->getActivities();

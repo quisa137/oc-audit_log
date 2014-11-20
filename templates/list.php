@@ -1,7 +1,7 @@
 <?php
 
 /**
- * ownCloud - Activity App
+ * ownCloud - Audit_log App
  *
  * @author Frank Karlitschek
  * @copyright 2013 Frank Karlitschek frank@owncloud.org

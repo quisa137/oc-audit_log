@@ -1,7 +1,7 @@
 <?php
 
 /**
- * ownCloud - Activity App
+ * ownCloud - Audit_log App
  *
  * @author Joas Schilling
  * @copyright 2014 Joas Schilling nickvergessen@owncloud.com
@@ -21,12 +21,12 @@
  *
  */
 
-namespace OCA\Activity;
+namespace OCA\Audit_log;
 
 /**
  * Class Api
  *
- * @package OCA\Activity
+ * @package OCA\Audit_log
  */
 class Api
 {
@@ -34,12 +34,12 @@ class Api
 
 	static public function get($param) {
 		$l = \OCP\Util::getL10N('audit_log');
-		$data = new \OCA\Activity\Data(\OC::$server->getActivityManager());
-		$groupHelper = new \OCA\Activity\GroupHelper(
-			\OC::$server->getActivityManager(),
-			new \OCA\Activity\DataHelper(
-				\OC::$server->getActivityManager(),
-				new \OCA\Activity\ParameterHelper(new \OC\Files\View(''), $l),
+		$data = new \OCA\Audit_log\Data(\OC::$server->getAudit_logManager());
+		$groupHelper = new \OCA\Audit_log\GroupHelper(
+			\OC::$server->getAudit_logManager(),
+			new \OCA\Audit_log\DataHelper(
+				\OC::$server->getAudit_logManager(),
+				new \OCA\Audit_log\ParameterHelper(new \OC\Files\View(''), $l),
 				$l
 			),
 			false

@@ -1,7 +1,7 @@
 <?php
 $TRANSLATIONS = array(
 "Your settings have been updated." => "Zure ezarpenak eguneratu dira.",
-"Activity" => "Jarduera",
+"Audit_log" => "Jarduera",
 "A file or folder has been <strong>shared</strong>" => "Fitxategia edo karpeta <strong>konpartitu</strong> da",
 "A new file or folder has been <strong>created</strong>" => "Fitxategi edo karpeta berri bat <strong>sortu da</strong>",
 "A file or folder has been <strong>changed</strong>" => "Fitxategi edo karpeta bat <strong>aldatu da</strong>",
@@ -17,7 +17,7 @@ $TRANSLATIONS = array(
 "You shared %1\$s with group %2\$s" => "Zuk %1\$s elkarbanatu duzu %2\$s taldearekin",
 "%2\$s shared %1\$s with you" => "%2\$sk zurekin %1\$s elkarbanatu du",
 "You shared %1\$s via link" => "Konpartitu duzu %1\$s esteka baten bidez",
-"Activity notification" => "Jarduera jakinarazpenak",
+"Audit_log notification" => "Jarduera jakinarazpenak",
 "All Activities" => "Jarduera guztiak",
 "Activities by you" => "Zure jarduerak",
 "Activities by others" => "Besteen jarduerak",
@@ -45,7 +45,7 @@ $TRANSLATIONS = array(
 "Hourly" => "Orduro",
 "Daily" => "Egunero",
 "Weekly" => "Astero",
-"Activity feed" => "Jarduera jarioa",
+"Audit_log feed" => "Jarduera jarioa",
 "Personal activity feed for %s" => "%sen jarduera jario pertsonala"
 );
 $PLURAL_FORMS = "nplurals=2; plural=(n != 1);";

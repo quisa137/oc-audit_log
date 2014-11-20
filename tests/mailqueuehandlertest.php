@@ -1,7 +1,7 @@
 <?php
 
 /**
- * ownCloud - Activity App
+ * ownCloud - Audit_log App
  *
  * @author Thomas Müller
  * @copyright 2014 Thomas Müller deepdiver@owncloud.com
@@ -20,9 +20,9 @@
  * License along with this library.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-namespace OCA\Activity\Tests;
+namespace OCA\Audit_log\Tests;
 
-use OCA\Activity\MailQueueHandler;
+use OCA\Audit_log\MailQueueHandler;
 
 class MailQueueHandlerTest extends \PHPUnit_Framework_TestCase {
 

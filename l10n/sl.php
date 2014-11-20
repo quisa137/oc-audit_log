@@ -1,7 +1,7 @@
 <?php
 $TRANSLATIONS = array(
 "Your settings have been updated." => "Nastavitve so posodobljene.",
-"Activity" => "Dejavnosti",
+"Audit_log" => "Dejavnosti",
 "A file or folder has been <strong>shared</strong>" => "Za datoteko ali mapo je odobrena <strong>souporaba</strong>.",
 "A new file or folder has been <strong>created</strong>" => "Nova datoteka ali mapa je <strong>ustvarjena</strong>",
 "A file or folder has been <strong>changed</strong>" => "Datoteka ali mapa je <strong>spremenjena</strong>.",
@@ -17,7 +17,7 @@ $TRANSLATIONS = array(
 "You shared %1\$s with group %2\$s" => "Omogočili ste souporabo %1\$s s skupino %2\$s",
 "%2\$s shared %1\$s with you" => "Uporabnik %2\$s je omogočil souporabo %1\$s",
 "You shared %1\$s via link" => "Omogočili ste souporabo %1\$s preko povezave",
-"Activity notification" => "Obvestila o dejavnosti",
+"Audit_log notification" => "Obvestila o dejavnosti",
 "All Activities" => "Vse dejavnosti",
 "Activities by you" => "Vaše dejavnosti",
 "Activities by others" => "Dejavnosti drugih",
@@ -45,7 +45,7 @@ $TRANSLATIONS = array(
 "Hourly" => "Vsako uro",
 "Daily" => "Dnevno",
 "Weekly" => "Tedensko",
-"Activity feed" => "Objava dejavnosti z viri RSS",
+"Audit_log feed" => "Objava dejavnosti z viri RSS",
 "Personal activity feed for %s" => "Osebne dejavnosti za %s"
 );
 $PLURAL_FORMS = "nplurals=4; plural=(n%100==1 ? 0 : n%100==2 ? 1 : n%100==3 || n%100==4 ? 2 : 3);";

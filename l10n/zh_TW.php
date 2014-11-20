@@ -1,7 +1,7 @@
 <?php
 $TRANSLATIONS = array(
 "Your settings have been updated." => "您的設定已更新.",
-"Activity" => "活動",
+"Audit_log" => "活動",
 "A file or folder has been <strong>shared</strong>" => "檔案或目錄已經被 <strong>分享</strong>",
 "You created %1\$s" => "您建立了 %1\$s",
 "%2\$s created %1\$s" => "%2\$s 已建立 %1\$s",

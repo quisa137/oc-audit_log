@@ -1,7 +1,7 @@
 <?php
 $TRANSLATIONS = array(
 "Your settings have been updated." => "La configuració s'ha actualitzat.",
-"Activity" => "Activitat",
+"Audit_log" => "Activitat",
 "A file or folder has been <strong>shared</strong>" => "S'ha <strong>compartit</strong> un fitxer o una carpeta",
 "A new file or folder has been <strong>created</strong>" => "S'ha <strong>creat</strong> un nou fitxer o una nova carpeta",
 "A file or folder has been <strong>changed</strong>" => "S'ha <strong>canviat</strong> un fitxer o una carpeta",
@@ -17,7 +17,7 @@ $TRANSLATIONS = array(
 "You shared %1\$s with group %2\$s" => "has compartit %1\$s amb el grup %2\$s",
 "%2\$s shared %1\$s with you" => "%2\$s ha compartit %1\$s amb tu",
 "You shared %1\$s via link" => "Heu compartit %1\$s via enllaç",
-"Activity notification" => "Notificació d'activitat",
+"Audit_log notification" => "Notificació d'activitat",
 "All Activities" => "Totes les activitats",
 "Activities by you" => "Les teves activitats",
 "Activities by others" => "Activitats dels altres",
@@ -45,7 +45,7 @@ $TRANSLATIONS = array(
 "Hourly" => "Horàriament",
 "Daily" => "Diari",
 "Weekly" => "Setmanalment",
-"Activity feed" => "Llista d'activitat",
+"Audit_log feed" => "Llista d'activitat",
 "Personal activity feed for %s" => "Llista d'activitat personal per a %s"
 );
 $PLURAL_FORMS = "nplurals=2; plural=(n != 1);";

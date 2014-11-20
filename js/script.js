@@ -1,7 +1,7 @@
 $(function(){
-	var OCActivity={};
+	var OCAudit_log={};
 
-	OCActivity.Filter = {
+	OCAudit_log.Filter = {
 		filter: undefined,
 		currentPage: 0,
 		navigation: $('#app-navigation'),
@@ -17,39 +17,39 @@ $(function(){
 			this.filter = filter;
 			OC.Util.History.pushState('filter=' + filter);
 
-			OCActivity.InfinitScrolling.container.animate({ scrollTop: 0 }, 'slow');
-			OCActivity.InfinitScrolling.container.children().remove();
+			OCAudit_log.InfinitScrolling.container.animate({ scrollTop: 0 }, 'slow');
+			OCAudit_log.InfinitScrolling.container.children().remove();
 			$('#no_activities').addClass('hidden');
 			$('#no_more_activities').addClass('hidden');
 			$('#loading_activities').removeClass('hidden');
-			OCActivity.InfinitScrolling.ignoreScroll = false;
+			OCAudit_log.InfinitScrolling.ignoreScroll = false;
 
 			this.navigation.find('a[data-navigation=' + filter + ']').addClass('active');
 
-			OCActivity.InfinitScrolling.prefill();
+			OCAudit_log.InfinitScrolling.prefill();
 		}
 	};
 
-	OCActivity.InfinitScrolling = {
+	OCAudit_log.InfinitScrolling = {
 		ignoreScroll: false,
 		container: $('#container'),
 		content: $('#app-content'),
 
 		prefill: function () {
 			if (this.content.scrollTop() + this.content.height() > this.container.height() - 100) {
-				OCActivity.Filter.currentPage++;
+				OCAudit_log.Filter.currentPage++;
 
 				$.get(
 					OC.filePath('audit_log', 'ajax', 'fetch.php'),
-					'filter=' + OCActivity.Filter.filter + '&page=' + OCActivity.Filter.currentPage,
+					'filter=' + OCAudit_log.Filter.filter + '&page=' + OCAudit_log.Filter.currentPage,
 					function(data) {
 						if (data.length) {
-							OCActivity.InfinitScrolling.appendContent(data);
+							OCAudit_log.InfinitScrolling.appendContent(data);
 
 							// Continue prefill
-							OCActivity.InfinitScrolling.prefill();
+							OCAudit_log.InfinitScrolling.prefill();
 						}
-						else if (OCActivity.Filter.currentPage == 1) {
+						else if (OCAudit_log.Filter.currentPage == 1) {
 							// First page is empty - No activities :(
 							$('#no_activities').removeClass('hidden');
 							$('#loading_activities').addClass('hidden');
@@ -65,23 +65,23 @@ $(function(){
 		},
 
 		onScroll: function () {
-			if (!OCActivity.InfinitScrolling.ignoreScroll && OCActivity.InfinitScrolling.content.scrollTop() +
-			 OCActivity.InfinitScrolling.content.height() > OCActivity.InfinitScrolling.container.height() - 100) {
-				OCActivity.Filter.currentPage++;
+			if (!OCAudit_log.InfinitScrolling.ignoreScroll && OCAudit_log.InfinitScrolling.content.scrollTop() +
+			 OCAudit_log.InfinitScrolling.content.height() > OCAudit_log.InfinitScrolling.container.height() - 100) {
+				OCAudit_log.Filter.currentPage++;
 
-				OCActivity.InfinitScrolling.ignoreScroll = true;
+				OCAudit_log.InfinitScrolling.ignoreScroll = true;
 				$.get(
 					OC.filePath('audit_log', 'ajax', 'fetch.php'),
-					'filter=' + OCActivity.Filter.filter + '&page=' + OCActivity.Filter.currentPage,
+					'filter=' + OCAudit_log.Filter.filter + '&page=' + OCAudit_log.Filter.currentPage,
 					function(data) {
-						OCActivity.InfinitScrolling.appendContent(data);
-						OCActivity.InfinitScrolling.ignoreScroll = false;
+						OCAudit_log.InfinitScrolling.appendContent(data);
+						OCAudit_log.InfinitScrolling.ignoreScroll = false;
 
 						if (!data.length) {
 							// Page is empty - No more activities :(
 							$('#no_more_activities').removeClass('hidden');
 							$('#loading_activities').addClass('hidden');
-							OCActivity.InfinitScrolling.ignoreScroll = true;
+							OCAudit_log.InfinitScrolling.ignoreScroll = true;
 						}
 					}
 				);
@@ -98,7 +98,7 @@ $(function(){
 					lastBoxContainer = lastGroup.find('.boxcontainer');
 
 				// Move content into the last box
-				OCActivity.InfinitScrolling.processElements(appendedBoxes);
+				OCAudit_log.InfinitScrolling.processElements(appendedBoxes);
 				lastBoxContainer.append(appendedBoxes);
 
 				// Remove the first box, so it's not duplicated
@@ -107,7 +107,7 @@ $(function(){
 				content = $(content);
 			}
 
-			OCActivity.InfinitScrolling.processElements(content);
+			OCAudit_log.InfinitScrolling.processElements(content);
 			this.container.append(content);
 		},
 
@@ -124,11 +124,11 @@ $(function(){
 		}
 	};
 
-	OCActivity.Filter.setFilter(OCActivity.InfinitScrolling.container.attr('data-activity-filter'));
-	OCActivity.InfinitScrolling.content.on('scroll', OCActivity.InfinitScrolling.onScroll);
+	OCAudit_log.Filter.setFilter(OCAudit_log.InfinitScrolling.container.attr('data-activity-filter'));
+	OCAudit_log.InfinitScrolling.content.on('scroll', OCAudit_log.InfinitScrolling.onScroll);
 
-	OCActivity.Filter.navigation.find('a[data-navigation]').on('click', function (event) {
-		OCActivity.Filter.setFilter($(this).attr('data-navigation'));
+	OCAudit_log.Filter.navigation.find('a[data-navigation]').on('click', function (event) {
+		OCAudit_log.Filter.setFilter($(this).attr('data-navigation'));
 		event.preventDefault();
 	});
 

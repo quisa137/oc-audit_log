@@ -1,7 +1,7 @@
 <?php
 
 /**
- * ownCloud - Activity App
+ * ownCloud - Audit_log App
  *
  * @author Joas Schilling
  * @copyright 2014 Joas Schilling nickvergessen@owncloud.com
@@ -20,12 +20,12 @@
  * License along with this library.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-namespace OCA\Activity\Tests;
+namespace OCA\Audit_log\Tests;
 
-use OCA\Activity\Data;
+use OCA\Audit_log\Data;
 
 class DataDeleteActivitiesTest extends \PHPUnit_Framework_TestCase {
-	/** @var \OCA\Activity\Data */
+	/** @var \OCA\Audit_log\Data */
 	protected $data;
 
 	public function setUp() {
@@ -38,9 +38,9 @@ class DataDeleteActivitiesTest extends \PHPUnit_Framework_TestCase {
 			array('affectedUser' => 'otherUser', 'subject' => 'subject2', 'time' => time()),
 		);
 
-		$queryActivity = \OCP\DB::prepare('INSERT INTO `*PREFIX*activity`(`app`, `subject`, `subjectparams`, `message`, `messageparams`, `file`, `link`, `user`, `affecteduser`, `timestamp`, `priority`, `type`)' . ' VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ? )');
+		$queryAudit_log = \OCP\DB::prepare('INSERT INTO `*PREFIX*activity`(`app`, `subject`, `subjectparams`, `message`, `messageparams`, `file`, `link`, `user`, `affecteduser`, `timestamp`, `priority`, `type`)' . ' VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ? )');
 		foreach ($activities as $activity) {
-			$queryActivity->execute(array(
+			$queryAudit_log->execute(array(
 				'app',
 				$activity['subject'],
 				serialize(array()),
@@ -56,7 +56,7 @@ class DataDeleteActivitiesTest extends \PHPUnit_Framework_TestCase {
 			));
 		}
 		$this->data = new Data(
-			$this->getMock('\OCP\Activity\IManager')
+			$this->getMock('\OCP\Audit_log\IManager')
 		);
 	}
 
@@ -87,7 +87,7 @@ class DataDeleteActivitiesTest extends \PHPUnit_Framework_TestCase {
 	}
 
 	public function testExpireActivities() {
-		$backgroundjob = new \OCA\Activity\BackgroundJob\ExpireActivities();
+		$backgroundjob = new \OCA\Audit_log\BackgroundJob\ExpireActivities();
 		$this->assertUserActivities(array('delete', 'otherUser'));
 		$jobList = $this->getMock('\OCP\BackgroundJob\IJobList');
 		$backgroundjob->execute($jobList);

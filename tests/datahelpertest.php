@@ -1,7 +1,7 @@
 <?php
 
 /**
- * ownCloud - Activity App
+ * ownCloud - Audit_log App
  *
  * @author Joas Schilling
  * @copyright 2014 Joas Schilling nickvergessen@owncloud.com
@@ -20,7 +20,7 @@
  * License along with this library.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-namespace OCA\Activity\Tests;
+namespace OCA\Audit_log\Tests;
 
 class DataHelperTest extends \PHPUnit_Framework_TestCase {
 	protected $originalWEBROOT;
@@ -125,9 +125,9 @@ class DataHelperTest extends \PHPUnit_Framework_TestCase {
 	 * @dataProvider translationData
 	 */
 	public function testTranslation($text, $params, $stripPath, $highlightParams, $expected) {
-		$dataHelper = new \OCA\Activity\DataHelper(
-			$this->getMock('\OCP\Activity\IManager'),
-			new \OCA\Activity\ParameterHelper(
+		$dataHelper = new \OCA\Audit_log\DataHelper(
+			$this->getMock('\OCP\Audit_log\IManager'),
+			new \OCA\Audit_log\ParameterHelper(
 				new \OC\Files\View(''),
 				\OCP\Util::getL10N('audit_log')
 			),

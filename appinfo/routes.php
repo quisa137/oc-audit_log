@@ -1,7 +1,7 @@
 <?php
 
 /**
- * ownCloud - Activity App
+ * ownCloud - Audit_log App
  *
  * @author Frank Karlitschek
  * @copyright 2013 Frank Karlitschek frank@owncloud.org
@@ -36,6 +36,6 @@ $this->create('audit_log.ajax.settings', 'ajax/settings.php')
 OC_API::register(
 	'get',
 	'/cloud/audit_log',
-	array('OCA\Activity\Api', 'get'),
+	array('OCA\Audit_log\Api', 'get'),
 	'audit_log'
 );
