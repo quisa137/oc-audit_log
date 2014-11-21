@@ -103,10 +103,9 @@ class Data
 	 * @param string $link A link where this event is associated with (optional)
 	 * @param string $affecteduser If empty the current user will be used
 	 * @param string $type Type of the notification
-	 * @param int    $prio Priority of the notification
 	 * @return bool
 	 */
-	public static function send($app, $subject, $subjectparams = array(), $message = '', $messageparams = array(), $file = '', $link = '', $affecteduser = '', $type = '', $prio = Data::PRIORITY_MEDIUM) {
+	public static function send($app, $subject, $subjectparams = array(), $message = '', $messageparams = array(), $file = '', $link = '', $affecteduser = '', $type = '') {
 		$timestamp = time();
 		$user = User::getUser();
 
@@ -117,11 +116,11 @@ class Data
 		}
 
 		// store in DB
-		$query = DB::prepare('INSERT INTO `*PREFIX*activity`(`app`, `subject`, `subjectparams`, `message`, `messageparams`, `file`, `link`, `user`, `affecteduser`, `timestamp`, `priority`, `type`)' . ' VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ? )');
-		$query->execute(array($app, $subject, serialize($subjectparams), $message, serialize($messageparams), $file, $link, $user, $auser, $timestamp, $prio, $type));
+		$query = DB::prepare('INSERT INTO `*PREFIX*audit_log`(`app`, `subject`, `subjectparams`, `message`, `messageparams`, `file`, `link`, `user`, `affecteduser`, `timestamp`, `type`)' . ' VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ? )');
+		$query->execute(array($app, $subject, serialize($subjectparams), $message, serialize($messageparams), $file, $link, $user, $auser, $timestamp, $type));
 
 		// fire a hook so that other apps like notification systems can connect
-		Util::emitHook('OC_Audit_log', 'post_event', array('app' => $app, 'subject' => $subject, 'user' => $user, 'affecteduser' => $affecteduser, 'message' => $message, 'file' => $file, 'link'=> $link, 'prio' => $prio, 'type' => $type));
+		Util::emitHook('OC_Audit_log', 'post_event', array('app' => $app, 'subject' => $subject, 'user' => $user, 'affecteduser' => $affecteduser, 'message' => $message, 'file' => $file, 'link'=> $link, 'type' => $type));
 
 		return true;
 	}
@@ -141,7 +140,7 @@ class Data
 		$timestamp = time();
 
 		// store in DB
-		$query = DB::prepare('INSERT INTO `*PREFIX*activity_mq` '
+		$query = DB::prepare('INSERT INTO `*PREFIX*audit_log_mq` '
 			. ' (`amq_appid`, `amq_subject`, `amq_subjectparams`, `amq_affecteduser`, `amq_timestamp`, `amq_type`, `amq_latest_send`) '
 			. ' VALUES(?, ?, ?, ?, ?, ?, ?)');
 		$query->execute(array(
@@ -239,7 +238,7 @@ class Data
 		// fetch from DB
 		$query = DB::prepare(
 			'SELECT * '
-			. ' FROM `*PREFIX*activity` '
+			. ' FROM `*PREFIX*audit_log` '
 			. ' WHERE `affecteduser` = ? ' . $limitActivities
 			. ' ORDER BY `timestamp` DESC',
 			$count, $start);

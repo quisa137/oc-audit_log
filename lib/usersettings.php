@@ -105,7 +105,7 @@ class UserSettings
 		}
 
 		// Allow other apps to add notification types to the default setting
-		$additionalSettings = \OC::$server->getAudit_logManager()->getDefaultTypes($method);
+		$additionalSettings = \OC::$server->getActivityManager()->getDefaultTypes($method);
 		$settings = array_merge($settings, $additionalSettings);
 
 		return $settings;

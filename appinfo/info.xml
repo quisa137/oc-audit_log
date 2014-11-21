@@ -1,6 +1,6 @@
 <?xml version="1.0"?>
 <info>
-		<id>oc-audit_log</id>
+		<id>audit_log</id>
 		<name>Audit Log</name>
 		<description>Provides an Audit Log file upload/download and other interesting things going on in your ownCloud.</description>
 		<licence>AGPL</licence>

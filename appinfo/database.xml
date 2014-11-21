@@ -90,7 +90,7 @@
 			</field>
 
 			<index>
-				<name>activity_user_time</name>
+				<name>adudit_log_user_time</name>
 				<field>
 					<name>affecteduser</name>
 				</field>
@@ -101,7 +101,7 @@
 			</index>
 
 			<index>
-				<name>activity_filter_by</name>
+				<name>audit_log_filter_by</name>
 				<field>
 					<name>affecteduser</name>
 				</field>
@@ -115,7 +115,7 @@
 			</index>
 
 			<index>
-				<name>activity_filter_app</name>
+				<name>audit_log_filter_app</name>
 				<field>
 					<name>affecteduser</name>
 				</field>
@@ -130,7 +130,7 @@
 		</declaration>
 	</table>
 	<table>
-		<name>*dbprefix*activity_mq</name>
+		<name>*dbprefix*aduit_log_mq</name>
 		<declaration>
 			<field>
 				<name>mail_id</name>

@@ -35,8 +35,8 @@ $l = OC_L10N::get('audit_log');
 // register the hooks for filesystem operations. All other events from other apps has to be send via the public api
 OCA\Audit_log\Hooks::register();
 
-// Personal settings for notifications and emails
-//OCP\App::registerPersonal('audit_log', 'personal');
+// Admin settings for notifications and emails
+OCP\App::registerAdmin('audit_log', 'admin');
 
 // Cron job for sending Emails
 OCP\Backgroundjob::registerJob('OCA\Audit_log\BackgroundJob\EmailNotification');

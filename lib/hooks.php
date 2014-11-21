@@ -42,7 +42,7 @@ class Hooks {
 		\OCP\Util::connectHook('OC_User', 'post_deleteUser', 'OCA\Audit_log\Hooks', 'deleteUser');
 
 		// hooking up the activity manager
-		$am = \OC::$server->getAudit_logManager();
+		$am = \OC::$server->getActivityManager();
 		$am->registerConsumer(function() {
 			return new Consumer();
 		});
@@ -142,7 +142,7 @@ class Hooks {
 					$user, $userSubject, $userParams,
 					$path, true, true,
 					!empty($filteredEmailUsers[$user]) ? $filteredEmailUsers[$user] : 0,
-					$activityType, Data::PRIORITY_HIGH
+					$activityType
 			);
 
 		}
@@ -298,16 +298,15 @@ class Hooks {
 	 * @param bool $streamSetting
 	 * @param int $emailSetting
 	 * @param string $type
-	 * @param int $priority
 	 */
-	protected static function addNotificationsForUser($user, $subject, $subjectParams, $path, $isFile, $streamSetting, $emailSetting, $type = Data::TYPE_SHARED, $priority = Data::PRIORITY_MEDIUM) {
+	protected static function addNotificationsForUser($user, $subject, $subjectParams, $path, $isFile, $streamSetting, $emailSetting, $type = Data::TYPE_SHARED) {
 		$link = \OCP\Util::linkToAbsolute('files', 'index.php', array(
 			'dir' => ($isFile) ? dirname($path) : $path,
 		));
 
 		// Add activity to stream
 		if ($streamSetting) {
-			Data::send('files', $subject, $subjectParams, '', array(), $path, $link, $user, $type, $priority);
+			Data::send('files', $subject, $subjectParams, '', array(), $path, $link, $user, $type);
 		}
 
 		// Add activity to mail queue
@@ -330,7 +329,7 @@ class Hooks {
 				'dir' => ($params['itemType'] === 'file') ? dirname($path) : $path,
 			));
 
-			Data::send('files', 'shared_link_self', array($path), '', array(), $path, $link, \OCP\User::getUser(), Data::TYPE_SHARED, Data::PRIORITY_MEDIUM);
+			Data::send('files', 'shared_link_self', array($path), '', array(), $path, $link, \OCP\User::getUser(), Data::TYPE_SHARED);
 		}
 	}
 
