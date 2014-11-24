@@ -1,4 +1,5 @@
 # just sane ignores
+sftp-config.json
 .*.sw[po]
 *.bak
 *.BAK
