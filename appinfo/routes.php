@@ -21,21 +21,20 @@
  *
  */
 
-/** @var $this OC\Route\Router */
-
-$this->create('audit_log.index', '')
-	->actionInclude('audit_log/index.php');
+/**
+ * @var $this OC\Route\Router
+ */
+$this->create ( 'audit_log.index', '' )->actionInclude ( 'audit_log/index.php' );
 // $this->create('audit_log.ajax.fetch', 'ajax/fetch.php')
-// 	->actionInclude('audit_log/ajax/fetch.php');
+// ->actionInclude('audit_log/ajax/fetch.php');
 // $this->create('audit_log.ajax.rssfeed', 'ajax/rssfeed.php')
-// 	->actionInclude('audit_log/ajax/rssfeed.php');
-$this->create('audit_log.ajax.settings', 'ajax/settings.php')
-	->actionInclude('audit_log/ajax/settings.php');
+// ->actionInclude('audit_log/ajax/rssfeed.php');
+$this->create ( 'audit_log.ajax.settings', 'ajax/settings.php' )->actionInclude ( 'audit_log/ajax/settings.php' );
 
 // Register an OCS API call
-OC_API::register(
-	'get',
-	'/cloud/audit_log',
-	array('OCA\Audit_log\Api', 'get'),
-	'audit_log'
-);
+// OC_API::register(
+// 	'get',
+// 	'/cloud/audit_log',
+// 	array('OCA\Audit_log\Api', 'get'),
+// 	'audit_log'
+// );

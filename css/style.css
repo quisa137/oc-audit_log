@@ -2,6 +2,9 @@
 	margin-left: 24px;
 	margin-bottom: 16px;
 }
+#container > .tb {
+	border-collapse:collapse;
+}
 
 .activitysubject {
 	display: inline-block;
@@ -12,9 +15,10 @@
 	text-overflow: ellipsis;
 	overflow: hidden;
 }
+
 .activitymessage {
-	font-size:0.8em;
-	color:#666;
+	font-size: 0.8em;
+	color: #666;
 	text-overflow: ellipsis;
 	overflow: hidden;
 }
@@ -46,7 +50,6 @@
 	width: 100%;
 	text-align: center;
 	padding: 50px 0;
-
 	z-index: 100;
 	margin: 40px auto;
 	bottom: 20px;
@@ -60,16 +63,16 @@
 }
 
 #container {
-  background: #FFF;
-  margin-bottom: 20px;
-  border-radius: 5px;
-  clear: both;
-  -webkit-border-radius: 5px;
-	 -moz-border-radius: 5px;
-		  border-radius: 5px;
+	background: #FFF;
+	margin-bottom: 20px;
+	border-radius: 5px;
+	clear: both;
+	-webkit-border-radius: 5px;
+	-moz-border-radius: 5px;
+	border-radius: 5px;
 }
 
-.group{
+.group {
 	clear: both;
 	padding-bottom: 10px;
 }
@@ -80,7 +83,7 @@
 	margin-bottom: 10px;
 }
 
-.box.loaded{
+.box.loaded {
 	transition: opacity 1s ease;
 	-ms-transition: opacity 1s ease;
 	-moz-transition: opacity 1s ease;
@@ -89,34 +92,64 @@
 	opacity: 1;
 }
 
-.box.loading{
+.box.loading {
 	opacity: 0;
 }
 
-.box .header{
+.box .header {
 	height: 32px;
 	margin-bottom: 10px;
 }
 
-.box .messagecontainer{
+.box .messagecontainer {
 	width: 100%;
 	display: block;
 	margin-bottom: 20px;
 }
+.box .messagecontainer div {
+	display: inline-block;
+	word-wrap: break-word;
+	word-break: break-all;
+	vertical-align: top;
+}
+.box .messagecontainer div.username {
+	width: 100px;
+}
+.box .messagecontainer div.type {
+	width: 120px;
+}
+.box .messagecontainer div.filename {
+	width: 240px;
+}
+.box .messagecontainer div.os {
+	width: 120px;
+}
+.box .messagecontainer div.device {
+	width: 120px;
+}
+.box .messagecontainer div.browser {
+	width: 120px;
+}
+.box .messagecontainer div.userip {
+	width: 120px;
+}
+.box .messagecontainer div.time {
+	width: 120px;
+}
 
-.box .preview{
+.box .preview {
 	display: block;
 	width: 50px;
 	height: 50px;
 	margin-left: 24px;
 }
 
-.box .preview-dir-icon{
+.box .preview-dir-icon {
 	width: 32px;
 	height: 32px;
 }
 
-.box .user{
+.box .user {
 	white-space: nowrap;
 	overflow: hidden;
 	text-overflow: ellipsis;
@@ -125,13 +158,13 @@
 	width: 180px;
 }
 
-.box .user{
+.box .user {
 	font-weight: bold;
 }
 
 .box .activitytime {
 	float: right;
-	color:#666;
+	color: #666;
 	font-size: 0.8em;
 }
 
@@ -141,11 +174,11 @@
 	font-size: 0.8em;
 }
 
-.box .grouped{
+.box .grouped {
 	list-style: none;
 }
 
-.box .grouped .more{
+.box .grouped .more {
 	cursor: default;
 	color: #666;
 }
@@ -169,20 +202,21 @@
 	vertical-align: top;
 	margin-top: 2px;
 }
+
 .icon-add-color {
 	background-image: url('../img/add-color.svg');
 }
+
 .icon-change {
 	background-image: url('../img/change.svg');
 }
+
 .icon-delete-color {
 	background-image: url('../img/delete-color.svg');
 }
 /* grey the changed and shared icons so they are less intense */
-.icon-change,
-.icon-share,
-.icon-public {
+.icon-change, .icon-share, .icon-public {
 	-ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=50)";
-	filter: alpha(opacity=50);
+	filter: alpha(opacity = 50);
 	opacity: .5;
 }

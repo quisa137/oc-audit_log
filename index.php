@@ -30,15 +30,18 @@
 \OCP\App::setActiveNavigationEntry('audit_log');
 
 // load the needed js scripts and css
-\OCP\Util::addScript('audit_log', 'script');
 \OCP\Util::addStyle('audit_log', 'style');
+\OCP\Util::addScript('audit_log', 'script');
+
+\OCP\Util::addScript('audit_log', '../3rdparty/bootstrap/dist/js/bootstrap.min');
+\OCP\Util::addStyle('audit_log', '../3rdparty/bootstrap/dist/css/bootstrap.min');
 
 $navigation = new \OCA\Audit_log\Navigation(\OCP\Util::getL10N('audit_log'), \OC::$server->getActivityManager(), \OC::$server->getURLGenerator());
 $navigation->setRSSToken(\OCP\Config::getUserValue(\OCP\User::getUser(), 'audit_log', 'rsstoken'));
 
 // get the page that is requested. Needed for endless scrolling
 $data = new \OCA\Audit_log\Data(
-	\OC::$server->getAudit_logManager()
+	\OC::$server->getActivityManager()
 );
 $page = $data->getPageFromParam() - 1;
 $filter = $data->getFilterFromParam();

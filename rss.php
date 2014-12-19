@@ -20,67 +20,59 @@
  * License along with this library.  If not, see <http://www.gnu.org/licenses/>.
  *
  */
-
-\OCP\App::checkAppEnabled('audit_log');
+\OCP\App::checkAppEnabled ( 'audit_log' );
 
 $forceUserLogout = false;
-if (!\OCP\User::isLoggedIn()) {
-	if (!isset($_GET['token']) || strlen($_GET['token']) !== 30) {
-		// Token missing or invalid
-		header('HTTP/1.0 404 Not Found');
-		exit;
-	}
+if (! \OCP\User::isLoggedIn ()) {
+ if (! isset ( $_GET ['token'] ) ||
+   strlen ( $_GET ['token'] ) !== 30) {
+  // Token missing or invalid
+  header ( 'HTTP/1.0 404 Not Found' );
+  exit ();
+ }
 
-	$preferences = new \OC\Preferences(\OC_DB::getConnection());
-	$users = $preferences->getUsersForValue('audit_log', 'rsstoken', $_GET['token']);
+ $preferences = new \OC\Preferences ( \OC_DB::getConnection () );
+ $users = $preferences->getUsersForValue ( 'audit_log', 'rsstoken', $_GET ['token'] );
 
-	if (sizeof($users) !== 1) {
-		// User not found
-		header('HTTP/1.0 404 Not Found');
-		exit;
-	}
+ if (sizeof ( $users ) !==
+   1) {
+  // User not found
+  header ( 'HTTP/1.0 404 Not Found' );
+  exit ();
+ }
 
-	// Token found login as that user
-	\OC_User::setUserId(array_shift($users));
-	$forceUserLogout = true;
+ // Token found login as that user
+ \OC_User::setUserId ( array_shift ( $users ) );
+ $forceUserLogout = true;
 }
 
 // check if the user has the right permissions.
-\OCP\User::checkLoggedIn();
+\OCP\User::checkLoggedIn ();
 
 // rss is of content type text/xml
-if (isset($_SERVER['HTTP_ACCEPT']) && stristr($_SERVER['HTTP_ACCEPT'], 'application/rss+xml')) {
-	header('Content-Type: application/rss+xml');
+if (isset ( $_SERVER ['HTTP_ACCEPT'] ) &&
+  stristr ( $_SERVER ['HTTP_ACCEPT'], 'application/rss+xml' )) {
+ header ( 'Content-Type: application/rss+xml' );
 } else {
-	header('Content-Type: text/xml; charset=UTF-8');
+ header ( 'Content-Type: text/xml; charset=UTF-8' );
 }
 
 // generate and show the rss feed
-$l = \OCP\Util::getL10N('audit_log');
-$data = new \OCA\Activity\Data(\OC::$server->getActivityManager());
-$groupHelper = new \OCA\Activity\GroupHelper(
-	\OC::$server->getActivityManager(),
-	new \OCA\Activity\DataHelper(
-		\OC::$server->getActivityManager(),
-		new \OCA\Activity\ParameterHelper(new \OC\Files\View(''), $l),
-		$l
-	),
-	false
-);
+$l = \OCP\Util::getL10N ( 'audit_log' );
+$data = new \OCA\Audit_log\Data ( \OC::$server->getActivityManager () );
+$groupHelper = new \OCA\Audit_log\GroupHelper ( \OC::$server->getActivityManager (), new \OCA\Audit_log\DataHelper ( \OC::$server->getActivityManager (), new \OCA\Audit_log\ParameterHelper ( new \OC\Files\View ( '' ), $l ), $l ), false );
 
-$tmpl = new \OCP\Template('audit_log', 'rss');
+$tmpl = new \OCP\Template ( 'audit_log', 'rss' );
 
-$tmpl->assign('rssLang', \OC_Preferences::getValue(\OCP\User::getUser(), 'core', 'lang'));
-$tmpl->assign('rssLink', \OC::$server->getURLGenerator()->getAbsoluteURL(
-	\OC::$server->getURLGenerator()->linkToRoute('activity.rss')
-));
-$tmpl->assign('rssPubDate', date('r'));
-$tmpl->assign('user', \OCP\User::getUser());
+$tmpl->assign ( 'rssLang', \OC_Preferences::getValue ( \OCP\User::getUser (), 'core', 'lang' ) );
+$tmpl->assign ( 'rssLink', \OC::$server->getURLGenerator ()->getAbsoluteURL ( \OC::$server->getURLGenerator ()->linkToRoute ( 'activity.rss' ) ) );
+$tmpl->assign ( 'rssPubDate', date ( 'r' ) );
+$tmpl->assign ( 'user', \OCP\User::getUser () );
 
-$tmpl->assign('activities', $data->read($groupHelper, 0, 30, 'all'));
+$tmpl->assign ( 'activities', $data->read ( $groupHelper, 0, 30, 'all' ) );
 
-$tmpl->printPage();
+$tmpl->printPage ();
 
 if ($forceUserLogout) {
-	\OCP\User::logout();
+ \OCP\User::logout ();
 }

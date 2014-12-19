@@ -21,23 +21,32 @@
  *
  */
 
-/** @var $l OC_L10N */
-/** @var $theme OC_Defaults */
-/** @var $_ array */
+/**
+ * @var $l OC_L10N
+ */
+/**
+ * @var $theme OC_Defaults
+ */
+/**
+ * @var $_ array
+ */
 ?>
 <?php $_['appNavigation']->printPage(); ?>
 
 <div id="app-content">
+	<div id="audit_log_search" class="hidden">
+		<form class="searchbox">
+			<input type="search" name="query" autocomplete="off" class="svg">
+		</form>
+	</div>
 	<div id="no_activities" class="hidden">
 		<div class="body"><?php p($l->t('You will see a list of events here when you start to use your %s.', $theme->getTitle())) ?></div>
 	</div>
-
 	<div id="container" data-activity-filter="<?php p($_['filter']) ?>">
 	</div>
-
 	<div id="loading_activities" class="icon-loading"></div>
 
 	<div id="no_more_activities" class="hidden">
-		<?php p($l->t('No more events to load')) ?>
+		<?php p($l->t('No more events to load'))?>
 	</div>
 </div>

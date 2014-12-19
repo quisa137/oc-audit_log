@@ -1,7 +1,6 @@
 <?php
-
 /**
- * ownCloud - Audit_log App
+ * ownCloud - Activity App
  *
  * @author Frank Karlitschek
  * @copyright 2013 Frank Karlitschek frank@owncloud.org
@@ -27,34 +26,50 @@
 
 $lastDate = null;
 foreach ($_['audit_log'] as $event) {
-	// group by date
-	// TODO: use more efficient way to group by date (don't group by localized string...)
-	$currentDate = (string)(\OCP\relative_modified_date($event['timestamp'], true));
-
-	// new date group
-	if ($currentDate !== $lastDate) {
-		// not first date group ?
-		if ($lastDate !== null) {
-?>
-	</div>
-</div>
-
+ $currentDate = (string)(\OCP\relative_modified_date($event['timestamp'], true));
+ if ($currentDate !== $lastDate) {
+  if($lastDate !== null) {
+  ?>
+  	</tbody>
+  	</table>
+  	</div>
+  <?php 
+  } 
+  $lastDate = $currentDate;
+  ?>
+	<h2 class="h2"><?php p(ucfirst($currentDate))?></h2>
+	<div class="table-responsive">
+	<table class="table tb">
+	<thead>
+	<tr>
+		<th><?php p($l->t('user'))?></th>
+		<th><?php p($l->t('type'))?></th>
+		<th><?php p($l->t('filename'))?></th>
+		<th><?php p($l->t('os'))?></th>
+		<th><?php p($l->t('device'))?></th>
+		<th><?php p($l->t('browser'))?></th>
+		<th><?php p($l->t('userip'))?></th>
+		<th><?php p($l->t('time'))?></th>
+	</tr>
+	</thead>
+	<colgroup>
+		<col class='username col-sm-1'/>
+		<col class='type  col-sm-2'/>
+		<col class='filename  col-sm-4'/>
+		<col class='os  col-sm-2'/>
+		<col class='device  col-sm-1'/>
+		<col class='browser col-sm-1'/>
+		<col class='userip col-sm-1'/>
+		<col class="time  col-sm-2"/>
+	</colgroup>
+	<tbody>
 <?php
-		}
-		$lastDate = $currentDate;
-?>
-<div class="section activity-section group" data-date="<?php p($currentDate) ?>">
-	<h2>
-		<span class="tooltip" title="<?php p(\OCP\Util::formatDate(strip_time($event['timestamp']), true)) ?>">
-			<?php p(ucfirst($currentDate)) ?>
-		</span>
-	</h2>
-	<div class="boxcontainer">
-<?php
-	}
-	echo \OCA\Audit_log\Display::show($event);
+ }
+ echo \OCA\Audit_log\Display::show($event);
 }
-if (!empty($_['audit_log'])): ?>
-	</div>
+if (!empty($_['activity'])):
+?>
+</tbody>
+</table>
 </div>
 <?php endif;

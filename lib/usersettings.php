@@ -120,7 +120,7 @@ class UserSettings
 	 */
 	public static function getNotificationTypes($user, $method) {
 		$l = \OC_L10N::get('audit_log');
-		$data = new Data(\OC::$server->getAudit_logManager());
+		$data = new Data(\OC::$server->getActivityManager());
 		$types = $data->getNotificationTypes($l);
 
 		$notificationTypes = array();

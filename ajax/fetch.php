@@ -26,22 +26,21 @@
 \OCP\JSON::checkAppEnabled('audit_log');
 
 $l = \OCP\Util::getL10N('audit_log');
-$data = new \OCA\Audit_log\Data(\OC::$server->getAudit_logManager());
+$data = new \OCA\Audit_log\Data(\OC::$server->getActivityManager());
 $groupHelper = new \OCA\Audit_log\GroupHelper(
-	\OC::$server->getAudit_logManager(),
-	new \OCA\Audit_log\DataHelper(
-		\OC::$server->getAudit_logManager(),
-		new \OCA\Audit_log\ParameterHelper(new \OC\Files\View(''), $l),
-		$l
-	),
-	true
+	\OC::$server->getActivityManager(),
+	new \OCA\Audit_log\DataHelper(\OC::$server->getActivityManager(),
+		new \OCA\Audit_log\ParameterHelper(
+			new \OC\Files\View(''), $l
+		), $l
+	), true
 );
 
 $page = $data->getPageFromParam() - 1;
 $filter = $data->getFilterFromParam();
 
 // Read the next 30 items for the endless scrolling
-$count = 30;
+$count = 500;
 $activity = $data->read($groupHelper, $page * $count, $count, $filter);
 
 // show the next 30 entries

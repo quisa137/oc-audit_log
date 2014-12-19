@@ -77,20 +77,32 @@
 				<length>255</length>
 			</field>
 			<field>
-				<name>link</name>
+				<name>userip</name>
+				<type>integer</type>
+				<notnull>false</notnull>
+				<unsigned>true</unsigned>
+				<length>4</length>
+			</field>
+			<field>
+				<name>device</name>
 				<type>text</type>
 				<notnull>false</notnull>
 				<length>255</length>
 			</field>
 			<field>
-				<name>userip</name>
+				<name>os</name>
 				<type>text</type>
 				<notnull>false</notnull>
-				<length>55</length>
+				<length>255</length>
 			</field>
-
+			<field>
+				<name>browser</name>
+				<type>text</type>
+				<notnull>false</notnull>
+				<length>255</length>
+			</field>
 			<index>
-				<name>adudit_log_user_time</name>
+				<name>audit_log_user_time</name>
 				<field>
 					<name>affecteduser</name>
 				</field>
@@ -121,6 +133,19 @@
 				</field>
 				<field>
 					<name>app</name>
+				</field>
+				<field>
+					<name>timestamp</name>
+					<sorting>descending</sorting>
+				</field>
+			</index>
+			<index>
+				<name>audit_log_filter_userip</name>
+				<field>
+					<name>affecteduser</name>
+				</field>
+				<field>
+					<name>userip</name>
 				</field>
 				<field>
 					<name>timestamp</name>

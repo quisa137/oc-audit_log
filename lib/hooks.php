@@ -39,7 +39,7 @@ class Hooks {
 		\OCP\Util::connectHook('\OCA\Files_Trashbin\Trashbin', 'post_restore', 'OCA\Audit_log\Hooks', 'fileRestore');
 		\OCP\Util::connectHook('OCP\Share', 'post_shared', 'OCA\Audit_log\Hooks', 'share');
 
-		\OCP\Util::connectHook('OC_User', 'post_deleteUser', 'OCA\Audit_log\Hooks', 'deleteUser');
+		//\OCP\Util::connectHook('OC_User', 'post_deleteUser', 'OCA\Audit_log\Hooks', 'deleteUser');
 
 		// hooking up the activity manager
 		$am = \OC::$server->getActivityManager();
@@ -54,7 +54,7 @@ class Hooks {
 	 */
 	public static function fileCreate($params) {
 		if (\OCP\User::getUser() !== false) {
-			self::addNotificationsForFileAction($params['path'], Data::TYPE_SHARE_CREATED, 'created_self', 'created_by');
+			self::addNotificationsForFileAction($params['path'], Data::TYPE_SHARE_CREATED, 'created');
 		} else {
 			self::addNotificationsForFileAction($params['path'], Data::TYPE_SHARE_CREATED, '', 'created_public');
 		}
@@ -65,7 +65,7 @@ class Hooks {
 	 * @param array $params The hook params
 	 */
 	public static function fileUpdate($params) {
-		self::addNotificationsForFileAction($params['path'], Data::TYPE_SHARE_CHANGED, 'changed_self', 'changed_by');
+		self::addNotificationsForFileAction($params['path'], Data::TYPE_SHARE_CHANGED, 'changed');
 	}
 
 	/**
@@ -73,7 +73,7 @@ class Hooks {
 	 * @param array $params The hook params
 	 */
 	public static function fileRead($params) {
-		self::addNotificationsForFileAction($params['path'], Data::TYPE_SHARE_DOWNLOADED, 'download_self', 'download_by');
+		self::addNotificationsForFileAction($params['path'], Data::TYPE_SHARE_DOWNLOADED, 'download');
 	}
 
 	/**
@@ -81,7 +81,7 @@ class Hooks {
 	 * @param array $params The hook params
 	 */
 	public static function fileDelete($params) {
-		self::addNotificationsForFileAction($params['path'], Data::TYPE_SHARE_DELETED, 'deleted_self', 'deleted_by');
+		self::addNotificationsForFileAction($params['path'], Data::TYPE_SHARE_DELETED, 'deleted');
 	}
 
 	/**
@@ -89,7 +89,7 @@ class Hooks {
 	 * @param array $params The hook params
 	 */
 	public static function fileRestore($params) {
-		self::addNotificationsForFileAction($params['filePath'], Data::TYPE_SHARE_RESTORED, 'restored_self', 'restored_by');
+		self::addNotificationsForFileAction($params['filePath'], Data::TYPE_SHARE_RESTORED, 'restored');
 	}
 
 	/**
@@ -100,51 +100,25 @@ class Hooks {
 	 * @param string $subject          The subject for the actor
 	 * @param string $subjectBy        The subject for other users (with "by $actor")
 	 */
-	public static function addNotificationsForFileAction($filePath, $activityType, $subject, $subjectBy) {
+	public static function addNotificationsForFileAction($filePath, $activityType, $subject) {
 		// Do not add activities for .part-files
 		if (substr($filePath, -5) === '.part') {
 			return;
 		}
 
 		$affectedUsers = self::getUserPathsFromPath($filePath);
-		$filteredStreamUsers = UserSettings::filterUsersBySetting(array_keys($affectedUsers), 'stream', $activityType);
-		$filteredEmailUsers = UserSettings::filterUsersBySetting(array_keys($affectedUsers), 'email', $activityType);
 
 		foreach ($affectedUsers as $user => $path) {
 // SGCOM MODIFIED :: 원래 세팅을 해야 데이터가 쌓이는 구조 였지만
 //  감사자료를 남기기 위해 무조건 데이터는 쌓게 하였다.
-// 			if (empty($filteredStreamUsers[$user]) && empty($filteredEmailUsers[$user])) {
-// 				continue;
-// 			}
 
-			if ($user === \OCP\User::getUser()) {
-				if (!UserSettings::getUserSetting(\OCP\User::getUser(), 'setting', 'self')) {
-					continue;
-				}
+			$userSubject = $subject;
+			$userParams = array($path, \OCP\User::getUser());
 
-				$userSubject = $subject;
-				$userParams = array($path);
-			} else {
-				$userSubject = $subjectBy;
-				$userParams = array($path, \OCP\User::getUser());
-			}
-
-// SGCOM MODIFIED :: 원래 세팅을 해야 데이터가 쌓이는 구조 였지만
-//  감사자료를 남기기 위해 무조건 데이터는 쌓게 하였다.
-// 			self::addNotificationsForUser(
-// 				$user, $userSubject, $userParams,
-// 				$path, true,
-// 				!empty($filteredStreamUsers[$user]),
-// 				!empty($filteredEmailUsers[$user]) ? $filteredEmailUsers[$user] : 0,
-// 				$activityType, Data::PRIORITY_HIGH
-// 			);
 			self::addNotificationsForUser(
 					$user, $userSubject, $userParams,
-					$path, true, true,
-					!empty($filteredEmailUsers[$user]) ? $filteredEmailUsers[$user] : 0,
-					$activityType
+					$path, $activityType
 			);
-
 		}
 	}
 
@@ -181,109 +155,18 @@ class Hooks {
 	/**
 	 * @brief Manage sharing events
 	 * @param array $params The hook params
+	 * 앱에서 설정된 시간에 메일을 보내도록 해야함
 	 */
 	public static function share($params) {
-		if ($params['itemType'] === 'file' || $params['itemType'] === 'folder') {
-			if ($params['shareWith']) {
-				if ($params['shareType'] == \OCP\Share::SHARE_TYPE_USER) {
-					self::shareFileOrFolderWithUser($params);
-				} else if ($params['shareType'] == \OCP\Share::SHARE_TYPE_GROUP) {
-					self::shareFileOrFolderWithGroup($params);
-				}
-			} else {
-				self::shareFileOrFolder($params);
-			}
-		}
-	}
-
-	/**
-	 * @brief Sharing a file or folder with a user
-	 * @param array $params The hook params
-	 */
-	public static function shareFileOrFolderWithUser($params) {
-		// User performing the share
-		self::shareNotificationForSharer('shared_user_self', $params['shareWith'], $params['fileSource'], $params['itemType']);
-
-		// New shared user
-		$path = $params['fileTarget'];
-		self::addNotificationsForUser(
-			$params['shareWith'], 'shared_with_by', array($path, \OCP\User::getUser()),
-			$path, ($params['itemType'] === 'file'),
-			UserSettings::getUserSetting($params['shareWith'], 'stream', Data::TYPE_SHARED),
-			UserSettings::getUserSetting($params['shareWith'], 'email', Data::TYPE_SHARED) ? UserSettings::getUserSetting($params['shareWith'], 'setting', 'batchtime') : 0
-		);
-	}
-
-	/**
-	 * @brief Sharing a file or folder with a group
-	 * @param array $params The hook params
-	 */
-	public static function shareFileOrFolderWithGroup($params) {
-		// User performing the share
-		self::shareNotificationForSharer('shared_group_self', $params['shareWith'], $params['fileSource'], $params['itemType']);
-
-		// Members of the new group
-		$affectedUsers = array();
-		$usersInGroup = \OC_Group::usersInGroup($params['shareWith']);
-		foreach ($usersInGroup as $user) {
-			$affectedUsers[$user] = $params['fileTarget'];
-		}
-
-		// Remove the triggering user, we already managed his notifications
-		unset($affectedUsers[\OCP\User::getUser()]);
-
-		if (empty($affectedUsers)) {
-			return;
-		}
-
-		$filteredStreamUsersInGroup = UserSettings::filterUsersBySetting($usersInGroup, 'stream', Data::TYPE_SHARED);
-		$filteredEmailUsersInGroup = UserSettings::filterUsersBySetting($usersInGroup, 'email', Data::TYPE_SHARED);
-
-		// Check when there was a naming conflict and the target is different
-		// for some of the users
-		$query = \OCP\DB::prepare('SELECT `share_with`, `file_target` FROM `*PREFIX*share` WHERE `parent` = ? ');
-		$result = $query->execute(array($params['id']));
-		if (\OCP\DB::isError($result)) {
-			\OCP\Util::writeLog('OCA\Audit_log\Hooks::shareFileOrFolderWithGroup', \OCP\DB::getErrorMessage($result), \OCP\Util::ERROR);
+		if ($params['shareWith']) {
+			$file_path = \OC\Files\Filesystem::getPath($params['fileSource']);
+			$subject = ($params['shareType'] == \OCP\Share::SHARE_TYPE_USER) ? 'shared_user' : 'shared_group' ;
+			self::addNotificationsForUser(
+				$params['uidOwner'], $subject, array($file_path, $params['shareWith'], $params['uidOwner']),
+				$file_path, Data::TYPE_SHARED
+			);
 		} else {
-			while ($row = $result->fetchRow()) {
-				$affectedUsers[$row['share_with']] = $row['file_target'];
-			}
-		}
-
-		foreach ($affectedUsers as $user => $path) {
-			if (empty($filteredStreamUsersInGroup[$user]) && empty($filteredEmailUsersInGroup[$user])) {
-				continue;
-			}
-
-			self::addNotificationsForUser(
-				$user, 'shared_with_by', array($path, \OCP\User::getUser()),
-				$path, ($params['itemType'] === 'file'),
-				!empty($filteredStreamUsersInGroup[$user]),
-				!empty($filteredEmailUsersInGroup[$user]) ? $filteredEmailUsersInGroup[$user] : 0
-			);
-		}
-	}
-
-	/**
-	 * Add notifications for the user that shares a file/folder
-	 *
-	 * @param string $subject
-	 * @param string $shareWith
-	 * @param int $fileSource
-	 * @param string $itemType
-	 */
-	public static function shareNotificationForSharer($subject, $shareWith, $fileSource, $itemType) {
-		// User performing the share
-		if (UserSettings::getUserSetting(\OCP\User::getUser(), 'setting', 'self')) {
-			$file_path = \OC\Files\Filesystem::getPath($fileSource);
-
-			self::addNotificationsForUser(
-				\OCP\User::getUser(), $subject, array($file_path, $shareWith),
-				$file_path, ($itemType === 'file'),
-				UserSettings::getUserSetting(\OCP\User::getUser(), 'stream', Data::TYPE_SHARED),
-				UserSettings::getUserSetting(\OCP\User::getUser(), 'email', Data::TYPE_SHARED) ? UserSettings::getUserSetting(\OCP\User::getUser(), 'setting', 'batchtime') : 0
-			);
+			self::shareFileOrFolder($params);
 		}
 	}
 
@@ -299,21 +182,15 @@ class Hooks {
 	 * @param int $emailSetting
 	 * @param string $type
 	 */
-	protected static function addNotificationsForUser($user, $subject, $subjectParams, $path, $isFile, $streamSetting, $emailSetting, $type = Data::TYPE_SHARED) {
-		$link = \OCP\Util::linkToAbsolute('files', 'index.php', array(
-			'dir' => ($isFile) ? dirname($path) : $path,
-		));
+	protected static function addNotificationsForUser($user, $subject, $subjectParams, $path, $type = Data::TYPE_SHARED) {
 
-		// Add activity to stream
-		if ($streamSetting) {
-			Data::send('files', $subject, $subjectParams, '', array(), $path, $link, $user, $type);
-		}
+		Data::send('files', $subject, $subjectParams, '', array(), $path, $user, $type);
 
 		// Add activity to mail queue
-		if ($emailSetting) {
-			$latestSend = time() + $emailSetting;
-			Data::storeMail('files', $subject, $subjectParams, $user, $type, $latestSend);
-		}
+		// if ($emailSetting) {
+		// 	$latestSend = time() + $emailSetting;
+		// 	Data::storeMail('files', $subject, $subjectParams, $user, $type, $latestSend);
+		// }
 	}
 
 	/**
@@ -321,33 +198,11 @@ class Hooks {
 	 * @param array $params The hook params
 	 */
 	public static function shareFileOrFolder($params) {
-		if (UserSettings::getUserSetting(\OCP\User::getUser(), 'setting', 'self') &&
-			UserSettings::getUserSetting(\OCP\User::getUser(), 'stream', Data::TYPE_SHARED)) {
+		$path = \OC\Files\Filesystem::getPath($params['fileSource']);
+		$link = \OCP\Util::linkToAbsolute('files', 'index.php', array(
+			'dir' => ($params['itemType'] === 'file') ? dirname($path) : $path,
+		));
 
-			$path = \OC\Files\Filesystem::getPath($params['fileSource']);
-			$link = \OCP\Util::linkToAbsolute('files', 'index.php', array(
-				'dir' => ($params['itemType'] === 'file') ? dirname($path) : $path,
-			));
-
-			Data::send('files', 'shared_link_self', array($path), '', array(), $path, $link, \OCP\User::getUser(), Data::TYPE_SHARED);
-		}
-	}
-
-	/**
-	 * Delete remaining activities and emails when a user is deleted
-	 * @param array $params The hook params
-	 */
-	public static function deleteUser($params) {
-		// Delete activity entries
-		$data = new Data(
-			\OC::$server->getAudit_logManager()
-		);
-		$data->deleteActivities(array('affecteduser' => $params['uid']));
-
-		// Delete entries from mail queue
-		$query = \OCP\DB::prepare(
-			'DELETE FROM `*PREFIX*activity_mq` '
-			. ' WHERE `amq_affecteduser` = ?');
-		$query->execute(array($params['uid']));
+		Data::send('files', 'shared_link', array($path,\OCP\User::getUser()), '', array(), $path, \OCP\User::getUser(), Data::TYPE_SHARED);
 	}
 }

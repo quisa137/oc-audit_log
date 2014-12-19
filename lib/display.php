@@ -20,7 +20,6 @@
  * License along with this library.  If not, see <http://www.gnu.org/licenses/>.
  *
  */
-
 namespace OCA\Audit_log;
 
 /**
@@ -28,51 +27,68 @@ namespace OCA\Audit_log;
  *
  * @package OCA\Audit_log
  */
-class Display
-{
-	/**
-	 * Get the template for a specific activity-event in the activities
-	 *
-	 * @param array $activity An array with all the activity data in it
-	 * @param return string
-	 */
-	public static function show($activity) {
-		$tmpl = new \OCP\Template('audit_log', 'activity.box');
-		$tmpl->assign('formattedDate', \OCP\Util::formatDate($activity['timestamp']));
-		$tmpl->assign('formattedTimestamp', \OCP\relative_modified_date($activity['timestamp']));
-		$tmpl->assign('user', $activity['user']);
-		$tmpl->assign('displayName', \OCP\User::getDisplayName($activity['user']));
+class Display {
+ /**
+  * Get the template for a specific activity-event in the activities
+  *
+  * @param array $activity
+  *         An array with all the activity data in it
+  * @param
+  *         return string
+  */
+ public static function show($activity) {
+  $tmpl = new \OCP\Template('audit_log', 'activity.box');
+  $tmpl->assign(
+  	'formattedDate',
+  	\OCP\Util::formatDate($activity['timestamp'])
+  );
+  $tmpl->assign(
+  	'formattedTimestamp',
+  	\OCP\relative_modified_date($activity['timestamp'])
+  );
+  $tmpl->assign('user', $activity['user']);
+  $tmpl->assign('displayName', \OCP\User::getDisplayName($activity['user']));
 
-		if ($activity['app'] === 'files') {
-			// We do not link the subject as we create links for the parameters instead
-			$activity['link'] = '';
-		}
+  if ($activity['app'] === 'files') {
+   // We do not link the subject as we create links for the parameters instead
+   $activity['link'] = '';
+  }
 
-		$tmpl->assign('event', $activity);
+  $tmpl->assign('event', $activity);
 
-		if ($activity['file']) {
-			$rootView = new \OC\Files\View('');
-			$exist = $rootView->file_exists('/' . $activity['user'] . '/files' . $activity['file']);
-			$is_dir = $rootView->is_dir('/' . $activity['user'] . '/files' . $activity['file']);
-			unset($rootView);
+  if ($activity ['file']) {
+   $rootView = new \OC\Files\View('');
+   $exist = $rootView->file_exists('/' . $activity['user'] . '/files' . $activity['file']);
+   $is_dir = $rootView->is_dir('/' . $activity['user'] . '/files' . $activity['file']);
+   unset($rootView);
 
-			// show a preview image if the file still exists
-			if (!$is_dir && $exist) {
-				$tmpl->assign('previewLink', \OCP\Util::linkTo('files', 'index.php', array('dir' => dirname($activity['file']))));
-				$tmpl->assign('previewImageLink',
-					\OCP\Util::linkToRoute('core_ajax_preview', array(
-						'file' => $activity['file'],
-						'x' => 150,
-						'y' => 150,
-					))
-				);
-			} else if ($exist) {
-				$tmpl->assign('previewLink', \OCP\Util::linkTo('files', 'index.php', array('dir' => $activity['file'])));
-				$tmpl->assign('previewImageLink', \OC_Helper::mimetypeIcon('dir'));
-				$tmpl->assign('previewLinkIsDir', true);
-			}
-		}
+   // show a preview image if the file still exists
+   if (!$is_dir && $exist) {
+    $tmpl->assign(
+    	'previewLink',
+    	\OCP\Util::linkTo(
+    		'files', 'index.php', array('dir' => dirname($activity['file']))
+    	)
+    );
+    $tmpl->assign(
+    	'previewImageLink',
+    	\OCP\Util::linkToRoute(
+    		'core_ajax_preview',
+    		array('file' => $activity['file'],'x' => 150,'y' => 150)
+    	)
+    );
+   } else if ($exist) {
+    $tmpl->assign(
+    	'previewLink',
+    	\OCP\Util::linkTo(
+    		'files', 'index.php', array('dir' => $activity['file'])
+    	)
+    );
+    $tmpl->assign('previewImageLink', \OC_Helper::mimetypeIcon('dir'));
+    $tmpl->assign('previewLinkIsDir', true );
+   }
+  }
 
-		return $tmpl->fetchPage();
-	}
+  return $tmpl->fetchPage();
+ }
 }

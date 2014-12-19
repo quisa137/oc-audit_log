@@ -1,5 +1,4 @@
 <?php
-
 /**
  * ownCloud - Audit_log App
  *
@@ -20,19 +19,20 @@
  * License along with this library.  If not, see <http://www.gnu.org/licenses/>.
  *
  */
-
 $l = OC_L10N::get('audit_log');
 
-// add an navigation entry
-// OCP\App::addNavigationEntry(array(
-// 	'id' => 'audit_log',
-// 	'order' => 1,
-// 	'href' => OCP\Util::linkToRoute('activity.index'),
-// 	'icon' => OCP\Util::imagePath('audit_log', 'activity.svg'),
-// 	'name' => $l->t('Audit_log'),
-// ));
+if(\OC_User::isAdminUser(\OC_User::getUser())) {
+ // TODO : 현재는 관리자일때만 보이기, 지정한 사용자 일 때만, 보이기
+ OCP\App::addNavigationEntry(array(
+  'id' => 'audit_log',
+  'href' => OCP\Util::linkToRoute('audit_log.index'),
+  'icon' => OCP\Util::imagePath('audit_log', 'audit_log.svg'),
+  'name' => $l->t('Audit_log')
+ ));
+}
 
-// register the hooks for filesystem operations. All other events from other apps has to be send via the public api
+// register the hooks for filesystem operations. All other events from other
+// apps has to be send via the public api
 OCA\Audit_log\Hooks::register();
 
 // Admin settings for notifications and emails

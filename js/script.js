@@ -99,10 +99,10 @@ $(function(){
 
 				// Move content into the last box
 				OCAudit_log.InfinitScrolling.processElements(appendedBoxes);
-				lastBoxContainer.append(appendedBoxes);
+				//lastBoxContainer.append(appendedBoxes);
 
 				// Remove the first box, so it's not duplicated
-				content = $(content).slice(1);
+				//content = $(content).slice(1);
 			} else {
 				content = $(content);
 			}
@@ -116,11 +116,13 @@ $(function(){
 				var element = $(this);
 				element.avatar(element.data('user'), 28);
 			});
-
+			/*
 			$(parentElement).find('.tooltip').tipsy({
 				gravity:	's',
 				fade:		true
 			});
+			*/
+			$(parentElement).find('[data-toggle="tooltip"]').tooltip();
 		}
 	};
 
@@ -131,20 +133,4 @@ $(function(){
 		OCAudit_log.Filter.setFilter($(this).attr('data-navigation'));
 		event.preventDefault();
 	});
-
-	$('#enable_rss').change(function () {
-		if (this.checked) {
-			$('#rssurl').removeClass('hidden');
-		} else {
-			$('#rssurl').addClass('hidden');
-		}
-		$.post(OC.filePath('audit_log', 'ajax', 'rssfeed.php'), 'enable=' + this.checked, function(data) {
-			$('#rssurl').val(data.data.rsslink);
-		});
-	});
-
-	$('#rssurl').on('click', function () {
-		$('#rssurl').select();
-	});
 });
-
