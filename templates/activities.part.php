@@ -49,17 +49,19 @@ foreach ($_['audit_log'] as $event) {
 		<th><?php p($l->t('device'))?></th>
 		<th><?php p($l->t('browser'))?></th>
 		<th><?php p($l->t('userip'))?></th>
+		<th><?php p($l->t('checksum'))?></th>
 		<th><?php p($l->t('time'))?></th>
 	</tr>
 	</thead>
 	<colgroup>
 		<col class='username col-sm-1'/>
-		<col class='type  col-sm-2'/>
-		<col class='filename  col-sm-4'/>
-		<col class='os  col-sm-2'/>
+		<col class='type  col-sm-1'/>
+		<col class='filename  col-sm-3'/>
+		<col class='os  col-sm-1'/>
 		<col class='device  col-sm-1'/>
 		<col class='browser col-sm-1'/>
 		<col class='userip col-sm-1'/>
+		<col class='checksum col-sm-1'/>
 		<col class="time  col-sm-2"/>
 	</colgroup>
 	<tbody>

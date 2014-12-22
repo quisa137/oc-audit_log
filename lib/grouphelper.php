@@ -172,7 +172,8 @@ class GroupHelper {
    $activity = $this->dataHelper->formatStrings($activity, 'subject');
    $activity = $this->dataHelper->formatStrings($activity, 'message');
 
-   $activity['typeicon'] = $this->dataHelper->getTypeIcon ($activity['type']);
+   $activity['typeicon'] = $this->dataHelper->getTypeIcon($activity['type']);
+   $activity['username'] = \OC_User::getDisplayName($activity['user']);
    $return[] = $activity;
   }
 

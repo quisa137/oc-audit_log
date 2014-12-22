@@ -39,14 +39,21 @@
 			<input type="search" name="query" autocomplete="off" class="svg">
 		</form>
 	</div>
-	<div id="no_activities" class="hidden">
-		<div class="body"><?php p($l->t('You will see a list of events here when you start to use your %s.', $theme->getTitle())) ?></div>
-	</div>
-	<div id="container" data-activity-filter="<?php p($_['filter']) ?>">
-	</div>
-	<div id="loading_activities" class="icon-loading"></div>
-
-	<div id="no_more_activities" class="hidden">
-		<?php p($l->t('No more events to load'))?>
+	<div role="tabpanel">
+	  <!-- Nav tabs -->
+	  <ul class="nav nav-tabs" role="tablist">
+	    <li role="presentation" class="active"><a href="#grouped" aria-controls="container" role="tab" data-toggle="tab"><?php p($l->t('GROUPED'))?></a></li>
+	    <li role="presentation"><a href="#raw" aria-controls="container" role="tab" data-toggle="tab"><?php p($l->t('RAW'))?></a></li>
+	    <li role="presentation"><a href="#search" aria-controls="search" role="tab" data-toggle="tab"><?php p($l->t('Search'))?></a></li>
+	  </ul>
+	  <!-- Tab panes -->
+	  <div class="tab-content">
+		<div id="no_activities" class="hidden">
+			<div class="body"><?php p($l->t('You will see a list of events here when you start to use your %s.', $theme->getTitle())) ?></div>
+		</div>
+		<div role="tabpanel" class="tab-pane active" id="container" data-activity-filter="all" data-activity-grouping="grouped"></div>
+		<div id="loading_activities" class="icon-loading"></div>
+		<div id="no_more_activities" class="hidden"><?php p($l->t('No more events to load'))?></div>
+	  </div>
 	</div>
 </div>

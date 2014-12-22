@@ -101,6 +101,18 @@
 				<notnull>false</notnull>
 				<length>255</length>
 			</field>
+			<field>
+				<name>useragent</name>
+				<type>text</type>
+				<notnull>false</notnull>
+				<length>255</length>
+			</field>
+			<field>
+				<name>checksum</name>
+				<type>text</type>
+				<notnull>false</notnull>
+				<length>255</length>
+			</field>
 			<index>
 				<name>audit_log_user_time</name>
 				<field>

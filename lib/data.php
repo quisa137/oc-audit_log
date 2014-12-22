@@ -124,27 +124,28 @@ class Data {
   $timestamp = time ();
   $user = User::getUser ();
 
-  if ($affecteduser ===
-    '') {
-   $auser = $user;
+  if ($affecteduser === '') {
+	$auser = $user;
   } else {
    $auser = $affecteduser;
   }
 
   // store in DB
-  $query = DB::prepare ( 'INSERT INTO `*PREFIX*audit_log`(`app`, `subject`, `subjectparams`, `message`, `messageparams`, `file`, `user`, `affecteduser`, `timestamp`, `type`, `userip`, `device`, `os`, `browser`, `userAgent`)' .
-    ' VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, inet_aton(?), ?, ?, ?, ? )' );
+  $query = DB::prepare ( 'INSERT INTO `*PREFIX*audit_log`(`app`, `subject`, `subjectparams`, `message`, `messageparams`, `file`, `user`, `affecteduser`, `timestamp`, `type`, `userip`, `device`, `os`, `browser`, `userAgent`, `checksum`)' .
+    ' VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, inet_aton(?), ?, ?, ?, ?, ?)' );
   $dh = new DataHelper();
   $userInfo = $dh->parseUserAgent();
-  $query->execute ( array (
-   $app,$subject,serialize ( $subjectparams ),$message,serialize ( $messageparams ),$file,$user,$auser,$timestamp,$type,$userInfo['userip'],$userInfo['device'],$userInfo['os'],$userInfo['browser'],$userInfo['userAgent']));
+  $checksum = '';
+  if($type !== Data::TYPE_SHARE_DELETED){
+  	$checksum = $dh->getFileChecksum($file);
+  }
+  $query->execute(array($app,$subject,serialize($subjectparams),$message,serialize($messageparams),$file,$user,$auser,$timestamp,$type,$userInfo['userip'],$userInfo['device'],$userInfo['os'],$userInfo['browser'],$userInfo['userAgent'],$checksum));
 
   // fire a hook so that other apps like notification systems can connect
-  Util::emitHook ( 'OC_Audit_log', 'post_event', array (
+  Util::emitHook('OC_Audit_log', 'post_event', array(
    'app' => $app,'subject' => $subject,'user' => $user,
    'affecteduser' => $affecteduser,'message' => $message,'file' => $file,
-   'type' => $type
-  ) );
+   'type' => $type));
 
   return true;
  }
@@ -220,7 +221,7 @@ class Data {
   *         Filter the activities
   * @return array
   */
- public function read(GroupHelper $groupHelper, $start, $count, $filter = 'all') {
+ public function read(GroupHelper $groupHelper, $start, $count, $filter = 'all',$filterValue = '', $searchOption = array()) {
   // get current user
   $user = User::getUser ();
   $enabledNotifications = UserSettings::getNotificationTypes ( $user, 'stream' );
@@ -230,18 +231,64 @@ class Data {
   if (empty ( $enabledNotifications )) {
    return array();
   }
-
-  $parameters = array();
-  $limitActivities = " AND `type` IN ('" .
-    implode ( "','", $enabledNotifications ) . "')";
+  
+  $whereColumns = '';
+  $sqlWhereQueries = $parameters = array();
+  $limitActivities = " AND `type` IN ('" . implode ( "','", $enabledNotifications ) . "')";
+  
+  if(!empty($filter) && $filter !== 'all') {
+	  switch ($filter) {
+	  	case 'redZone':
+	  		break;
+	  	case 'fileHistory':
+	  		$sqlWhereQueries[] = ' AND checksum = ?';
+	  		break;
+	  	case 'userHistory':
+	  		$sqlWhereQueries[] = ' AND user = ?';
+	  		break;
+	  	case 'ipHistory':
+	  		$sqlWhereQueries[] = ' AND userIp = inet_aton(?)';
+	  		break;
+	  	default:
+	  		break;
+	  }
+	  $parameters[] = $filterValue;
+  }
+  
+  if(!empty($searchOption)) {
+  	foreach($searchOption as $k => $v) {
+  		switch ($k) {
+  			case 'stdDate':
+  				$sqlWhereQueries[] = ' AND unix_timestamp(?) <= timestamp';
+  				break;
+  			case 'endDdate':
+  				$sqlWhereQueries[] = ' AND timestamp <= unix_timestamp(?)';
+  				break;
+  			case 'fileName':
+  				$sqlWhereQueries[] = ' AND file like ? ';
+  				$v = '%'.$v;
+  				break;
+  			case 'userIp':
+  				$sqlWhereQueries[] = ' AND userip = inet_aton(?)';
+  				break;
+  			case 'userId':
+  				$sqlWhereQueries[] = ' AND user = ?';
+  				break;
+  			case 'userId':
+  				$sqlWhereQueries[] = ' AND user = ?';
+  				break;
+  		}
+  		$parameters[] = $v;
+  	}
+  }
 
   // fetch from DB
-  $query = DB::prepare ( 'SELECT *,inet_ntoa(userip) as userip ' .
-    ' FROM `*PREFIX*audit_log` WHERE 1=1 ' .
-    $limitActivities . ' ORDER BY `timestamp` DESC', $count, $start );
-  $result = $query->execute ( $parameters );
+  $query = DB::prepare('SELECT *,inet_ntoa(userip) as userip ' .
+    ' FROM `*PREFIX*audit_log` WHERE 1=1 ' . implode(' ', $sqlWhereQueries) .
+    $limitActivities . ' ORDER BY `timestamp` DESC', $count, $start);
+  $result = $query->execute($parameters);
 
-  return $this->getActivitiesFromQueryResult ( $result, $groupHelper );
+  return $this->getActivitiesFromQueryResult($result, $groupHelper);
  }
 
  /**
@@ -275,27 +322,54 @@ class Data {
 
   return 1;
  }
+ 
+ /**
+  * Get grouping from $_GET
+  * 
+  * @return boolean
+  */
+ public function getGroupingFromParam() {
+ 	if(!isset($_GET['grouping']))
+ 		return true;
+ 	$grouping = $_GET['grouping'];
+ 	return ($grouping=='t')?true:false;
+ }
 
+ /**
+  * Get the SearchOption from $_GET
+  *
+  * @return array
+  */
+ public function getSearchOptionFromParam($paramList) {
+	$result = array();
+	foreach($paramList as $param) {
+		$paramValue = $_GET[$param];
+		if(!empty($filterValue)) {
+			$result[$param] = $paramValue;
+		}
+	}
+	return $result;
+ }
  /**
   * Get the filter from $_GET
   *
-  * @return string
+  * @return array
   */
  public function getFilterFromParam() {
-  if (! isset ( $_GET ['filter'] ))
-   return 'all';
-
-  $filterValue = $_GET ['filter'];
-  switch ($filterValue) {
-   case 'redZone' :
-   case 'fileHistory' :
-    return $filterValue;
-   default :
-    if ($this->activityManager->isFilterValid ( $filterValue )) {
-     return $filterValue;
-    }
-    return 'all';
-  }
+ 	if (!isset($_GET['filter']))
+ 		return array();
+ 
+ 	$filterValue = $_GET['filter'];
+ 	switch ($filterValue) {
+ 		case 'redZone':
+ 		case 'fileHistory':
+ 			return $filterValue;
+ 		default:
+ 			if($this->activityManager->isFilterValid($filterValue)) {
+ 				return $filterValue;
+ 			}
+ 			return 'all';
+ 	}
  }
 
  /**
@@ -306,16 +380,10 @@ class Data {
   * @return null
   */
  public function expire($expireDays = 365) {
-  $ttl = (60 *
-    60 * 24 * max ( 1, $expireDays ));
+  $ttl = (60 * 60 * 24 * max(1, $expireDays));
 
-  $timelimit = time () -
-    $ttl;
-  $this->deleteActivities ( array (
-   'timestamp' => array (
-    $timelimit,'<'
-   )
-  ) );
+  $timelimit = time() - $ttl;
+  $this->deleteActivities(array('timestamp' => array($timelimit,'<')));
  }
 
  /**
@@ -331,19 +399,15 @@ class Data {
   $sqlWhere = '';
   $sqlParameters = $sqlWhereList = array ();
   foreach ( $conditions as $column => $comparison ) {
-   $sqlWhereList [] = " `$column` " .
-     ((is_array ( $comparison ) && isset ( $comparison [1] )) ? $comparison [1] : '=') .
-     ' ? ';
-   $sqlParameters [] = (is_array ( $comparison )) ? $comparison [0] : $comparison;
+   $sqlWhereList[] = " `$column` " . ((is_array ( $comparison ) && isset ( $comparison [1] )) ? $comparison [1] : '=') . ' ? ';
+   $sqlParameters[] = (is_array($comparison)) ? $comparison[0] : $comparison;
   }
 
-  if (! empty ( $sqlWhereList )) {
-   $sqlWhere = ' WHERE ' .
-     implode ( ' AND ', $sqlWhereList );
+  if (!empty($sqlWhereList)) {
+   $sqlWhere = ' WHERE ' . implode(' AND ', $sqlWhereList);
   }
 
-  $query = DB::prepare ( 'DELETE FROM `*PREFIX*activity`' .
-    $sqlWhere );
-  $query->execute ( $sqlParameters );
+  $query = DB::prepare('DELETE FROM `*PREFIX*activity`' . $sqlWhere);
+  $query->execute($sqlParameters);
  }
 }

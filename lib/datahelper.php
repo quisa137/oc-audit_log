@@ -135,13 +135,17 @@ class DataHelper {
  public function getTypeIcon($type) {
   switch ($type) {
    case Data::TYPE_SHARE_CHANGED :
-    return 'icon-change';
+    return 'glyphicon-refresh';
    case Data::TYPE_SHARE_CREATED :
-    return 'icon-add-color';
+    return 'glyphicon-cloud-upload';
+   case Data::TYPE_SHARE_DOWNLOADED :
+   	return 'glyphicon-cloud-download';
    case Data::TYPE_SHARE_DELETED :
-    return 'icon-delete-color';
+    return 'glyphicon-remove';
    case Data::TYPE_SHARED :
-    return 'icon-share';
+    return 'glyphicon-transfer';
+   case Data::TYPE_SHARE_RESTORED :
+   	return 'glyphicon-repeat';
   }
 
   // Allow other apps to add a icon for their notifications
@@ -205,5 +209,17 @@ public function parseUserAgent() {
     'userAgent' => $uaStr
  	);
  	return $result;
+ }
+ 
+ /**
+  * Get File checksum
+  */
+ public function getFileChecksum($filename) {
+ 	$absolutePath = \OC_User::getHome(\OC_User::getUser()) . '/files' . $filename;
+
+ 	if(file_exists($absolutePath)) {
+ 		return md5_file($absolutePath, false);
+ 	}
+ 	return '';
  }
 }

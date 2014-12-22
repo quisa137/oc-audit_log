@@ -44,7 +44,7 @@ $data = new \OCA\Audit_log\Data(
 	\OC::$server->getActivityManager()
 );
 $page = $data->getPageFromParam() - 1;
-$filter = $data->getFilterFromParam();
+$filter = $data->getFilterFromParam(array('stdDate', 'endDate', 'fileName', 'userIp', 'userId'));
 
 // show activity template
 $tmpl = new \OCP\Template('audit_log', 'list', 'user');
