@@ -36,6 +36,11 @@
 \OCP\Util::addScript('audit_log', '../3rdparty/bootstrap/dist/js/bootstrap.min');
 \OCP\Util::addStyle('audit_log', '../3rdparty/bootstrap/dist/css/bootstrap.min');
 
+\OCP\Util::addScript('audit_log', '../3rdparty/moment/moment');
+\OCP\Util::addScript('audit_log', '../3rdparty/moment/locale/ko');
+\OCP\Util::addScript('audit_log', '../3rdparty/bootstrap-daterangepicker/daterangepicker');
+\OCP\Util::addStyle('audit_log', '../3rdparty/bootstrap-daterangepicker/daterangepicker-bs3');
+
 $navigation = new \OCA\Audit_log\Navigation(\OCP\Util::getL10N('audit_log'), \OC::$server->getActivityManager(), \OC::$server->getURLGenerator());
 $navigation->setRSSToken(\OCP\Config::getUserValue(\OCP\User::getUser(), 'audit_log', 'rsstoken'));
 

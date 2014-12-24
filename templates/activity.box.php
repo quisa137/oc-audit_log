@@ -16,7 +16,7 @@
 	<tr>
 		<td><div class="username"><?php p($_['event']['username']) ?></div></td>
 		<td><div class="type"><span class="glyphicon <?php p($_['event']['typeicon'])?>" aria-hidden="true" title="<?php p($_['event']['type']) ?>"></span></div></td>
-		<td><div class="filename" data-toggle="tooltip" data-placement="auto" title="<?php p($_['event']['file']) ?>"><?php p($_['event']['file']) ?></div></td>
+		<td><div class="filename" data-toggle="tooltip" data-placement="auto" title="<?php p($_['event']['file']) ?>"><span><?php p($_['event']['file']) ?></span></div></td>
 		<td><div class="os"><?php p($_['event']['os']) ?></div></td>
 		<td><div class="device"><?php p($_['event']['device']) ?></div></td>
 		<td><div class="browser"><?php p($_['event']['browser']) ?></div></td>

@@ -54,15 +54,15 @@ foreach ($_['audit_log'] as $event) {
 	</tr>
 	</thead>
 	<colgroup>
-		<col class='username col-sm-1'/>
-		<col class='type  col-sm-1'/>
-		<col class='filename  col-sm-3'/>
-		<col class='os  col-sm-1'/>
-		<col class='device  col-sm-1'/>
-		<col class='browser col-sm-1'/>
-		<col class='userip col-sm-1'/>
-		<col class='checksum col-sm-1'/>
-		<col class="time  col-sm-2"/>
+		<col class='col-sm-username col-xs-username'/>
+		<col class='col-sm-type col-xs-type'/>
+		<col/>
+		<col class='col-sm-1'/>
+		<col class='col-sm-1'/>
+		<col class='col-sm-1'/>
+		<col class='col-sm-1'/>
+		<col class='col-sm-2'/>
+		<col class="col-sm-1"/>
 	</colgroup>
 	<tbody>
 <?php

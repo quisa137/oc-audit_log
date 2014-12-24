@@ -29,8 +29,9 @@ $l = \OCP\Util::getL10N('audit_log');
 $data = new \OCA\Audit_log\Data(\OC::$server->getActivityManager());
 
 $page = $data->getPageFromParam() - 1;
-$searchOption = $data->getSearchOptionFromParam(array('stdDate', 'endDate', 'fileName', 'userIp', 'userId'));
+$searchOption = $data->getSearchOptionFromParam(array('stdDate','endDate', 'fileName', 'userIP', 'userId', 'os', 'device'));
 $filter = $data->getFilterFromParam();
+$filterValue = '';
 $grouping = $data->getGroupingFromParam();
 
 $groupHelper = new \OCA\Audit_log\GroupHelper(
@@ -45,7 +46,7 @@ $groupHelper = new \OCA\Audit_log\GroupHelper(
 
 // Read the next 30 items for the endless scrolling
 $count = 500;
-$activity = $data->read($groupHelper, $page * $count, $count, $filter, $searchOption);
+$activity = $data->read($groupHelper, $page * $count, $count, $filter, $filterValue, $searchOption);
 
 // show the next 30 entries
 $tmpl = new \OCP\Template('audit_log', 'activities.part', '');

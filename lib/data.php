@@ -260,25 +260,30 @@ class Data {
   		switch ($k) {
   			case 'stdDate':
   				$sqlWhereQueries[] = ' AND unix_timestamp(?) <= timestamp';
+  				$parameters[] = $v;
   				break;
-  			case 'endDdate':
+  			case 'endDate':
   				$sqlWhereQueries[] = ' AND timestamp <= unix_timestamp(?)';
+  				$parameters[] = $v;
   				break;
   			case 'fileName':
   				$sqlWhereQueries[] = ' AND file like ? ';
   				$v = '%'.$v;
+  				$parameters[] = $v;
   				break;
   			case 'userIp':
   				$sqlWhereQueries[] = ' AND userip = inet_aton(?)';
+  				$parameters[] = $v;
   				break;
   			case 'userId':
   				$sqlWhereQueries[] = ' AND user = ?';
+  				$parameters[] = $v;
   				break;
-  			case 'userId':
-  				$sqlWhereQueries[] = ' AND user = ?';
+  			case 'checksum':
+  				$sqlWhereQueries[] = ' AND checksum = ?';
+  				$parameters[] = $v;
   				break;
   		}
-  		$parameters[] = $v;
   	}
   }
 
@@ -332,7 +337,7 @@ class Data {
  	if(!isset($_GET['grouping']))
  		return true;
  	$grouping = $_GET['grouping'];
- 	return ($grouping=='t')?true:false;
+ 	return ($grouping=='true')?true:false;
  }
 
  /**
@@ -344,7 +349,7 @@ class Data {
 	$result = array();
 	foreach($paramList as $param) {
 		$paramValue = $_GET[$param];
-		if(!empty($filterValue)) {
+		if(!empty($paramValue)) {
 			$result[$param] = $paramValue;
 		}
 	}

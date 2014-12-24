@@ -4,7 +4,11 @@ $(function(){
 	OCAudit_log.Filter = {
 		filter: undefined,
 		currentPage: 0,
+		grouping: true,
 		navigation: $('#app-navigation'),
+		tabs: $('#auditlog_tabs'),
+		searchFrm: $('#audit_log_search'),
+		queryStr:[],
 
 		setFilter: function (filter) {
 			if (filter === this.filter) {
@@ -27,6 +31,43 @@ $(function(){
 			this.navigation.find('a[data-navigation=' + filter + ']').addClass('active');
 
 			OCAudit_log.InfinitScrolling.prefill();
+		},
+		setGrouping: function(grouping) {
+			if(grouping=== this.grouping) {
+				return;
+			}
+			
+			this.currentPage = 0;
+			this.grouping = grouping;
+			
+			OCAudit_log.InfinitScrolling.container.animate({ scrollTop: 0 }, 'slow');
+			OCAudit_log.InfinitScrolling.container.children().remove();
+			OCAudit_log.InfinitScrolling.ignoreScroll = false;
+			OCAudit_log.InfinitScrolling.prefill();
+		},
+		setSearchOption: function(){
+			var dateRange = this.searchFrm.find('.dateRange input').val().split(' ~ ');
+			var str = [];
+			str['stdDate'] = dateRange[0];
+			str['endDate'] = dateRange[1];
+			str['os'] = $.makeArray(this.searchFrm.find('input[name=os]:checked').map(function(idx,elem){return $(elem).val();})).join('+');
+			str['device'] = $.makeArray(this.searchFrm.find('input[name=device]:checked').map(function(idx,elem){return $(elem).val();})).join('+');
+			str['userIP'] = this.searchFrm.find('input[name=userIP]').val();
+			str['userId'] = this.searchFrm.find('input[name=userId]').val();
+			str['fileName'] = this.searchFrm.find('input[name=fileName]').val();
+			str['checksum'] = this.searchFrm.find('input[name=checksum]').val();
+			
+			
+			for(var key in str) {
+				if($.type(str[key]) === 'string' && str[key] !== '')
+					this.queryStr.push(key + '=' + str[key]);
+			}
+			
+			this.currentPage = 0;
+			OCAudit_log.InfinitScrolling.container.animate({ scrollTop: 0 }, 'slow');
+			OCAudit_log.InfinitScrolling.container.children().remove();
+			OCAudit_log.InfinitScrolling.ignoreScroll = false;
+			OCAudit_log.InfinitScrolling.prefill();
 		}
 	};
 
@@ -41,7 +82,8 @@ $(function(){
 
 				$.get(
 					OC.filePath('audit_log', 'ajax', 'fetch.php'),
-					'filter=' + OCAudit_log.Filter.filter + '&page=' + OCAudit_log.Filter.currentPage,
+					'filter=' + OCAudit_log.Filter.filter + '&grouping=' + OCAudit_log.Filter.grouping + '&page=' + OCAudit_log.Filter.currentPage + 
+					((OCAudit_log.Filter.queryStr.length > 0)?'&' + OCAudit_log.Filter.queryStr.join('&'):''),
 					function(data) {
 						if (data.length) {
 							OCAudit_log.InfinitScrolling.appendContent(data);
@@ -72,7 +114,8 @@ $(function(){
 				OCAudit_log.InfinitScrolling.ignoreScroll = true;
 				$.get(
 					OC.filePath('audit_log', 'ajax', 'fetch.php'),
-					'filter=' + OCAudit_log.Filter.filter + '&page=' + OCAudit_log.Filter.currentPage,
+					'filter=' + OCAudit_log.Filter.filter + '&grouping=' + OCAudit_log.Filter.grouping + '&page=' + OCAudit_log.Filter.currentPage + 
+					((OCAudit_log.Filter.queryStr.length > 0)?'&' + OCAudit_log.Filter.queryStr.join('&'):''),
 					function(data) {
 						OCAudit_log.InfinitScrolling.appendContent(data);
 						OCAudit_log.InfinitScrolling.ignoreScroll = false;
@@ -116,12 +159,6 @@ $(function(){
 				var element = $(this);
 				element.avatar(element.data('user'), 28);
 			});
-			/*
-			$(parentElement).find('.tooltip').tipsy({
-				gravity:	's',
-				fade:		true
-			});
-			*/
 			$(parentElement).find('[data-toggle="tooltip"]').tooltip();
 		}
 	};
@@ -133,4 +170,44 @@ $(function(){
 		OCAudit_log.Filter.setFilter($(this).attr('data-navigation'));
 		event.preventDefault();
 	});
+	OCAudit_log.Filter.tabs.find('a[role=tab]').on('click',function(e) {
+		OCAudit_log.Filter.setGrouping($(this).attr('href')==='#grouped');
+		e.preventDefault();
+	});
+	OCAudit_log.Filter.tabs.find('a[href=search]').on('click',function(e) {
+		e.preventDefault();
+		$('#searchDialog').dialog('show');
+	});
+	OCAudit_log.Filter.searchFrm.find('#btnSubmit').on('click',function(e) {
+		e.preventDefault();
+		OCAudit_log.Filter.setSearchOption();
+		OCAudit_log.Filter.setGrouping(false);
+	})
+	OCAudit_log.Filter.searchFrm.find(".dateRange").daterangepicker({
+	      format: 'YYYY-MM-DD',
+	      locale:{
+              applyLabel: '입력',
+              cancelLabel: '취소',
+              fromLabel: '부터',
+              toLabel: '까지',
+              weekLabel: '일',
+              customRangeLabel: '날짜 선택',
+              daysOfWeek: moment.weekdaysMin(),
+              monthNames: moment.monthsShort(),
+              firstDay: moment.localeData()._week.dow
+          },
+	      ranges: {
+	          '오늘': [moment(), moment().add(1, 'days')],
+	          '어제': [moment().subtract(1, 'days'), moment()],
+	          '지난7일': [moment().subtract(6, 'days'), moment()],
+	          '지난30일': [moment().subtract(29, 'days'), moment()],
+	          '이달': [moment().startOf('month'), moment().endOf('month')],
+	          '지난달': [moment().subtract(1, 'month').startOf('month'), moment().subtract(1, 'month').endOf('month')]
+	       },
+	       startDate: moment().subtract(29, 'days'),
+	       endDate: moment()
+	     },
+	     function(start, end) {
+	         $('.dateRange input').val(start.format('YYYY-MM-DD') + ' ~ ' + end.format('YYYY-MM-DD'));
+	     });
 });

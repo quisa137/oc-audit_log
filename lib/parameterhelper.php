@@ -54,11 +54,11 @@ class ParameterHelper {
   */
  public function prepareParameters($params, $paramTypes = array(), $stripPath = false, $highlightParams = false) {
   $preparedParams = array ();
-  foreach ( $params as $i => $param ) {
-   if (is_array ( $param )) {
-    $preparedParams [] = $this->prepareArrayParameter ( $param, $paramTypes [$i], $stripPath, $highlightParams );
+  foreach($params as $i => $param) {
+   if (is_array($param)) {
+    $preparedParams[] = $this->prepareArrayParameter($param, $paramTypes [$i], $stripPath, $highlightParams);
    } else {
-    $preparedParams [] = $this->prepareStringParameter ( $param, isset ( $paramTypes [$i] ) ? $paramTypes [$i] : '', $stripPath, $highlightParams );
+    $preparedParams[] = $this->prepareStringParameter($param, isset ( $paramTypes [$i] ) ? $paramTypes [$i] : '', $stripPath, $highlightParams);
    }
   }
   return $preparedParams;
@@ -76,14 +76,12 @@ class ParameterHelper {
   * @return string
   */
  public function prepareStringParameter($param, $paramType, $stripPath, $highlightParams) {
-  if ($paramType ===
-    'file') {
-   return $this->prepareFileParam ( $param, $stripPath, $highlightParams );
-  } else if ($paramType ===
-    'username') {
-   return $this->prepareUserParam ( $param, $highlightParams );
+  if ($paramType === 'file') {
+   return $this->prepareFileParam($param, $stripPath, $highlightParams);
+  } else if ($paramType === 'username') {
+   return $this->prepareUserParam($param, $highlightParams);
   }
-  return $this->prepareParam ( $param, $highlightParams );
+  return $this->prepareParam($param, $highlightParams);
  }
 
  /**
@@ -99,17 +97,16 @@ class ParameterHelper {
   */
  public function prepareArrayParameter($params, $paramType, $stripPath, $highlightParams) {
   $parameterList = $plainParameterList = array ();
-  foreach ( $params as $parameter ) {
-   if ($paramType ===
-     'file') {
-    $parameterList [] = $this->prepareFileParam ( $parameter, $stripPath, $highlightParams );
-    $plainParameterList [] = $this->prepareFileParam ( $parameter, false, false );
+  foreach ($params as $parameter) {
+   if ($paramType === 'file') {
+    $parameterList [] = $this->prepareFileParam($parameter, $stripPath, $highlightParams);
+    $plainParameterList [] = $this->prepareFileParam($parameter, false, false);
    } else {
-    $parameterList [] = $this->prepareParam ( $parameter, $highlightParams );
-    $plainParameterList [] = $this->prepareParam ( $parameter, false );
+    $parameterList [] = $this->prepareParam($parameter, $highlightParams);
+    $plainParameterList [] = $this->prepareParam($parameter, false);
    }
   }
-  return $this->joinParameterList ( $parameterList, $plainParameterList, $highlightParams );
+  return $this->joinParameterList($parameterList, $plainParameterList, $highlightParams);
  }
 
  /**
@@ -122,7 +119,7 @@ class ParameterHelper {
  protected function prepareParam($param, $highlightParams) {
   if ($highlightParams) {
    return '<strong>' .
-     Util::sanitizeHTML ( $param ) . '</strong>';
+     Util::sanitizeHTML($param) . '</strong>';
   } else {
    return $param;
   }
@@ -138,13 +135,12 @@ class ParameterHelper {
   * @return string
   */
  protected function prepareUserParam($param, $highlightParams) {
-  $displayName = User::getDisplayName ( $param );
-  $param = Util::sanitizeHTML ( $param );
-  $displayName = Util::sanitizeHTML ( $displayName );
+  $displayName = User::getDisplayName($param);
+  $param = Util::sanitizeHTML($param);
+  $displayName = Util::sanitizeHTML($displayName);
 
   if ($highlightParams) {
-   return '<div class="avatar" data-user="' .
-     $param . '"></div>' . '<strong>' . $displayName . '</strong>';
+   return '<div class="avatar" data-user="' . $param . '"></div>' . '<strong>' . $displayName . '</strong>';
   } else {
    return $displayName;
   }
@@ -162,42 +158,32 @@ class ParameterHelper {
   * @return string
   */
  protected function prepareFileParam($param, $stripPath, $highlightParams) {
-  $param = $this->fixLegacyFilename ( $param );
-  $is_dir = $this->rootView->is_dir ( '/' .
-    User::getUser () . '/files' . $param );
+  $param = $this->fixLegacyFilename($param);
+  $is_dir = $this->rootView->is_dir( '/' . User::getUser() . '/files' . $param);
 
   if ($is_dir) {
    $parent_dir = $param;
   } else {
-   $parent_dir = (substr_count ( $param, '/' ) ==
-     1) ? '/' : dirname ( $param );
+   $parent_dir = (substr_count($param, '/' ) == 1) ? '/' : dirname($param);
   }
 
-  $fileLink = Util::linkTo ( 'files', 'index.php', array (
-   'dir' => $parent_dir
-  ) );
-  $param = trim ( $param, '/' );
+  $fileLink = Util::linkTo('files', 'index.php', array ('dir' => $parent_dir));
+  $param = trim($param, '/');
 
-  list ( $path, $name ) = $this->splitPathFromFilename ( $param );
-  if (! $stripPath ||
-    $path === '') {
-   if (! $highlightParams) {
+  list($path, $name) = $this->splitPathFromFilename($param);
+  if(!$stripPath || $path === '') {
+   if(!$highlightParams) {
     return $param;
    }
-   return '<a class="filename" href="' .
-     $fileLink . '">' . Util::sanitizeHTML ( $param ) . '</a>';
+   return '<a class="filename" href="' .  $fileLink . '">' . Util::sanitizeHTML($param) . '</a>';
   }
 
-  if (! $highlightParams) {
+  if(!$highlightParams) {
    return $name;
   }
 
-  $title = ' title="' .
-    $this->l->t ( 'in %s', array (
-    Util::sanitizeHTML ( $path )
-   ) ) . '"';
-  return '<a class="filename" href="' .
-    $fileLink . '"' . $title . '>' . Util::sanitizeHTML ( $name ) . '</a>';
+  $title = ' title="' . $this->l->t ( 'in %s', array(Util::sanitizeHTML($path))) . '"';
+  return '<a class="filename" href="' . $fileLink . '"' . $title . '>' . Util::sanitizeHTML($name) . '</a>';
  }
 
  /**
@@ -207,8 +193,7 @@ class ParameterHelper {
   * @return string
   */
  protected function fixLegacyFilename($filename) {
-  if (strpos ( $filename, '/' ) !==
-    0) {
+  if (strpos($filename, '/') !== 0) {
    return '/' . $filename;
   }
   return $filename;
@@ -221,16 +206,13 @@ class ParameterHelper {
   * @return array Array with path and filename
   */
  protected function splitPathFromFilename($filename) {
-  if (strrpos ( $filename, '/' ) !==
-    false) {
+  if (strrpos($filename, '/') !==  false) {
    return array (
-    trim ( substr ( $filename, 0, strrpos ( $filename, '/' ) ), '/' ),
-    substr ( $filename, strrpos ( $filename, '/' ) + 1 )
+    trim(substr($filename, 0, strrpos($filename, '/')), '/' ),
+    substr($filename, strrpos($filename, '/') + 1)
    );
   }
-  return array (
-   '',$filename
-  );
+  return array('',$filename);
  }
 
  /**
@@ -259,25 +241,25 @@ class ParameterHelper {
   if ($count == 1) {
    return $lastItem;
   } else if ($count == 2) {
-   $firstItem = array_pop ($parameterList);
+   $firstItem = array_pop($parameterList);
    return $this->l->t('%s and %s', array($firstItem,$lastItem));
   } else if ($count <= 5) {
    $list = implode($this->l->t(', '), $parameterList);
    return $this->l->t('%s and %s', array($list,$lastItem));
   }
 
-  $firstParams = array_slice ( $parameterList, 0, 3 );
-  $firstList = implode ( $this->l->t ( ', ' ), $firstParams );
-  $trimmedParams = array_slice ( $plainParameterList, 3 );
-  $trimmedList = implode ( $this->l->t ( ', ' ), $trimmedParams );
+  $firstParams = array_slice($parameterList, 0, 3);
+  $firstList = implode($this->l->t(', '), $firstParams);
+  $trimmedParams = array_slice($plainParameterList, 3);
+  $trimmedList = implode($this->l->t (', '), $trimmedParams);
   if ($highlightParams) {
    return $this->l->n(
-    '%s and <strong  data-toggle="tooltip" data-placement="bottom" title="%s">%n more</strong>',
-    '%s and <strong  data-toggle="tooltip" data-placement="bottom" title="%s">%n more</strong>',
+    '%s and <strong data-toggle="tooltip" data-placement="bottom" title="%s">%n more</strong>',
+    '%s and <strong data-toggle="tooltip" data-placement="bottom" title="%s">%n more</strong>',
     $count - 3,
     array($firstList,$trimmedList));
   }
-  return $this->l->n ('%s and %n more', '%s and %n more', $count - 3, array($firstList));
+  return $this->l->n('%s and %n more', '%s and %n more', $count - 3, array($firstList));
  }
 
  /**
