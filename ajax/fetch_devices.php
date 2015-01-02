@@ -24,31 +24,8 @@
 // some housekeeping
 \OCP\JSON::checkLoggedIn();
 \OCP\JSON::checkAppEnabled('audit_log');
-
-$l = \OCP\Util::getL10N('audit_log');
+\OCP\JSON::setContentTypeHeader();
 $data = new \OCA\Audit_log\Data(\OC::$server->getActivityManager());
-
-$page = $data->getPageFromParam() - 1;
-$searchOption = $data->getSearchOptionFromParam(array('stdDate','endDate', 'fileName', 'userIP', 'user', 'os', 'device'));
-$filter = $data->getFilterFromParam();
-$filterValue = '';
-$grouping = $data->getGroupingFromParam();
-
-$groupHelper = new \OCA\Audit_log\GroupHelper(
-	\OC::$server->getActivityManager(),
-	new \OCA\Audit_log\DataHelper(\OC::$server->getActivityManager(),
-		new \OCA\Audit_log\ParameterHelper(
-			new \OC\Files\View(''), $l
-		), $l
-	), $grouping
-);
-
-
-// Read the next 30 items for the endless scrolling
-$count = 500;
-$activity = $data->read($groupHelper, $page * $count, $count, $filter, $filterValue, $searchOption);
-
-// show the next 30 entries
-$tmpl = new \OCP\Template('audit_log', 'activities.part', '');
-$tmpl->assign('audit_log', $activity);
-$tmpl->printPage();
+$devices = $data->getDevices();
+echo \OC_JSON::encode($devices);
+?>

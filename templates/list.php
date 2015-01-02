@@ -59,6 +59,12 @@
 	        		</div>
 	        	</div>
 	        	<div class="form-group">
+	        		<label for="" class="col-sm-2 control-label"><?php p($l->t('DEVICE'))?></label>
+	        		<div class="col-sm-10">
+	        		  <select name="device" multiple></select>
+					</div>
+	        	</div>
+	        	<div class="form-group">
 	        		<label for="" class="col-sm-2 control-label"><?php p($l->t('OS'))?></label>
 	        		<div class="col-sm-10">
 	        		<div class="btn-group" data-toggle="buttons">
@@ -78,28 +84,6 @@
 					</div>
 	        	</div>
 	        	<div class="form-group">
-	        		<label for="" class="col-sm-2 control-label"><?php p($l->t('DEVICE'))?></label>
-	        		<div class="col-sm-10">
-	        		<div class="btn-group" data-toggle="buttons">
-					  <label class="btn btn-primary">
-					    <input type="checkbox"  name="device" value="PC" autocomplete="off"> PC
-					  </label>
-					  <label class="btn btn-primary">
-					    <input type="checkbox"  name="device" value="Android" autocomplete="off"> Android
-					  </label>
-					  <label class="btn btn-primary">
-					    <input type="checkbox"  name="device" value="Macintosh" autocomplete="off"> Macintosh
-					  </label>
-					  <label class="btn btn-primary">
-					    <input type="checkbox"  name="device" value="iPhone" autocomplete="off"> iPhone
-					  </label>
-					  <label class="btn btn-primary">
-					    <input type="checkbox"  name="device" value="iPad" autocomplete="off"> iPad
-					  </label>
-					</div>
-					</div>
-	        	</div>
-	        	<div class="form-group">
 	        		<label for="" class="col-sm-2 control-label"><?php p($l->t('user IP'))?></label>
 	        		<div class="col-sm-10">
 	        			<input type="text" name="userIP" id="" class="input"/>
@@ -108,7 +92,7 @@
 	        	<div class="form-group">
 	        		<label for="" class="col-sm-2 control-label"><?php p($l->t('user ID'))?></label>
 	        		<div class="col-sm-10">
-	        			<input type="text" name="userId" id="" class="input"/>
+	        			<input type="text" name="user" id="" class="input typeahead" data-provide="typeahead" autocomplete="off"/>
 					</div>
 	        	</div>
 	        	<div class="form-group">

@@ -158,7 +158,7 @@ class DataHelper {
  */
 public function parseUserAgent() {
  	$uaStr = $_SERVER['HTTP_USER_AGENT'];
- 	$uIP = $_SERVER['REMOTE_ADDR'];
+ 	$uIP = \OC_Util::getUserIP();
  	$osRegex = '/Windows( NT| Phone| CE)?|Mac OS X|Android( \d(\.\d(\.\d)?)?)?/';
  	$isLinuxRegex = '/Linux( arm| x86_64| i686)?/';
  	$deviceRegex = '/Macintosh|iPad|iPhone|BlackBerry|Samsung|LG|HTC|Android/';
@@ -199,7 +199,7 @@ public function parseUserAgent() {
  		$device = 'PC';
  	}
   $browser = ($browser == 'neon')?'mirall':$browser;
-  $os = ($browser == 'mirall' && $device == 'Macintosh')?'MAC OS X':$os;
+  $os = ($device == 'Macintosh')?'MAC OS X':$os;
 
  	$result = array(
  		'os' => $os,

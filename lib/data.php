@@ -223,7 +223,7 @@ class Data {
   */
  public function read(GroupHelper $groupHelper, $start, $count, $filter = 'all',$filterValue = '', $searchOption = array()) {
   // get current user
-  $user = User::getUser ();
+  $user = User::getUser();
   $enabledNotifications = UserSettings::getNotificationTypes ( $user, 'stream' );
   $enabledNotifications = $this->filterNotificationTypes ( $enabledNotifications, $filter );
 
@@ -271,17 +271,27 @@ class Data {
   				$v = '%'.$v;
   				$parameters[] = $v;
   				break;
-  			case 'userIp':
+  			case 'userIP':
   				$sqlWhereQueries[] = ' AND userip = inet_aton(?)';
   				$parameters[] = $v;
   				break;
-  			case 'userId':
-  				$sqlWhereQueries[] = ' AND user = ?';
+  			case 'user':
+  			case 'checksum':
+  				$sqlWhereQueries[] = ' AND '.$k.' = ?';
   				$parameters[] = $v;
   				break;
-  			case 'checksum':
-  				$sqlWhereQueries[] = ' AND checksum = ?';
-  				$parameters[] = $v;
+  			case 'os':
+ 			case 'device':
+ 				$values = explode(' ', $v);
+ 				$tmpWhereQuery = '';
+ 				foreach ($values as $value) {
+ 					if($value ==='OSX') $value = 'Mac OS X';
+ 					$tmpWhereQuery .= !empty($tmpWhereQuery)?' OR ':'';
+ 					$tmpWhereQuery .= $k.' like ?';
+ 					$parameters[] = $value.'%';
+ 				}
+  				$sqlWhereQueries[] = ' AND ('.$tmpWhereQuery.')';
+  				
   				break;
   		}
   	}
@@ -294,6 +304,20 @@ class Data {
   $result = $query->execute($parameters);
 
   return $this->getActivitiesFromQueryResult($result, $groupHelper);
+ }
+ 
+ /**
+  * Get Devices
+  */
+ public function getDevices() {
+ 	$query = DB::prepare('select distinct device from oc_owncloud.oc_audit_log where device is not null');
+ 	$result = $query->execute(array());
+ 	if(DB::isError($result)) {
+ 		Util::writeLog('Audit_log', DB::getErrorMessage($result), Util::ERROR);
+ 		return array();
+ 	} else {
+ 		return $result->fetchAll();
+ 	}
  }
 
  /**
