@@ -39,7 +39,7 @@
 	    <div class="modal-content">
 	      <div class="modal-header">
 	        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-	        <h4 class="modal-title" id="searchLabel"><?php p($l->t('Search Detail'))?></h4>
+	        <h4 class="modal-title" id="searchLabel"><?php p($l->t('Detail Search'))?></h4>
 	      </div>
 	      <div class="modal-body">
 	        <form class="search form-horizontal">
@@ -59,13 +59,19 @@
 	        		</div>
 	        	</div>
 	        	<div class="form-group">
-	        		<label for="" class="col-sm-2 control-label"><?php p($l->t('DEVICE'))?></label>
+	        		<label for="" class="col-sm-2 control-label"><?php p($l->t('device'))?></label>
 	        		<div class="col-sm-10">
 	        		  <select name="device" multiple></select>
 					</div>
 	        	</div>
 	        	<div class="form-group">
-	        		<label for="" class="col-sm-2 control-label"><?php p($l->t('OS'))?></label>
+	        		<label for="" class="col-sm-2 control-label"><?php p($l->t('types'))?></label>
+	        		<div class="col-sm-10">
+	        		  <select name="types" multiple></select>
+					</div>
+	        	</div>
+	        	<div class="form-group">
+	        		<label for="" class="col-sm-2 control-label"><?php p($l->t('os'))?></label>
 	        		<div class="col-sm-10">
 	        		<div class="btn-group" data-toggle="buttons">
 					  <label class="btn btn-primary">
@@ -84,15 +90,16 @@
 					</div>
 	        	</div>
 	        	<div class="form-group">
-	        		<label for="" class="col-sm-2 control-label"><?php p($l->t('user IP'))?></label>
+	        		<label for="" class="col-sm-2 control-label"><?php p($l->t('userip'))?></label>
 	        		<div class="col-sm-10">
 	        			<input type="text" name="userIP" id="" class="input"/>
 					</div>
 	        	</div>
 	        	<div class="form-group">
-	        		<label for="" class="col-sm-2 control-label"><?php p($l->t('user ID'))?></label>
+	        		<label for="" class="col-sm-2 control-label"><?php p($l->t('user'))?></label>
 	        		<div class="col-sm-10">
-	        			<input type="text" name="user" id="" class="input typeahead" data-provide="typeahead" autocomplete="off"/>
+	        			<input type="hidden" name="user"/>
+	        			<input type="text" name="username" id="" class="input typeahead" data-provide="typeahead" autocomplete="off"/>
 					</div>
 	        	</div>
 	        	<div class="form-group">

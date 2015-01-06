@@ -141,30 +141,21 @@ $(function(){
             if (lastGroup && lastGroup.data('date') === firstNewGroup.data('date')) {
                 var appendedBoxes = firstNewGroup.find('.box'),
                     lastBoxContainer = lastGroup.find('.boxcontainer');
-
-                // Move content into the last box
-                OCAudit_log.InfinitScrolling.processElements(appendedBoxes);
-                //lastBoxContainer.append(appendedBoxes);
-
-                // Remove the first box, so it's not duplicated
-                //content = $(content).slice(1);
             } else {
                 content = $(content);
-            }
-
+              }
             OCAudit_log.InfinitScrolling.processElements(content);
             this.container.append(content);
         },
 
-        processElements: function (parentElement) {
-            $(parentElement).find('.avatar').each(function() {
-                var element = $(this);
-                element.avatar(element.data('user'), 28);
-            });
-            $(parentElement).find('[data-toggle="tooltip"]').tooltip();
+        processElements: function (content) {
+            return content;
         }
     };
-
+    $('body').tooltip({
+        html:true,
+        selector:'[data-toggle="tooltip"]'
+    });
     OCAudit_log.Filter.setFilter(OCAudit_log.InfinitScrolling.container.attr('data-activity-filter'));
     OCAudit_log.InfinitScrolling.content.on('scroll', OCAudit_log.InfinitScrolling.onScroll);
 
@@ -176,15 +167,15 @@ $(function(){
         OCAudit_log.Filter.setGrouping($(this).attr('href')==='#grouped');
         e.preventDefault();
     });
-    OCAudit_log.Filter.tabs.find('a[href=search]').on('click',function(e) {
-        e.preventDefault();
-        $('#searchDialog').dialog('show');
-    });
+    
+    //검색 버튼 누를 때,
     OCAudit_log.Filter.searchFrm.find('#btnSubmit').on('click',function(e) {
         e.preventDefault();
         OCAudit_log.Filter.setSearchOption();
         OCAudit_log.Filter.tabs.find('a[href=#raw]').tab('show');
+        $('#audit_log_search').modal('hide');
     })
+    //검색창에서 검색기간 설정 시,
     OCAudit_log.Filter.searchFrm.find(".dateRange").daterangepicker({
           format: 'YYYY-MM-DD',
           locale:{
@@ -221,34 +212,44 @@ $(function(){
         }
         OCAudit_log.Filter.searchFrm.find('select[name=device]').append(optionHTML.join(''));
     });
+    //Search 폼에 동작유형들을 박아 넣음 첫 실행시, 한번만 실행하면 된다.
+    $.get(OC.filePath('audit_log','ajax','fetch_types.php'),function(res){
+        optionHTML = [];
+        for(var i=0;i<res.length;i++) {
+            optionHTML.push('<option value='+res[i]['type']+'>'+res[i]['type']+'</option>');
+        }
+        OCAudit_log.Filter.searchFrm.find('select[name=types]').append(optionHTML.join(''));
+    });    
+    //자동완성 기능 - 선택 시, 아이디도 같이 검색된다.
     var userlist = new Bloodhound({
         datumTokenizer: Bloodhound.tokenizers.obj.whitespace('displayname'),
         queryTokenizer: Bloodhound.tokenizers.whitespace,
-        prefetch: '../data/films/post_1960.json',
-        remote: OC.generateUrl('/settings/ajax/userlist')+'?offset=0&limit=30&gid=&pattern=%QUERY'
-      });
-       
-    userlist.initialize();
-       
-    OCAudit_log.Filter.searchFrm.find('[name=user].typeahead').typeahead(null, {
-        name: '',
-        displayKey: 'value',
-        source: bestPictures.ttAdapter()
-      });    
-    OCAudit_log.Filter.searchFrm.find('[name=user].typeahead').typeahead({
-        source: function (query, process) {
-            return $.get(OC.generateUrl('/settings/ajax/userlist'), { offset: 0, limit: 30, gid: '', pattern: query }, function (data) {
-                if(data.status ==='success') {
-                    var result = [];
-                    for(var i=0;i < data.length;i++) {
-                        result.push(data[i].displayname);
-                       }
-                    data.option = result;
-                }else{
-                    data.option = [];
-                  }
-                return process(data.options);
-            });
+        limit: 30,
+        remote: {
+          url: OC.generateUrl('/settings/ajax/userlist') +'?offset=0&limit=30&gid=&pattern=%QUERY',
+          filter: function(list) {
+              return list.data;
+          }
         }
+      });
+    userlist.initialize();
+    OCAudit_log.Filter.searchFrm.find('[name=username].typeahead').typeahead({
+        minLength:1,
+        highlight:true
+    }, {
+        name: 'userlist',
+        displayKey: 'displayname',
+        source:userlist.ttAdapter()
+        ,templates: {
+            empty: [
+              '<div class="empty-message">',
+              '검색 결과 없음',
+              '</div>'
+            ].join('\n'),
+            suggestion: Handlebars.compile('<p><strong data-userid="{{name}}">{{displayname}}</strong></p>')
+         }
+    });
+    OCAudit_log.Filter.searchFrm.find('.tt-dataset-userlist').on('click','.tt-suggestion',function(e){
+        OCAudit_log.Filter.searchFrm.find('[name=user]').val($(e.target).data('userid'));
     });
 });

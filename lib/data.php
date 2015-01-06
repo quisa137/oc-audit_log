@@ -125,21 +125,22 @@ class Data {
   $user = User::getUser ();
 
   if ($affecteduser === '') {
-	$auser = $user;
+    $auser = $user;
   } else {
    $auser = $affecteduser;
   }
 
   // store in DB
-  $query = DB::prepare ( 'INSERT INTO `*PREFIX*audit_log`(`app`, `subject`, `subjectparams`, `message`, `messageparams`, `file`, `user`, `affecteduser`, `timestamp`, `type`, `userip`, `device`, `os`, `browser`, `userAgent`, `checksum`)' .
-    ' VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, inet_aton(?), ?, ?, ?, ?, ?)' );
+  $query = DB::prepare ( 'INSERT INTO `*PREFIX*audit_log`(`app`, `subject`, `subjectparams`, `message`, `messageparams`, `file`,`filesize`, `user`, `affecteduser`, `timestamp`, `type`, `userip`, `device`, `os`, `browser`, `userAgent`, `checksum`)' .
+    ' VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, inet_aton(?), ?, ?, ?, ?, ?)' );
   $dh = new DataHelper();
   $userInfo = $dh->parseUserAgent();
   $checksum = '';
   if($type !== Data::TYPE_SHARE_DELETED){
-  	$checksum = $dh->getFileChecksum($file);
+      $filesize = $dh->getFileSize($file);
+      $checksum = $dh->getFileChecksum($file);
   }
-  $query->execute(array($app,$subject,serialize($subjectparams),$message,serialize($messageparams),$file,$user,$auser,$timestamp,$type,$userInfo['userip'],$userInfo['device'],$userInfo['os'],$userInfo['browser'],$userInfo['userAgent'],$checksum));
+  $query->execute(array($app,$subject,serialize($subjectparams),$message,serialize($messageparams),$file,$filesize,$user,$auser,$timestamp,$type,$userInfo['userip'],$userInfo['device'],$userInfo['os'],$userInfo['browser'],$userInfo['userAgent'],$checksum));
 
   // fire a hook so that other apps like notification systems can connect
   Util::emitHook('OC_Audit_log', 'post_event', array(
@@ -237,64 +238,64 @@ class Data {
   $limitActivities = " AND `type` IN ('" . implode ( "','", $enabledNotifications ) . "')";
   
   if(!empty($filter) && $filter !== 'all') {
-	  switch ($filter) {
-	  	case 'redZone':
-	  		break;
-	  	case 'fileHistory':
-	  		$sqlWhereQueries[] = ' AND checksum = ?';
-	  		break;
-	  	case 'userHistory':
-	  		$sqlWhereQueries[] = ' AND user = ?';
-	  		break;
-	  	case 'ipHistory':
-	  		$sqlWhereQueries[] = ' AND userIp = inet_aton(?)';
-	  		break;
-	  	default:
-	  		break;
-	  }
-	  $parameters[] = $filterValue;
+      switch ($filter) {
+          case 'redZone':
+              break;
+          case 'fileHistory':
+              $sqlWhereQueries[] = ' AND checksum = ?';
+              break;
+          case 'userHistory':
+              $sqlWhereQueries[] = ' AND user = ?';
+              break;
+          case 'ipHistory':
+              $sqlWhereQueries[] = ' AND userIp = inet_aton(?)';
+              break;
+          default:
+              break;
+      }
+      $parameters[] = $filterValue;
   }
   
   if(!empty($searchOption)) {
-  	foreach($searchOption as $k => $v) {
-  		switch ($k) {
-  			case 'stdDate':
-  				$sqlWhereQueries[] = ' AND unix_timestamp(?) <= timestamp';
-  				$parameters[] = $v;
-  				break;
-  			case 'endDate':
-  				$sqlWhereQueries[] = ' AND timestamp <= unix_timestamp(?)';
-  				$parameters[] = $v;
-  				break;
-  			case 'fileName':
-  				$sqlWhereQueries[] = ' AND file like ? ';
-  				$v = '%'.$v;
-  				$parameters[] = $v;
-  				break;
-  			case 'userIP':
-  				$sqlWhereQueries[] = ' AND userip = inet_aton(?)';
-  				$parameters[] = $v;
-  				break;
-  			case 'user':
-  			case 'checksum':
-  				$sqlWhereQueries[] = ' AND '.$k.' = ?';
-  				$parameters[] = $v;
-  				break;
-  			case 'os':
- 			case 'device':
- 				$values = explode(' ', $v);
- 				$tmpWhereQuery = '';
- 				foreach ($values as $value) {
- 					if($value ==='OSX') $value = 'Mac OS X';
- 					$tmpWhereQuery .= !empty($tmpWhereQuery)?' OR ':'';
- 					$tmpWhereQuery .= $k.' like ?';
- 					$parameters[] = $value.'%';
- 				}
-  				$sqlWhereQueries[] = ' AND ('.$tmpWhereQuery.')';
-  				
-  				break;
-  		}
-  	}
+      foreach($searchOption as $k => $v) {
+          switch ($k) {
+              case 'stdDate':
+                  $sqlWhereQueries[] = ' AND unix_timestamp(?) <= timestamp';
+                  $parameters[] = $v;
+                  break;
+              case 'endDate':
+                  $sqlWhereQueries[] = ' AND timestamp <= unix_timestamp(?)';
+                  $parameters[] = $v;
+                  break;
+              case 'fileName':
+                  $sqlWhereQueries[] = ' AND file like ? ';
+                  $v = '%'.$v;
+                  $parameters[] = $v;
+                  break;
+              case 'userIP':
+                  $sqlWhereQueries[] = ' AND userip = inet_aton(?)';
+                  $parameters[] = $v;
+                  break;
+              case 'user':
+              case 'checksum':
+                  $sqlWhereQueries[] = ' AND '.$k.' = ?';
+                  $parameters[] = $v;
+                  break;
+              case 'os':
+             case 'device':
+                 $values = explode(' ', $v);
+                 $tmpWhereQuery = '';
+                 foreach ($values as $value) {
+                     if($value ==='OSX') $value = 'Mac OS X';
+                     $tmpWhereQuery .= !empty($tmpWhereQuery)?' OR ':'';
+                     $tmpWhereQuery .= $k.' like ?';
+                     $parameters[] = $value.'%';
+                 }
+                  $sqlWhereQueries[] = ' AND ('.$tmpWhereQuery.')';
+                  
+                  break;
+          }
+      }
   }
 
   // fetch from DB
@@ -310,16 +311,30 @@ class Data {
   * Get Devices
   */
  public function getDevices() {
- 	$query = DB::prepare('select distinct device from oc_owncloud.oc_audit_log where device is not null');
- 	$result = $query->execute(array());
- 	if(DB::isError($result)) {
- 		Util::writeLog('Audit_log', DB::getErrorMessage($result), Util::ERROR);
- 		return array();
- 	} else {
- 		return $result->fetchAll();
- 	}
+     $query = DB::prepare('select distinct device from oc_owncloud.oc_audit_log where device is not null');
+     $result = $query->execute(array());
+     if(DB::isError($result)) {
+         Util::writeLog('Audit_log', DB::getErrorMessage($result), Util::ERROR);
+         return array();
+     } else {
+         return $result->fetchAll();
+     }
  }
-
+ 
+ /**
+  * Get Types
+  */
+ public function getTypes() {
+     $query = DB::prepare('select distinct type from oc_audit_log where type is not null');
+     $result = $query->execute(array());
+     if(DB::isError($result)) {
+         Util::writeLog('Audit_log', DB::getErrorMessage($result), Util::ERROR);
+         return array();
+     } else {
+         return $result->fetchAll();
+     }
+ }
+ 
  /**
   * Process the result and return the activities
   *
@@ -358,10 +373,10 @@ class Data {
   * @return boolean
   */
  public function getGroupingFromParam() {
- 	if(!isset($_GET['grouping']))
- 		return true;
- 	$grouping = $_GET['grouping'];
- 	return ($grouping=='true')?true:false;
+     if(!isset($_GET['grouping']))
+         return true;
+     $grouping = $_GET['grouping'];
+     return ($grouping=='true')?true:false;
  }
 
  /**
@@ -370,14 +385,14 @@ class Data {
   * @return array
   */
  public function getSearchOptionFromParam($paramList) {
-	$result = array();
-	foreach($paramList as $param) {
-		$paramValue = $_GET[$param];
-		if(!empty($paramValue)) {
-			$result[$param] = $paramValue;
-		}
-	}
-	return $result;
+    $result = array();
+    foreach($paramList as $param) {
+        $paramValue = $_GET[$param];
+        if(!empty($paramValue)) {
+            $result[$param] = $paramValue;
+        }
+    }
+    return $result;
  }
  /**
   * Get the filter from $_GET
@@ -385,20 +400,20 @@ class Data {
   * @return array
   */
  public function getFilterFromParam() {
- 	if (!isset($_GET['filter']))
- 		return array();
+     if (!isset($_GET['filter']))
+         return array();
  
- 	$filterValue = $_GET['filter'];
- 	switch ($filterValue) {
- 		case 'redZone':
- 		case 'fileHistory':
- 			return $filterValue;
- 		default:
- 			if($this->activityManager->isFilterValid($filterValue)) {
- 				return $filterValue;
- 			}
- 			return 'all';
- 	}
+     $filterValue = $_GET['filter'];
+     switch ($filterValue) {
+         case 'redZone':
+         case 'fileHistory':
+             return $filterValue;
+         default:
+           if($this->activityManager->isFilterValid($filterValue)) {
+                 return $filterValue;
+             }
+           return 'all';
+     }
  }
 
  /**

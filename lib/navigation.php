@@ -85,27 +85,27 @@ class Navigation {
  public function getTemplate($forceActive = null) {
   $active = $forceActive ?  : $this->active;
 
-  $template = new Template ( 'audit_log', 'navigation', '' );
-  $entries = $this->getLinkList ();
+  $template = new Template('audit_log', 'navigation', '');
+  $entries = $this->getLinkList();
 
-  if (sizeof ( $entries ['apps'] ) ===
-    1) {
+  if (sizeof($entries['apps']) ===  1) {
    // If there is only the files app, we simply do not show it,
    // as it is the same as the 'all' filter.
-   $entries ['apps'] = array ();
+   $entries['apps'] = array();
   }
 
-  $template->assign ( 'activeNavigation', $active );
-  $template->assign ( 'navigations', $entries );
-  $template->assign ( 'rssLink', $this->rssLink );
+  $template->assign('activeNavigation', $active);
+  $template->assign('navigations', $entries);
+  $template->assign('rssLink', $this->rssLink);
 
   return $template;
  }
  public function setRSSToken($rssToken) {
   if ($rssToken) {
-   $this->rssLink = $this->URLGenerator->getAbsoluteURL ( $this->URLGenerator->linkToRoute ( 'activity.rss', array (
-    'token' => $rssToken
-   ) ) );
+   $this->rssLink = $this->URLGenerator->getAbsoluteURL(
+           $this->URLGenerator->linkToRoute('activity.rss', array('token' => $rssToken)
+               )
+           );
   } else {
    $this->rssLink = '';
   }
@@ -118,34 +118,38 @@ class Navigation {
   */
  public function getLinkList() {
   $topEntries = array (
-   array (
-    'id' => 'all','name' => ( string ) $this->l->t ( 'All' ),
-    'url' => Util::linkToRoute ( 'audit_log.index' )
-   )
-  )
+      array (
+               'id' => 'all',
+               'name' => ( string ) $this->l->t ( 'All' ),
+               'url' => Util::linkToRoute ( 'audit_log.index' )
+      ),
+      array (
+              'id' => 'fileHistory',
+              'name' => (string) $this->l->t('File history'),
+              'url' => Util::linkToRoute('audit_log.fileHistory'),
+      ),
+      array (
+              'id' => 'userHistory',
+              'name' => (string) $this->l->t('User history'),
+              'url' => Util::linkToRoute('audit_log.userHistory'),
+    )
+  );
   // array(
   // 'id' => 'redZone',
   // 'name' => (string) $this->l->t('Setup Red zone'),
   // 'url' => Util::linkToRoute('audit_log.redZone'),
   // ),
-  // array(
-  // 'id' => 'fileHistory',
-  // 'name' => (string) $this->l->t('File history'),
-  // 'url' => Util::linkToRoute('audit_log.fileHistory'),
-  // ),
-  ;
 
-  $appFilterEntries = array ()
+  $appFilterEntries = array ();
   // array(
   // 'id' => 'all',
   // 'name' => (string) $this->l->t('All'),
   // 'url' => Util::linkToRoute('audit_log.index'),
   // ),
-  ;
 
-  $additionalEntries = $this->activityManager->getNavigation ();
-  $topEntries = array_merge ( $topEntries, $additionalEntries ['top'] );
-  $appFilterEntries = array_merge ( $appFilterEntries, $additionalEntries ['apps'] );
+  $additionalEntries = $this->activityManager->getNavigation();
+  $topEntries = array_merge($topEntries, $additionalEntries['top']);
+  $appFilterEntries = array_merge($appFilterEntries, $additionalEntries['apps']);
 
   return array (
    'top' => $topEntries,'apps' => $appFilterEntries

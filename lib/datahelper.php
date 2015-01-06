@@ -72,24 +72,7 @@ class DataHelper {
 
   if ($app === 'files') {
    $preparedParams = $this->parameterHelper->prepareParameters($params, $this->parameterHelper->getSpecialParameterList($app,$text), $stripPath, $highlightParams);
-   switch ($text) {
-    case 'created' :
-     return $this->l->t('%2$s created %1$s', $preparedParams);
-    case 'created_public' :
-     return $this->l->t('%1$s was created in a public folder',$preparedParams);
-    case 'changed' :
-     return $this->l->t('%2$s changed %1$s',$preparedParams);
-    case 'deleted' :
-     return $this->l->t('%2$s deleted %1$s',$preparedParams);
-    case 'shared_user' :
-     return $this->l->t('%3$s shared %1$s with %2$s',$preparedParams);
-    case 'shared_group' :
-     return $this->l->t('%3$s shared %1$s with group %2$s',$preparedParams);
-    case 'shared_link' :
-     return $this->l->t('%2$s published %1$s',$preparedParams);
-    case 'download' :
-     return $this->l->t('%2$s Downloaded %1$s',$preparedParams);
-   }
+   return $preparedParams[0];
   }
 
   // Allow other apps to correctly translate their activities
@@ -149,7 +132,7 @@ class DataHelper {
   }
 
   // Allow other apps to add a icon for their notifications
-  return $this->activityManager->getTypeIcon ( $type );
+  return $this->activityManager->getTypeIcon($type);
  }
 
 /**
@@ -221,5 +204,16 @@ public function parseUserAgent() {
  		return md5_file($absolutePath, false);
  	}
  	return '';
+ }
+ /**
+  * Get File checksum
+  */
+ public function getFileSize($filename) {
+ 	$absolutePath = \OC_User::getHome(\OC_User::getUser()) . '/files' . $filename;
+
+ 	if(file_exists($absolutePath)) {
+ 		return filesize($absolutePath);
+ 	}
+ 	return 0;
  }
 }

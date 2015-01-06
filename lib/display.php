@@ -53,6 +53,11 @@ class Display {
    // We do not link the subject as we create links for the parameters instead
    $activity['link'] = '';
   }
+  if(is_array($activity['subjectparams'][0])) {
+  	$activity['subjecttitle'] = implode('<br>', $activity['subjectparams'][0]);
+  }else{
+  	$activity['subjecttitle'] = $activity['subjectparams'][0];
+  }
 
   $tmpl->assign('event', $activity);
 

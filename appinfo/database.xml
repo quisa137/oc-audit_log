@@ -77,6 +77,12 @@
 				<length>255</length>
 			</field>
 			<field>
+				<name>filesize</name>
+				<type>bigint</type>
+				<notnull>false</notnull>
+				<length>11</length>
+			</field>
+			<field>
 				<name>userip</name>
 				<type>integer</type>
 				<notnull>false</notnull>

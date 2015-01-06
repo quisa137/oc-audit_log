@@ -56,9 +56,9 @@ class ParameterHelper {
   $preparedParams = array ();
   foreach($params as $i => $param) {
    if (is_array($param)) {
-    $preparedParams[] = $this->prepareArrayParameter($param, $paramTypes [$i], $stripPath, $highlightParams);
+    $preparedParams[] = $this->prepareArrayParameter($param, $paramTypes[$i], $stripPath, $highlightParams);
    } else {
-    $preparedParams[] = $this->prepareStringParameter($param, isset ( $paramTypes [$i] ) ? $paramTypes [$i] : '', $stripPath, $highlightParams);
+    $preparedParams[] = $this->prepareStringParameter($param, isset($paramTypes[$i])? $paramTypes[$i] : '', $stripPath, $highlightParams);
    }
   }
   return $preparedParams;
@@ -99,11 +99,11 @@ class ParameterHelper {
   $parameterList = $plainParameterList = array ();
   foreach ($params as $parameter) {
    if ($paramType === 'file') {
-    $parameterList [] = $this->prepareFileParam($parameter, $stripPath, $highlightParams);
-    $plainParameterList [] = $this->prepareFileParam($parameter, false, false);
+    $parameterList[] = $this->prepareFileParam($parameter, $stripPath, $highlightParams);
+    $plainParameterList[] = $this->prepareFileParam($parameter, false, false);
    } else {
-    $parameterList [] = $this->prepareParam($parameter, $highlightParams);
-    $plainParameterList [] = $this->prepareParam($parameter, false);
+    $parameterList[] = $this->prepareParam($parameter, $highlightParams);
+    $plainParameterList[] = $this->prepareParam($parameter, false);
    }
   }
   return $this->joinParameterList($parameterList, $plainParameterList, $highlightParams);
@@ -118,8 +118,7 @@ class ParameterHelper {
   */
  protected function prepareParam($param, $highlightParams) {
   if ($highlightParams) {
-   return '<strong>' .
-     Util::sanitizeHTML($param) . '</strong>';
+   return '<strong>' . Util::sanitizeHTML($param) . '</strong>';
   } else {
    return $param;
   }
@@ -182,7 +181,7 @@ class ParameterHelper {
    return $name;
   }
 
-  $title = ' title="' . $this->l->t ( 'in %s', array(Util::sanitizeHTML($path))) . '"';
+  $title = ' title="' . $this->l->t('in %s', array(Util::sanitizeHTML($path))) . '"';
   return '<a class="filename" href="' . $fileLink . '"' . $title . '>' . Util::sanitizeHTML($name) . '</a>';
  }
 
