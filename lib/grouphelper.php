@@ -84,6 +84,10 @@ class GroupHelper {
    $activity['subjectparams_array'] = array($activity['subjectparams_array']);
   }
 
+  if($this->allowGrouping) {
+  	$activity['checksum'] = '';
+  }
+
   if (!$this->getGroupKey($activity)) {
    if (!empty($this->openGroup)) {
     $this->activities[] = $this->openGroup;

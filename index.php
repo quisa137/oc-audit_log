@@ -32,6 +32,7 @@
 // load the needed js scripts and css
 \OCP\Util::addStyle('audit_log', 'style');
 \OCP\Util::addScript('audit_log', 'script');
+\OCP\Util::addScript('audit_log', 'searchFrm');
 
 \OCP\Util::addScript('audit_log', '../3rdparty/bootstrap/dist/js/bootstrap.min');
 \OCP\Util::addStyle('audit_log', '../3rdparty/bootstrap/dist/css/bootstrap.min');

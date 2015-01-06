@@ -118,20 +118,25 @@ class Navigation {
   */
  public function getLinkList() {
   $topEntries = array (
-      array (
+    array (
                'id' => 'all',
                'name' => ( string ) $this->l->t ( 'All' ),
                'url' => Util::linkToRoute ( 'audit_log.index' )
-      ),
-      array (
+    ),
+    array (
               'id' => 'fileHistory',
               'name' => (string) $this->l->t('File history'),
               'url' => Util::linkToRoute('audit_log.fileHistory'),
-      ),
-      array (
+    ),
+    array (
               'id' => 'userHistory',
               'name' => (string) $this->l->t('User history'),
               'url' => Util::linkToRoute('audit_log.userHistory'),
+    ),
+    array (
+              'id' => 'ipHistory',
+              'name' => (string) $this->l->t('IP history'),
+              'url' => Util::linkToRoute('audit_log.ipHistory'),
     )
   );
   // array(

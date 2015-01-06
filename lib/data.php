@@ -236,26 +236,7 @@ class Data {
   $whereColumns = '';
   $sqlWhereQueries = $parameters = array();
   $limitActivities = " AND `type` IN ('" . implode ( "','", $enabledNotifications ) . "')";
-  
-  if(!empty($filter) && $filter !== 'all') {
-      switch ($filter) {
-          case 'redZone':
-              break;
-          case 'fileHistory':
-              $sqlWhereQueries[] = ' AND checksum = ?';
-              break;
-          case 'userHistory':
-              $sqlWhereQueries[] = ' AND user = ?';
-              break;
-          case 'ipHistory':
-              $sqlWhereQueries[] = ' AND userIp = inet_aton(?)';
-              break;
-          default:
-              break;
-      }
-      $parameters[] = $filterValue;
-  }
-  
+    
   if(!empty($searchOption)) {
       foreach($searchOption as $k => $v) {
           switch ($k) {
@@ -282,15 +263,16 @@ class Data {
                   $parameters[] = $v;
                   break;
               case 'os':
-             case 'device':
-                 $values = explode(' ', $v);
-                 $tmpWhereQuery = '';
-                 foreach ($values as $value) {
-                     if($value ==='OSX') $value = 'Mac OS X';
-                     $tmpWhereQuery .= !empty($tmpWhereQuery)?' OR ':'';
-                     $tmpWhereQuery .= $k.' like ?';
-                     $parameters[] = $value.'%';
-                 }
+              case 'device':
+              case 'types':
+                  $values = explode(' ', $v);
+                  $tmpWhereQuery = '';
+                  foreach ($values as $value) {
+                      if($value ==='OSX') $value = 'Mac OS X';
+                      $tmpWhereQuery .= !empty($tmpWhereQuery)?' OR ':'';
+                      $tmpWhereQuery .= $k.' like ?';
+                      $parameters[] = $value.'%';
+                     }
                   $sqlWhereQueries[] = ' AND ('.$tmpWhereQuery.')';
                   
                   break;

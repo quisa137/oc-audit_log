@@ -14,17 +14,15 @@
 ?>
 
 	<tr>
-		<td><div class="username" data-toggle="tooltip" data-placement="auto" title="<?php p($_['event']['user']) ?>"><?php p($_['event']['username']) ?></div></td>
+		<td><div class="username" data-toggle="tooltip" data-placement="auto" title="<?php p($_['event']['user']) ?>" data-key="user" data-val="<?php p($_['event']['user']) ?>"><?php p($_['event']['username']) ?></div></td>
 		<td><div class="type" data-toggle="tooltip" data-placement="auto" title="<?php p($_['event']['type']) ?>"><span class="glyphicon <?php p($_['event']['typeicon'])?>" aria-hidden="true" title="<?php p($_['event']['type']) ?>"></span></div></td>
-		<td><div class="filename" data-toggle="tooltip" data-placement="auto" title="<?php p($_['event']['subjecttitle']) ?>"><span><?php p($_['event']['subjectformatted']['trimmed']) ?></span></div></td>
-		<td><div class="os"><?php p($_['event']['os']) ?></div></td>
-		<td><div class="device"><?php p($_['event']['device']) ?></div></td>
-		<td><div class="browser"><?php p($_['event']['browser']) ?></div></td>
-		<td><div class="userip"><?php p($_['event']['userip']) ?></div></td>
-		<td><div class="checksum"><?php p($_['event']['checksum']) ?></div></td>
+		<td><div class="filename" data-toggle="tooltip" data-placement="auto" title="<?php p($_['event']['subjecttitle']) ?>"><?php p($_['event']['subjectformatted']['trimmed']) ?></div></td>
+		<td><div class="os" data-toggle="tooltip" data-placement="auto" title="<?php p($_['event']['os']) ?>"><?php p($_['event']['os']) ?></div></td>
+		<td><div class="device" data-toggle="tooltip" data-placement="auto" title="<?php p($_['event']['device']) ?>"><?php p($_['event']['device']) ?></div></td>
+		<td><div class="browser" data-toggle="tooltip" data-placement="auto" title="<?php p($_['event']['browser']) ?>"><?php p($_['event']['browser']) ?></div></td>
+		<td><div class="userip" data-toggle="tooltip" data-placement="auto" title="<?php p($_['event']['userip']) ?>" data-key="userIP" data-val="<?php p($_['event']['userip']) ?>"><?php p($_['event']['userip']) ?></div></td>
+		<td><div class="checksum" data-toggle="tooltip" data-placement="auto" title="<?php p($_['event']['checksum']) ?>"><?php p($_['event']['checksum']) ?></div></td>
 		<td><div class="time"
-			title="<?php p($_['formattedDate']) ?>">
-			<?php /* p($_['formattedTimestamp']) */ ?>
-			<?php p($_['formattedDate']) ?>
-		</div></td>
+			data-toggle="tooltip" data-placement="auto"
+			title="<?php p($_['formattedDate']) ?>"><?php /* p($_['formattedTimestamp']) */ ?><?php p($_['formattedDate']) ?></div></td>
 	</tr>

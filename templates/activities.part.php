@@ -37,7 +37,9 @@ foreach ($_['audit_log'] as $event) {
   } 
   $lastDate = $currentDate;
   ?>
-	<h2 class="h2"><?php p(ucfirst($currentDate))?></h2>
+	<div class="page-header">
+		<h1><?php p(ucfirst($currentDate))?></h1>
+	</div>
 	<div class="table-responsive">
 	<table class="table tb">
 	<thead>

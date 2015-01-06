@@ -27,6 +27,7 @@
 $this->create('audit_log.index', '')->actionInclude('audit_log/index.php');
 $this->create('audit_log.fileHistory', '')->actionInclude('audit_log/index.php');
 $this->create('audit_log.userHistory', '')->actionInclude('audit_log/index.php');
+$this->create('audit_log.ipHistory', '')->actionInclude('audit_log/index.php');
 $this->create('audit_log.ajax.fetch', 'ajax/fetch.php')->actionInclude('audit_log/ajax/fetch.php');
 $this->create('audit_log.ajax.fetch_devices', 'ajax/fetch_devices.php')->actionInclude('audit_log/ajax/fetch_devices.php');
 $this->create('audit_log.ajax.fetch_types', 'ajax/fetch_types.php')->actionInclude('audit_log/ajax/fetch_types.php');
