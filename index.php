@@ -32,10 +32,10 @@
 // load the needed js scripts and css
 \OCP\Util::addStyle('audit_log', 'style');
 \OCP\Util::addScript('audit_log', 'script');
-\OCP\Util::addScript('audit_log', 'searchFrm');
+\OCP\Util::addScript('audit_log', 'dialogControl');
 
-\OCP\Util::addScript('audit_log', '../3rdparty/bootstrap/dist/js/bootstrap.min');
-\OCP\Util::addStyle('audit_log', '../3rdparty/bootstrap/dist/css/bootstrap.min');
+\OCP\Util::addScript('audit_log', '../3rdparty/bootstrap/dist/js/bootstrap');
+\OCP\Util::addStyle('audit_log', '../3rdparty/bootstrap/dist/css/bootstrap');
 
 \OCP\Util::addScript('audit_log', '../3rdparty/moment/moment');
 \OCP\Util::addScript('audit_log', '../3rdparty/moment/locale/ko');

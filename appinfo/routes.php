@@ -33,6 +33,7 @@ $this->create('audit_log.ajax.fetch_devices', 'ajax/fetch_devices.php')->actionI
 $this->create('audit_log.ajax.fetch_types', 'ajax/fetch_types.php')->actionInclude('audit_log/ajax/fetch_types.php');
 // $this->create('audit_log.ajax.rssfeed', 'ajax/rssfeed.php')->actionInclude('audit_log/ajax/rssfeed.php');
 $this->create('audit_log.ajax.settings', 'ajax/settings.php')->actionInclude('audit_log/ajax/settings.php');
+$this->create('audit_log.ajax.getDialog', 'ajax/getDialog.php')->actionInclude('audit_log/ajax/getDialog.php');
 
 // Register an OCS API call
 // OC_API::register(

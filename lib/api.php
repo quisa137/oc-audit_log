@@ -54,7 +54,6 @@ class Api
 			$data[] = array(
 				'id' => $entry['log_id'],
 				'subject' => (string) $entry['subjectformatted']['full'],
-				'message' => (string) $entry['messageformatted']['full'],
 				'file' => $entry['file'],
 				'link' => $entry['link'],
 				'date' => date('c', $entry['timestamp']),
