@@ -122,13 +122,13 @@ class DataHelper {
    case Data::TYPE_SHARE_CREATED :
     return 'glyphicon-cloud-upload';
    case Data::TYPE_SHARE_DOWNLOADED :
-   	return 'glyphicon-cloud-download';
+       return 'glyphicon-cloud-download';
    case Data::TYPE_SHARE_DELETED :
     return 'glyphicon-remove';
    case Data::TYPE_SHARED :
     return 'glyphicon-transfer';
    case Data::TYPE_SHARE_RESTORED :
-   	return 'glyphicon-repeat';
+       return 'glyphicon-repeat';
   }
 
   // Allow other apps to add a icon for their notifications
@@ -140,80 +140,81 @@ class DataHelper {
  * Device, DeviceType, OSType,IP, Browser String, Connect Region
  */
 public function parseUserAgent() {
- 	$uaStr = $_SERVER['HTTP_USER_AGENT'];
- 	$uIP = \OC_Util::getUserIP();
- 	$osRegex = '/Windows( NT| Phone| CE)?|Mac OS X|Android( \d(\.\d(\.\d)?)?)?/';
- 	$isLinuxRegex = '/Linux( arm| x86_64| i686)?/';
- 	$deviceRegex = '/Macintosh|iPad|iPhone|BlackBerry|Samsung|LG|HTC|Android/';
- 	$browserRegex = '/MSIE( \d{1,3}\.\d)?|Mobile Safari|Chrome|Firefox|Safari|mirall|neon/';
- 	$ie11LaterRegex = '/(Trident)\/.+; rv:(\d{1,3}\.\d)/';
- 	$device = array();
- 	$os = array();
- 	$browser = array();
- 	$linux = array();
+    $uaStr = $_SERVER['HTTP_USER_AGENT'];
+    $uIP = \OC_Util::getUserIP();
+    $uIP = ($uIP==='::1')?'127.0.0.1':$uIP;
+    $osRegex = '/Windows( NT| Phone| CE)?|Mac OS X|Android( \d(\.\d(\.\d)?)?)?/';
+    $isLinuxRegex = '/Linux( arm| x86_64| i686)?/';
+    $deviceRegex = '/Macintosh|iPad|iPhone|BlackBerry|Samsung|LG|HTC|Android/';
+    $browserRegex = '/MSIE( \d{1,3}\.\d)?|Mobile Safari|Chrome|Firefox|Safari|mirall|neon/';
+    $ie11LaterRegex = '/(Trident)\/.+; rv:(\d{1,3}\.\d)/';
+    $device = array();
+    $os = array();
+    $browser = array();
+    $linux = array();
 
- 	preg_match($deviceRegex, $uaStr, $device);
- 	preg_match($osRegex, $uaStr, $os);
- 	preg_match($browserRegex, $uaStr,$browser);
- 	$isLinux = preg_match($isLinuxRegex, $uaStr, $linux);
- 	$os = count($os)>0?$os[0]:'';
- 	$browser = count($browser)>0?$browser[0]:'';
- 	$device = count($device)>0?$device[0]:'';
+    preg_match($deviceRegex, $uaStr, $device);
+    preg_match($osRegex, $uaStr, $os);
+    preg_match($browserRegex, $uaStr,$browser);
+    $isLinux = preg_match($isLinuxRegex, $uaStr, $linux);
+    $os = count($os)>0?$os[0]:'';
+    $browser = count($browser)>0?$browser[0]:'';
+    $device = count($device)>0?$device[0]:'';
 
- 	if(empty($os)){
- 		if($isLinux){
- 			$os = count($linux)>0?$linux[0]:'unknown linux';
- 		}else{
- 			$os = 'unknown';
- 		}
- 	}
- 	if(empty($browser)){
- 		if(preg_match($ie11LaterRegex, $uaStr,$browser)){
- 			if(count($browser)==3){
- 				$tmpBrowser = $browser[1]=='Trident'?'MSIE':'';
- 				$tmpBrowser .= ' '.(floatval($browser[2]));
- 				$browser = $tmpBrowser;
- 			}
- 		}else{
-	 		$browser = 'unknown';
- 		}
- 	}
- 	if(empty($device)){
- 		$device = 'PC';
- 	}
+    if(empty($os)){
+        if($isLinux){
+            $os = count($linux)>0?$linux[0]:'unknown linux';
+        }else{
+            $os = 'unknown';
+        }
+    }
+    if(empty($browser)){
+        if(preg_match($ie11LaterRegex, $uaStr,$browser)){
+            if(count($browser)==3){
+                $tmpBrowser = $browser[1]=='Trident'?'MSIE':'';
+                $tmpBrowser .= ' '.(floatval($browser[2]));
+                $browser = $tmpBrowser;
+            }
+        }else{
+            $browser = 'unknown';
+        }
+    }
+    if(empty($device)){
+        $device = 'PC';
+    }
   $browser = ($browser == 'neon')?'mirall':$browser;
   $os = ($device == 'Macintosh')?'MAC OS X':$os;
 
- 	$result = array(
- 		'os' => $os,
- 		'browser' => $browser,
- 		'device' => $device,
- 		'userip' => $uIP,
+    $result = array(
+        'os' => $os,
+        'browser' => $browser,
+        'device' => $device,
+        'userip' => $uIP,
     'userAgent' => $uaStr
- 	);
- 	return $result;
- }
- 
+    );
+    return $result;
+}
+
  /**
   * Get File checksum
   */
  public function getFileChecksum($filename) {
- 	$absolutePath = \OC_User::getHome(\OC_User::getUser()) . '/files' . $filename;
+     $absolutePath = \OC_User::getHome(\OC_User::getUser()) . '/files' . $filename;
 
- 	if(file_exists($absolutePath)) {
- 		return md5_file($absolutePath, false);
- 	}
- 	return '';
+     if(file_exists($absolutePath)) {
+         return md5_file($absolutePath, false);
+     }
+     return '';
  }
  /**
   * Get File checksum
   */
  public function getFileSize($filename) {
- 	$absolutePath = \OC_User::getHome(\OC_User::getUser()) . '/files' . $filename;
+     $absolutePath = \OC_User::getHome(\OC_User::getUser()) . '/files' . $filename;
 
- 	if(file_exists($absolutePath)) {
- 		return filesize($absolutePath);
- 	}
- 	return 0;
+     if(file_exists($absolutePath)) {
+         return filesize($absolutePath);
+     }
+     return 0;
  }
 }

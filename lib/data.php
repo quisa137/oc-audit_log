@@ -105,10 +105,6 @@ class Data {
   *         A short description of the event
   * @param array $subjectparams
   *         Array with parameters that are filled in the subject
-  * @param string $message
-  *         A longer description of the event
-  * @param array $messageparams
-  *         Array with parameters that are filled in the message
   * @param string $file
   *         The file including path where this event is associated with.
   *         (optional)
@@ -120,7 +116,7 @@ class Data {
   *         Type of the notification
   * @return bool
   */
- public static function send($app, $subject, $subjectparams = array(), $message = '', $messageparams = array(), $file = '', $affecteduser = '', $type = '') {
+ public static function send($app, $subject, $subjectparams = array(), $file = '', $affecteduser = '', $type = '') {
   $timestamp = time ();
   $user = User::getUser ();
 
@@ -131,8 +127,8 @@ class Data {
   }
 
   // store in DB
-  $query = DB::prepare ( 'INSERT INTO `*PREFIX*audit_log`(`app`, `subject`, `subjectparams`, `message`, `messageparams`, `file`,`filesize`, `user`, `affecteduser`, `timestamp`, `type`, `userip`, `device`, `os`, `browser`, `userAgent`, `checksum`)' .
-    ' VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, inet_aton(?), ?, ?, ?, ?, ?)' );
+  $query = DB::prepare ( 'INSERT INTO `*PREFIX*audit_log`(`app`, `subject`, `subjectparams`, `file`,`filesize`, `user`, `affecteduser`, `timestamp`, `type`, `userip`, `device`, `os`, `browser`, `userAgent`, `checksum`)' .
+    ' VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, inet_aton(?), ?, ?, ?, ?, ?)' );
   $dh = new DataHelper();
   $userInfo = $dh->parseUserAgent();
   $checksum = '';
@@ -140,13 +136,7 @@ class Data {
       $filesize = $dh->getFileSize($file);
       $checksum = $dh->getFileChecksum($file);
   }
-  $query->execute(array($app,$subject,serialize($subjectparams),$message,serialize($messageparams),$file,$filesize,$user,$auser,$timestamp,$type,$userInfo['userip'],$userInfo['device'],$userInfo['os'],$userInfo['browser'],$userInfo['userAgent'],$checksum));
-
-  // fire a hook so that other apps like notification systems can connect
-  Util::emitHook('OC_Audit_log', 'post_event', array(
-   'app' => $app,'subject' => $subject,'user' => $user,
-   'affecteduser' => $affecteduser,'message' => $message,'file' => $file,
-   'type' => $type));
+  $query->execute(array($app,$subject,serialize($subjectparams),$file,$filesize,$user,$auser,$timestamp,$type,$userInfo['userip'],$userInfo['device'],$userInfo['os'],$userInfo['browser'],$userInfo['userAgent'],$checksum));
 
   return true;
  }

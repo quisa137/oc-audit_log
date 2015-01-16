@@ -52,6 +52,6 @@ class Consumer implements IConsumer {
   * @return null
   */
  function receive($app, $subject, $subjectParams, $message, $messageParams, $file, $link, $affectedUser, $type, $priority) {
-  Data::send ( $app, $subject, $subjectParams, $message, $messageParams, $file, $affectedUser, $type, $priority );
+  Data::send($app, $subject, $subjectParams, $file, $affectedUser, $type, $priority);
  }
 }

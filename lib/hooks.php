@@ -184,7 +184,7 @@ class Hooks {
 	 */
 	protected static function addNotificationsForUser($user, $subject, $subjectParams, $path, $type = Data::TYPE_SHARED) {
 
-		Data::send('files', $subject, $subjectParams, '', array(), $path, $user, $type);
+		Data::send('files', $subject, $subjectParams, $path, $user, $type);
 
 		// Add activity to mail queue
 		// if ($emailSetting) {
@@ -203,6 +203,6 @@ class Hooks {
 			'dir' => ($params['itemType'] === 'file') ? dirname($path) : $path,
 		));
 
-		Data::send('files', 'shared_link', array($path,\OCP\User::getUser()), '', array(), $path, \OCP\User::getUser(), Data::TYPE_SHARED);
+		Data::send('files', 'shared_link', array($path,\OCP\User::getUser()), $path, \OCP\User::getUser(), Data::TYPE_SHARED);
 	}
 }
