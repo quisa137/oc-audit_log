@@ -4,5 +4,5 @@
 \OCP\JSON::setContentTypeHeader();
 $settings = new \OCA\Audit_log\Settings();
 $filters = $settings->getFilters();
-echo \OC_JSON::encode($devices);
+echo \OC_JSON::encode($filters);
 ?>

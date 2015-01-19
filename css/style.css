@@ -80,7 +80,6 @@
 #app-content .pager li a {
     outline: none;
     margin:0;
-    line-height: normal;
     font-family: inherit;
     font-size: inherit;
     line-height: inherit;
@@ -101,9 +100,6 @@ div[id^=audit_log] .form-horizontal .form-group{
 div[id^=audit_log] .modal .modal-body {
     max-height: 420px;
     overflow-y: auto;
-}
-#filterList {
-	
 }
 #filterList > li{
     margin-bottom: 12px;

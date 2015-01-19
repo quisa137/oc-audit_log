@@ -36,7 +36,7 @@ class Display {
   * @param
   *         return string
   */
- public static function show($activity) {
+ public static function show($activity,$grouping) {
   $tmpl = new \OCP\Template('audit_log', 'activity.box');
   $tmpl->assign('formattedDate',\OCP\Util::formatDate($activity['timestamp']));
   $tmpl->assign('formattedTimestamp',\OCP\relative_modified_date($activity['timestamp']));
@@ -54,6 +54,7 @@ class Display {
   }
 
   $tmpl->assign('event', $activity);
+  $tmpl->assign('grouping',$grouping);
 
 //   if ($activity ['file']) {
 //    $rootView = new \OC\Files\View('');

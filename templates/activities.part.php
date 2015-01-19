@@ -51,8 +51,8 @@ foreach ($_['audit_log'] as $event) {
 		<th><?php p($l->t('device'))?></th>
 		<th><?php p($l->t('browser'))?></th>
 		<th><?php p($l->t('userip'))?></th>
-		<th><?php p($l->t('checksum'))?></th>
 		<th><?php p($l->t('time'))?></th>
+        <?php if ($_['grouping']===false) {?><th><?php p($l->t('checksum'))?></th><?php }; ?>
 	</tr>
 	</thead>
 	<colgroup>
@@ -63,13 +63,13 @@ foreach ($_['audit_log'] as $event) {
 		<col class='col-sm-1'/>
 		<col class='col-sm-1'/>
 		<col class='col-sm-1'/>
-		<col class='col-sm-2'/>
 		<col class="col-sm-1"/>
+        <?php if ($_['grouping']===false) { ?><col class='col-sm-2'/><?php }; ?>
 	</colgroup>
 	<tbody>
 <?php
  }
- echo \OCA\Audit_log\Display::show($event);
+ echo \OCA\Audit_log\Display::show($event,$_['grouping']);
 }
 if (!empty($_['activity'])):
 ?>

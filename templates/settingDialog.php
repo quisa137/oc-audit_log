@@ -30,6 +30,7 @@
     <div class="form-group">
         <label class="col-sm-3 control-label" for=""><?php p($l->t('filtername'))?></label>
         <div class="col-sm-9">
+            <input type="hidden" name="idx" value="">
             <input type="text" name="filtername" id="" class=""/>
         </div>
     </div>
@@ -42,7 +43,7 @@
                         <div class="input-group-addon">
                             <i class="glyphicon glyphicon-calendar"></i>
                         </div>
-                        <input type="text" value="<?php p(date("Y-m-d", strtotime('-30 day'))) ?> ~ <?php p(date("Y-m-d")) ?>" class="input-sm form-control">
+                        <input type="text" name="daterange" value="<?php p(date("Y-m-d", strtotime('-30 day'))) ?> ~ <?php p(date("Y-m-d")) ?>" class="input-sm form-control">
                     </div>
                 </div>
             </div>
@@ -71,16 +72,16 @@
         </div>
     </div>
     <div class="form-group">
-        <label for="" class="col-sm-3 control-label"><?php p($l->t('device'))?></label>
+        <label for="" class="col-sm-3 control-label"><?php p($l->t('types'))?></label>
         <div class="col-sm-9">
-          <select name="device" multiple></select>
+          <select name="types" multiple></select>
           <span class="help-block">Shift키를 누르면 여러개를 선택 할 수 있습니다</span>
         </div>
     </div>
     <div class="form-group">
-        <label for="" class="col-sm-3 control-label"><?php p($l->t('types'))?></label>
+        <label for="" class="col-sm-3 control-label"><?php p($l->t('device'))?></label>
         <div class="col-sm-9">
-          <select name="types" multiple></select>
+          <select name="device" multiple></select>
           <span class="help-block">Shift키를 누르면 여러개를 선택 할 수 있습니다</span>
         </div>
     </div>
@@ -104,13 +105,13 @@
         </div>
     </div>
     <div class="form-group">
-        <label for="" class="col-sm-3 control-label"><?php p($l->t('device'))?></label>
+        <label for="" class="col-sm-3 control-label"><?php p($l->t('priority'))?></label>
         <div class="col-sm-9">
             <select name="priority">
-                <option value="">긴급</option>
-                <option value="">중요</option>
-                <option value="" selected>보통</option>
-                <option value="">낮음</option>
+                <option value="10">긴급</option>
+                <option value="20">중요</option>
+                <option value="30" selected>보통</option>
+                <option value="40">낮음</option>
             </select>
             <span class="help-block">알림 메일에 표시됩니다.</span>
         </div>

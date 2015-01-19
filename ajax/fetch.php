@@ -51,4 +51,5 @@ $activity = $data->read($groupHelper, $page * $count, $count, $filter, $filterVa
 // show the next 30 entries
 $tmpl = new \OCP\Template('audit_log', 'activities.part', '');
 $tmpl->assign('audit_log', $activity);
+$tmpl->assign('grouping', $grouping);
 $tmpl->printPage();

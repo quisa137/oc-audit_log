@@ -22,15 +22,15 @@
         </div>
     </div>
     <div class="form-group">
-        <label for="" class="col-sm-2 control-label"><?php p($l->t('device'))?></label>
-        <div class="col-sm-10">
-          <select name="device" multiple></select>
-        </div>
-    </div>
-    <div class="form-group">
         <label for="" class="col-sm-2 control-label"><?php p($l->t('types'))?></label>
         <div class="col-sm-10">
           <select name="types" multiple></select>
+        </div>
+    </div>
+    <div class="form-group">
+        <label for="" class="col-sm-2 control-label"><?php p($l->t('device'))?></label>
+        <div class="col-sm-10">
+          <select name="device" multiple></select>
         </div>
     </div>
     <div class="form-group">

@@ -21,8 +21,8 @@
 		<td><div class="device" data-toggle="tooltip" data-placement="auto" title="<?php p($_['event']['device']) ?>"><?php p($_['event']['device']) ?></div></td>
 		<td><div class="browser" data-toggle="tooltip" data-placement="auto" title="<?php p($_['event']['browser']) ?>"><?php p($_['event']['browser']) ?></div></td>
 		<td><div class="userip" data-toggle="tooltip" data-placement="auto" title="<?php p($_['event']['userip']) ?>" data-key="userIP" data-val="<?php p($_['event']['userip']) ?>"><?php p($_['event']['userip']) ?></div></td>
-		<td><div class="checksum" data-toggle="tooltip" data-placement="auto" title="<?php p($_['event']['checksum']) ?>"><?php p($_['event']['checksum']) ?></div></td>
 		<td><div class="time"
 			data-toggle="tooltip" data-placement="auto"
 			title="<?php p($_['formattedDate']) ?>"><?php /* p($_['formattedTimestamp']) */ ?><?php p($_['formattedDate']) ?></div></td>
+		<?php if ($_['grouping']===false) { ?><td><div class="checksum" data-toggle="tooltip" data-placement="auto" title="<?php p($_['event']['checksum']) ?>"><?php p($_['event']['checksum']) ?></div></td><?php }; ?>
 	</tr>

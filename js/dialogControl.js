@@ -86,6 +86,7 @@ $(function(){
         currentPage: 0,
         filters: [],
         container:null,
+        settingFrm:null,
         rowHTML: [
             '<li class="col-xs-12" data-id="{{id}}">',
                 '<div class="col-xs-4">{{emails}}</div>',
@@ -93,15 +94,20 @@ $(function(){
                 '<div class="col-xs-4"><a href="" class="modify">수정</a>&nbsp;&nbsp;<a href="" class="delete">삭제</a></div>',
             '</li>'].join(""),
         initialize : function() {
-            var settingFrm = $('#audit_log_modal');
-            settingFrm.find('.detailed').addClass('hidden');
-            this.container = settingFrm.find('#filterList');
+            this.settingFrm = $('#audit_log_modal');
+            this.settingFrm.find('.detailed').addClass('hidden');
+            this.container = this.settingFrm.find('#filterList');
             this.getFilters();
             //수정
             this.container.on('click','.modify',function(e){
                 e.preventDefault();
                 //값 채워 넣고 화면 보이게 
-                settingFrm.find('.detailed').removeClass('hidden');
+                var t = $(e.currentTarget),
+                    id = t.parents('tr:first').data('id'),
+                    filter = Setting.filters[id];
+
+                Setting.settingFrm.find('.listed').addClass('hidden');
+                Setting.settingFrm.find('.detailed').removeClass('hidden');
             });
             //삭제
             this.container.on('click','.delete',function(e){
@@ -111,12 +117,75 @@ $(function(){
                 }
             });
             //필터 추가
-            settingFrm.on('click','[name=add]',function(e){
+            this.settingFrm.on('click','[name=add]',function(e){
                 e.preventDefault();
-                settingFrm.find('.listed').addClass('hidden');
-                settingFrm.find('.detailed').removeClass('hidden');
+                Setting.settingFrm.find('.listed').addClass('hidden');
+                Setting.settingFrm.find('.detailed').removeClass('hidden');
             });
-            commonInit(settingFrm);
+            this.settingFrm.on('click','#btnSave',function(e){
+                e.preventDefault();
+                var filter = Setting.formToArray();
+                var idx = filter['idx'];
+                delete filter['idx'];
+
+                if(idx === '' || idx<=0 || idx===undefined) {
+                    //쓰기 모드
+                    Setting.filters.push(filter);
+                } else if(idx > 0) {
+                    //수정 모드
+                    Setting.filters[idx] = filter;
+                }
+                Setting.setFilters();
+            });
+            commonInit(this.settingFrm);
+        },
+        formToArray : function() {
+            var filterRow = {};
+            this.settingFrm.find('.detailed').find('input,select,textarea').each(function(i,item){
+                var item = $(item);
+                if(item.is('select')) {
+                    var selected = [];
+                    item.find(':selected').val(function(idx,val){selected.push(val);return val;});
+                    
+                    if (selected.length > 1) {
+                        filterRow[item.attr('name')] = selected.join(',');
+                    } else if(selected.length==1) {
+                        filterRow[item.attr('name')] = selected[0];
+                    } else if(selected.length==0) {
+                        filterRow[item.attr('name')] = '';
+                    }
+                } else {
+                    if(item.is(':text') || item.is(':hidden') || item.is('textarea')) {
+                        filterRow[item.attr('name')] = item.val();
+                    } else if(item.is(':checkbox') || item.is(':radio')) {
+                        if(filterRow[item.attr('name')]===undefined) {
+                            var checked = [];
+                            Setting.settingFrm.find('[name='+item.attr('name')+']').val(function(idx,val) {
+                                if(val==='' || val==='on' || val==='off'){
+                                    if(item.prop('checked')){
+                                        checked.push(true);
+                                    }else{
+                                        checked.push(false);
+                                    }
+                                }else{
+                                    if(item.prop('checked')){
+                                        checked.push(val);
+                                    }
+                                }
+                                return val;
+                            });
+                            if(checked.length > 1) {
+                                filterRow[item.attr('name')] = checked.join(',');
+                            } else if(checked.length===1) {
+                                filterRow[item.attr('name')] = checked[0];
+                            } else if(checked.length===0) {
+                                filterRow[item.attr('name')] = '';
+                            }
+                        }
+                    }
+                }
+            });
+            return filterRow;
         },
         modifyFilter : function(id,name,val) {
             this.setFilters();
@@ -136,7 +205,7 @@ $(function(){
             this.currentPage++;
             $.get(OC.filePath('audit_log','ajax','fetch_filters.php'),{page:this.currentPage},function(resp) {
                 if(resp && resp.length) {
-                    Setting.filters = resp;
+                    Setting.filters = $.parseJSON(resp);
                     Setting.appendContent();
                 }else{
                     Setting.container.find('.loading').addClass('hidden');
@@ -145,7 +214,7 @@ $(function(){
             });
         },
         setFilters : function() {
-            $.post(OC.filePath('audit_log','ajax','save_filters.php'),{filter:Setting.filters},function(resp) {
+            $.post(OC.filePath('audit_log','ajax','save_filters.php'),{filters:JSON.stringify(Setting.filters)},function(resp) {
                 if(resp.status==='success') {
                     alert('저장 되었습니다.');
                 }
@@ -156,9 +225,13 @@ $(function(){
             var html = [];
             for(var i=0;i < filters.length;i++) {
                 var row = filters[i];
-                html.push(rowHTML.replace(/{{id}}/gi,i).replace(/{{emails}}/gi,row['emails']).replace(/{{filtername}}/gi,row['filtername']));
+                html.push(Setting.rowHTML.replace(/{{id}}/gi,i).replace(/{{emails}}/gi,row['emails']).replace(/{{filtername}}/gi,row['filtername']));
             }
-            Setting.container.append(html);
+            Setting.container.append(html.join(""));
+            if(html.length>0) {
+                Setting.container.find('.loading').addClass('hidden');
+                Setting.container.find('.noexist').addClass('hidden');
+            }
         }
     };
     //모달 창 제어 스크립트
@@ -184,4 +257,5 @@ $(function(){
             });
         }
     });
+    $.Setting = Setting;
 });
