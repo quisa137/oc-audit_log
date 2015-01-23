@@ -160,6 +160,9 @@ div[id^=audit_log] .modal .modal-body {
 	margin: 0 auto;
 	padding: 20px;
 }
+.limitoverflow {
+    overflow: hidden;
+}
 
 .group {
 	clear: both;

@@ -17,11 +17,17 @@ class Settings {
     protected static function setAppValue($key, $value){
         return \OCP\Config::setAppValue(self::APP_NAME, $key, $value);
     }
-    public static function setFilters($filters = array()){
-        return self::setAppValue('filters', serialize($filters));
+    public static function setFilters($filters = ''){
+        return self::setAppValue('filters', $filters);
     }
     public static function getFilters(){
-        return unserialize(self::getAppValue('filters',array()));
+        return self::getAppValue('filters','');
+    }
+    public static function setDefaultEmails($defaultEmails = '') {
+        return self::setAppValue('defaultEmails',$defaultEmails);
+    }
+    public static function getDefaultEmails() {
+        return self::getAppValue('defaultEmails','');
     }
 }
 ?>

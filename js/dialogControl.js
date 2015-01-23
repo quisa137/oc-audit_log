@@ -89,9 +89,9 @@ $(function(){
         settingFrm:null,
         rowHTML: [
             '<li class="col-xs-12" data-id="{{id}}">',
-                '<div class="col-xs-4">{{emails}}</div>',
-                '<div class="col-xs-4">{{filtername}}</div>',
-                '<div class="col-xs-4"><a href="" class="modify">수정</a>&nbsp;&nbsp;<a href="" class="delete">삭제</a></div>',
+                '<div class="col-xs-4 limitoverflow">{{emails}}</div>',
+                '<div class="col-xs-4 limitoverflow">{{filtername}}</div>',
+                '<div class="col-xs-4 limitoverflow"><a href="" class="modify">수정</a>&nbsp;&nbsp;<a href="" class="delete">삭제</a></div>',
             '</li>'].join(""),
         initialize : function() {
             this.settingFrm = $('#audit_log_modal');
@@ -103,22 +103,30 @@ $(function(){
                 e.preventDefault();
                 //값 채워 넣고 화면 보이게 
                 var t = $(e.currentTarget),
-                    id = t.parents('tr:first').data('id'),
+                    id = t.parents('li:first').data('id'),
                     filter = Setting.filters[id];
+                Setting.arrayToForm(filter);
 
                 Setting.settingFrm.find('.listed').addClass('hidden');
-                Setting.settingFrm.find('.detailed').removeClass('hidden');
+                Setting.settingFrm.find('.detailed').removeClass('hidden').find('[name=idx]').val(id);
             });
             //삭제
             this.container.on('click','.delete',function(e){
                 e.preventDefault();
                 if(confirm('정말 삭제하시겠습니까?')) {
-                    Settings.deleteFilter($(e.currentTarget).data('id'));
+                    Setting.deleteFilter($(e.currentTarget).parents('li:first').data('id'));
                 }
+            });
+            this.settingFrm.on('change','[name=defaultEmails]',function(e){
+                e.preventDefault();
+                $.post(OC.filePath('audit_log','ajax','save_filters.php'),{defaultEmails:$(this).val()},function(e){
+
+                });
             });
             //필터 추가
             this.settingFrm.on('click','[name=add]',function(e){
                 e.preventDefault();
+                Setting.settingFrm.find('.detailed [name=emails]').val(Setting.settingFrm.find('.listed [name=defaultEmails]').val());
                 Setting.settingFrm.find('.listed').addClass('hidden');
                 Setting.settingFrm.find('.detailed').removeClass('hidden');
             });
@@ -128,21 +136,61 @@ $(function(){
                 var idx = filter['idx'];
                 delete filter['idx'];
 
-                if(idx === '' || idx<=0 || idx===undefined) {
+                if(idx === '' || idx<0 || idx===undefined) {
                     //쓰기 모드
                     Setting.filters.push(filter);
-                } else if(idx > 0) {
+                } else if(idx >= 0) {
                     //수정 모드
                     Setting.filters[idx] = filter;
                 }
-                Setting.setFilters();
+                $.when(Setting.setFilters()).done(function(){
+                    Setting.reset();
+                    Setting.settingFrm.find('.listed').removeClass('hidden');
+                    Setting.settingFrm.find('.detailed').addClass('hidden');
+                });
+            });
+            this.settingFrm.on('click','#btnCancel',function(e){
+                e.preventDefault();
+                Setting.reset();
+                Setting.settingFrm.find('.listed').removeClass('hidden');
+                Setting.settingFrm.find('.detailed').addClass('hidden');
             });
             commonInit(this.settingFrm);
+        },
+        arrayToForm : function(filter) {
+            for(var key in filter) {
+                var input = this.settingFrm.find('.detailed [name='+key+']'),
+                value = filter[key];
+                
+                if(input.is('select')) {
+                    var values = value.split(',');
+                    input.val(values);
+                } else if(input.is(':radio,:checkbox')) {
+                    if($.type(value)==='boolean') {
+                        input.prop('checked',value);
+                    }else{
+                        if($.type(value)==='string') {
+                            var values = value.split(',');
+                            for(var i=0;i<input.length;i++) {
+                                var inObj = $(input[i]);
+                                if($.inArray(inObj.val(),values)!==-1){
+                                    inObj.prop('checked',true).parents('label:first').addClass('active');
+                                }else{
+                                    inObj.prop('checked',false).parents('label:first').removeClass('active');
+                                }
+                            }
+                        }
+                    }
+                }else{
+                    input.val(value);
+                }
+            }
         },
         formToArray : function() {
             var filterRow = {};
             this.settingFrm.find('.detailed').find('input,select,textarea').each(function(i,item){
                 var item = $(item);
+                
                 if(item.is('select')) {
                     var selected = [];
                     item.find(':selected').val(function(idx,val){selected.push(val);return val;});
@@ -158,28 +206,16 @@ $(function(){
                     if(item.is(':text') || item.is(':hidden') || item.is('textarea')) {
                         filterRow[item.attr('name')] = item.val();
                     } else if(item.is(':checkbox') || item.is(':radio')) {
-                        if(filterRow[item.attr('name')]===undefined) {
-                            var checked = [];
-                            Setting.settingFrm.find('[name='+item.attr('name')+']').val(function(idx,val) {
-                                if(val==='' || val==='on' || val==='off'){
-                                    if(item.prop('checked')){
-                                        checked.push(true);
-                                    }else{
-                                        checked.push(false);
-                                    }
+                        if(item.prop('checked')){
+                            var value = item.val();
+                            if($.type(value)==='boolean' || value==='' || value==='on' || value==='off') {
+                                filterRow[item.attr('name')] = item.prop('checked');
+                            }else {
+                                if($.type(filterRow[item.attr('name')])!=='undefined') {
+                                    filterRow[item.attr('name')] += ',' + value;
                                 }else{
-                                    if(item.prop('checked')){
-                                        checked.push(val);
-                                    }
+                                    filterRow[item.attr('name')] = value;
                                 }
-                                return val;
-                            });
-                            if(checked.length > 1) {
-                                filterRow[item.attr('name')] = checked.join(',');
-                            } else if(checked.length===1) {
-                                filterRow[item.attr('name')] = checked[0];
-                            } else if(checked.length===0) {
-                                filterRow[item.attr('name')] = '';
                             }
                         }
                     }
@@ -194,18 +230,27 @@ $(function(){
             this.filters = $.grep(this.filters,function(elem,i){
                 return id !== i;
             });
-            this.setFilters();
+            $.when(this.setFilters()).done(function(){
+                Setting.reset();
+            });
         },
         reset : function() {
             Setting.filters = [];
+            Setting.settingFrm.find('form').each(function(i,item){
+                item.reset();
+            });
+            Setting.container.find('li[data-id]').remove();
             Setting.container.find('.loading').removeClass('hidden');
             Setting.container.find('.noexist').addClass('hidden');
+            this.currentPage = 0;
+
+            Setting.getFilters();
         },
         getFilters : function() {
             this.currentPage++;
-            $.get(OC.filePath('audit_log','ajax','fetch_filters.php'),{page:this.currentPage},function(resp) {
+            return $.get(OC.filePath('audit_log','ajax','fetch_filters.php'),{page:this.currentPage},function(resp) {
                 if(resp && resp.length) {
-                    Setting.filters = $.parseJSON(resp);
+                    Setting.filters = resp;
                     Setting.appendContent();
                 }else{
                     Setting.container.find('.loading').addClass('hidden');
@@ -214,7 +259,7 @@ $(function(){
             });
         },
         setFilters : function() {
-            $.post(OC.filePath('audit_log','ajax','save_filters.php'),{filters:JSON.stringify(Setting.filters)},function(resp) {
+            return $.post(OC.filePath('audit_log','ajax','save_filters.php'),{filters:JSON.stringify(Setting.filters)},function(resp) {
                 if(resp.status==='success') {
                     alert('저장 되었습니다.');
                 }
@@ -243,7 +288,6 @@ $(function(){
         content = tg.find('.modal-content');
         if(tg.data('uri') !== content.data('uri')) {
             content.data('uri',tg.data('uri')).load(OC.filePath('audit_log','ajax','getDialog.php'),{dialog:tg.data('uri')},function(resp) {
-                //검색 버튼 누를 때,
                 if(resp.status !== 'error') {
                     switch($(this).data('uri')) {
                         case 'search':
@@ -255,6 +299,14 @@ $(function(){
                     }
                 }
             });
+        }
+    });
+    $('#audit_log_modal').on('hide.bs.modal',function(e){
+        var uri = $(e.currentTarget).find('.modal-content').data('uri');
+        if(uri==='setting') {
+            Setting.reset();
+            Setting.settingFrm.find('.listed').removeClass('hidden');
+            Setting.settingFrm.find('.detailed').addClass('hidden');
         }
     });
     $.Setting = Setting;

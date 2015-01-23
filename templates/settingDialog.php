@@ -20,7 +20,7 @@
     <div class="form-group">
         <label class="col-sm-3 control-label" for=""><?php p($l->t('default email'))?></label>
         <div class="col-sm-9">
-            <input type="text" name="defaultEmails" id="" class=""/>
+            <input type="text" name="defaultEmails" id="" class="" value="<?php p($_['defaultEmails'])?>"/>
         </div>
     </div>
 </form>
