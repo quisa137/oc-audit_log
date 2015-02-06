@@ -78,7 +78,7 @@ $(function(){
             $.OCAudit_log.Filter.setSearchOption();
             $.OCAudit_log.Filter.setFilter('all')
             $.OCAudit_log.Filter.setGrouping(false);
-            $('#audit_log_search').modal('hide');
+            $('#audit_log_modal').modal('hide');
         });
         commonInit(searchFrm);
     };
@@ -287,21 +287,28 @@ $(function(){
         var tg = $(e.currentTarget),
         content = tg.find('.modal-content');
         if(tg.data('uri') !== content.data('uri')) {
-            content.data('uri',tg.data('uri')).load(OC.filePath('audit_log','ajax','getDialog.php'),{dialog:tg.data('uri')},function(resp) {
+            content.children().remove();
+            content.data('uri',tg.data('uri'));
+
+            var content = content;
+            $.post(OC.filePath('audit_log','ajax','getDialog.php'),{dialog:tg.data('uri')},function(resp) {
                 if(resp.status !== 'error') {
-                    switch($(this).data('uri')) {
+                    content.append(resp);
+                    switch(content.data('uri')) {
                         case 'search':
-                        Search();
+                            Search();
                         break;
                         case 'setting':
-                        Setting.initialize();
+                            Setting.initialize();
                         break;
                     }
+                }else{
+                    location.reload();
                 }
             });
         }
     });
-    $('#audit_log_modal').on('hide.bs.modal',function(e){
+    $('#audit_log_modal').on('hidden.bs.modal',function(e){
         var uri = $(e.currentTarget).find('.modal-content').data('uri');
         if(uri==='setting') {
             Setting.reset();

@@ -26,7 +26,6 @@
 </form>
 
 <form class="form-horizontal detailed">
-    <div class="form-group detailed-title"><?php p($l->t('Filter detail'))?></div>
     <div class="form-group">
         <label class="col-sm-3 control-label" for=""><?php p($l->t('filtername'))?></label>
         <div class="col-sm-9">

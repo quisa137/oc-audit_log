@@ -23,6 +23,9 @@ class Settings {
     public static function getFilters(){
         return self::getAppValue('filters','');
     }
+    public static function getFilterstoArray(){
+        json_decode(self::getFilters());
+    }
     public static function setDefaultEmails($defaultEmails = '') {
         return self::setAppValue('defaultEmails',$defaultEmails);
     }

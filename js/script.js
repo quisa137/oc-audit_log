@@ -8,7 +8,7 @@ $(function(){
         navigation: $('#app-navigation'),
         pills: $('#auditlog_tabs>.btn-group:first'), //Grouping, Raw log switch
         
-        searchFrm: $('#audit_log_search'),
+        searchFrm: $('#audit_log_modal'),
         queryStr:[],
         initialize: function(reset) {
             if(reset) {

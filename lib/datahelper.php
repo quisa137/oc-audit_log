@@ -26,195 +26,233 @@ use \OCP\Util;
 use \OCP\Audit_log\IManager;
 
 class DataHelper {
- /**
-  * @var \OCP\Audit_log\IManager
-  */
- protected $activityManager;
+    /**
+    * @var \OCP\Audit_log\IManager
+    */
+    protected $activityManager;
 
- /**
-  * @var \OCA\Audit_log\ParameterHelper
-  */
- protected $parameterHelper;
+    /**
+    * @var \OCA\Audit_log\ParameterHelper
+    */
+    protected $parameterHelper;
 
- /**
-  * @var \OC_L10N
-  */
- protected $l;
- public function __construct(IManager $activityManager, ParameterHelper $parameterHelper, \OC_L10N $l) {
-  $this->activityManager = $activityManager;
-  $this->parameterHelper = $parameterHelper;
-  $this->l = $l;
- }
-
- /**
-  * @brief Translate an event string with the translations from the app where it
-  * was send from
-  *
-  * @param string $app
-  *         The app where this event comes from
-  * @param string $text
-  *         The text including placeholders
-  * @param array $params
-  *         The parameter for the placeholder
-  * @param bool $stripPath
-  *         Shall we strip the path from file names?
-  * @param bool $highlightParams
-  *         Shall we highlight the parameters in the string?
-  *         They will be highlighted with `<strong>`, all data will be passed
-  *         through
-  *         \OCP\Util::sanitizeHTML() before, so no XSS is possible.
-  * @return string translated
-  */
- public function translation($app, $text, $params, $stripPath = false, $highlightParams = false) {
-  if (! $text) {
-   return '';
-  }
-
-  if ($app === 'files') {
-   $preparedParams = $this->parameterHelper->prepareParameters($params, $this->parameterHelper->getSpecialParameterList($app,$text), $stripPath, $highlightParams);
-   return $preparedParams[0];
-  }
-
-  // Allow other apps to correctly translate their activities
-  $translation = $this->activityManager->translate($app,$text,$params,$stripPath,$highlightParams,$this->l->getLanguageCode());
-
-  if ($translation !== false) {
-   return $translation;
-  }
-
-  $l = Util::getL10N($app);
-  return $l->t($text,$params);
- }
-
- /**
-  * Format strings for display
-  *
-  * @param array $activity
-  * @param string $message
-  *         'subject' or 'message'
-  * @return array Modified $activity
-  */
- public function formatStrings($activity, $message) {
-  $activity[$message . 'params'] = $activity[$message . 'params_array'];
-  unset($activity[$message . 'params_array']);
-
-  $activity[$message . 'formatted'] = array(
-    'trimmed' => $this->translation($activity['app'],$activity[$message],$activity[$message . 'params'], true),
-    'full' => $this->translation($activity['app'],$activity[$message],$activity[$message . 'params']),
-    'markup' => array (
-     'trimmed' => $this->translation($activity['app'],$activity[$message],$activity[$message . 'params'], true, true),
-     'full' => $this->translation($activity['app'],$activity[$message],$activity[$message . 'params'], false, true)
-    )
-  );
-  return $activity;
- }
-
- /**
-  * Get the icon for a given activity type
-  *
-  * @param string $type
-  * @return string CSS class which adds the icon
-  */
- public function getTypeIcon($type) {
-  switch ($type) {
-   case Data::TYPE_SHARE_CHANGED :
-    return 'glyphicon-refresh';
-   case Data::TYPE_SHARE_CREATED :
-    return 'glyphicon-cloud-upload';
-   case Data::TYPE_SHARE_DOWNLOADED :
-       return 'glyphicon-cloud-download';
-   case Data::TYPE_SHARE_DELETED :
-    return 'glyphicon-remove';
-   case Data::TYPE_SHARED :
-    return 'glyphicon-transfer';
-   case Data::TYPE_SHARE_RESTORED :
-       return 'glyphicon-repeat';
-  }
-
-  // Allow other apps to add a icon for their notifications
-  return $this->activityManager->getTypeIcon($type);
- }
-
-/**
- * Parse the User Agent
- * Device, DeviceType, OSType,IP, Browser String, Connect Region
- */
-public function parseUserAgent() {
-    $uaStr = $_SERVER['HTTP_USER_AGENT'];
-    $uIP = \OC_Util::getUserIP();
-    $uIP = ($uIP==='::1')?'127.0.0.1':$uIP;
-    $osRegex = '/Windows( NT| Phone| CE)?|Mac OS X|Android( \d(\.\d(\.\d)?)?)?/';
-    $isLinuxRegex = '/Linux( arm| x86_64| i686)?/';
-    $deviceRegex = '/Macintosh|iPad|iPhone|BlackBerry|Samsung|LG|HTC|Android/';
-    $browserRegex = '/MSIE( \d{1,3}\.\d)?|Mobile Safari|Chrome|Firefox|Safari|mirall|neon/';
-    $ie11LaterRegex = '/(Trident)\/.+; rv:(\d{1,3}\.\d)/';
-    $device = array();
-    $os = array();
-    $browser = array();
-    $linux = array();
-
-    preg_match($deviceRegex, $uaStr, $device);
-    preg_match($osRegex, $uaStr, $os);
-    preg_match($browserRegex, $uaStr,$browser);
-    $isLinux = preg_match($isLinuxRegex, $uaStr, $linux);
-    $os = count($os)>0?$os[0]:'';
-    $browser = count($browser)>0?$browser[0]:'';
-    $device = count($device)>0?$device[0]:'';
-
-    if(empty($os)){
-        if($isLinux){
-            $os = count($linux)>0?$linux[0]:'unknown linux';
-        }else{
-            $os = 'unknown';
-        }
+    /**
+    * @var \OC_L10N
+    */
+    protected $l;
+    public function __construct(IManager $activityManager, ParameterHelper $parameterHelper, \OC_L10N $l) {
+        $this->activityManager = $activityManager;
+        $this->parameterHelper = $parameterHelper;
+        $this->l = $l;
     }
-    if(empty($browser)){
-        if(preg_match($ie11LaterRegex, $uaStr,$browser)){
-            if(count($browser)==3){
-                $tmpBrowser = $browser[1]=='Trident'?'MSIE':'';
-                $tmpBrowser .= ' '.(floatval($browser[2]));
-                $browser = $tmpBrowser;
+
+    /**
+    * @brief Translate an event string with the translations from the app where it
+    * was send from
+    *
+    * @param string $app
+    *         The app where this event comes from
+    * @param string $text
+    *         The text including placeholders
+    * @param array $params
+    *         The parameter for the placeholder
+    * @param bool $stripPath
+    *         Shall we strip the path from file names?
+    * @param bool $highlightParams
+    *         Shall we highlight the parameters in the string?
+    *         They will be highlighted with `<strong>`, all data will be passed
+    *         through
+    *         \OCP\Util::sanitizeHTML() before, so no XSS is possible.
+    * @return string translated
+    */
+    public function translation($app, $text, $params, $stripPath = false, $highlightParams = false) {
+        if (! $text) {
+            return '';
+        }
+
+        if ($app === 'files') {
+            $preparedParams = $this->parameterHelper->prepareParameters($params, $this->parameterHelper->getSpecialParameterList($app,$text), $stripPath, $highlightParams);
+            return $preparedParams[0];
+        }
+
+    // Allow other apps to correctly translate their activities
+        $translation = $this->activityManager->translate($app,$text,$params,$stripPath,$highlightParams,$this->l->getLanguageCode());
+
+        if ($translation !== false) {
+            return $translation;
+        }
+
+        $l = Util::getL10N($app);
+        return $l->t($text,$params);
+    }
+
+    /**
+    * Format strings for display
+    *
+    * @param array $activity
+    * @param string $message
+    *         'subject' or 'message'
+    * @return array Modified $activity
+    */
+    public function formatStrings($activity, $message) {
+        $activity[$message . 'params'] = $activity[$message . 'params_array'];
+        unset($activity[$message . 'params_array']);
+
+        $activity[$message . 'formatted'] = array(
+            'trimmed' => $this->translation($activity['app'],$activity[$message],$activity[$message . 'params'], true),
+            'full' => $this->translation($activity['app'],$activity[$message],$activity[$message . 'params']),
+            'markup' => array (
+                'trimmed' => $this->translation($activity['app'],$activity[$message],$activity[$message . 'params'], true, true),
+                'full' => $this->translation($activity['app'],$activity[$message],$activity[$message . 'params'], false, true)
+                )
+            );
+        return $activity;
+    }
+
+    /**
+    * Get the icon for a given activity type
+    *
+    * @param string $type
+    * @return string CSS class which adds the icon
+    */
+    public function getTypeIcon($type) {
+        switch ($type) {
+            case Data::TYPE_SHARE_CHANGED :
+                return 'glyphicon-refresh';
+            case Data::TYPE_SHARE_CREATED :
+                return 'glyphicon-cloud-upload';
+            case Data::TYPE_SHARE_DOWNLOADED :
+                return 'glyphicon-cloud-download';
+            case Data::TYPE_SHARE_DELETED :
+                return 'glyphicon-remove';
+            case Data::TYPE_SHARED :
+                return 'glyphicon-transfer';
+            case Data::TYPE_SHARE_RESTORED :
+                return 'glyphicon-repeat';
+        }
+
+    // Allow other apps to add a icon for their notifications
+        return $this->activityManager->getTypeIcon($type);
+    }
+
+    /**
+    * Parse the User Agent
+    * Device, DeviceType, OSType,IP, Browser String, Connect Region
+    */
+    public function parseUserAgent() {
+        $uaStr = $_SERVER['HTTP_USER_AGENT'];
+        $uIP = \OC_Util::getUserIP();
+        $uIP = ($uIP==='::1')?'127.0.0.1':$uIP;
+        $osRegex = '/Windows( NT| Phone| CE)?|Mac OS X|Android( \d(\.\d(\.\d)?)?)?/';
+        $isLinuxRegex = '/Linux( arm| x86_64| i686)?/';
+        $deviceRegex = '/Macintosh|iPad|iPhone|BlackBerry|Samsung|LG|HTC|Android/';
+        $browserRegex = '/MSIE( \d{1,3}\.\d)?|Mobile Safari|Chrome|Firefox|Safari|mirall|neon/';
+        $ie11LaterRegex = '/(Trident)\/.+; rv:(\d{1,3}\.\d)/';
+        $device = array();
+        $os = array();
+        $browser = array();
+        $linux = array();
+
+        preg_match($deviceRegex, $uaStr, $device);
+        preg_match($osRegex, $uaStr, $os);
+        preg_match($browserRegex, $uaStr,$browser);
+        $isLinux = preg_match($isLinuxRegex, $uaStr, $linux);
+        $os = count($os)>0?$os[0]:'';
+        $browser = count($browser)>0?$browser[0]:'';
+        $device = count($device)>0?$device[0]:'';
+
+        if(empty($os)){
+            if($isLinux){
+                $os = count($linux)>0?$linux[0]:'unknown linux';
+            }else{
+                $os = 'unknown';
             }
-        }else{
-            $browser = 'unknown';
         }
+        if(empty($browser)){
+            if(preg_match($ie11LaterRegex, $uaStr,$browser)){
+                if(count($browser)==3){
+                    $tmpBrowser = $browser[1]=='Trident'?'MSIE':'';
+                    $tmpBrowser .= ' '.(floatval($browser[2]));
+                    $browser = $tmpBrowser;
+                }
+            }else{
+                $browser = 'unknown';
+            }
+        }
+        if(empty($device)){
+            $device = 'PC';
+        }
+        $browser = ($browser == 'neon')?'mirall':$browser;
+        $os = ($device == 'Macintosh')?'MAC OS X':$os;
+
+        $result = array(
+            'os' => $os,
+            'browser' => $browser,
+            'device' => $device,
+            'userip' => $uIP,
+            'userAgent' => $uaStr
+            );
+        return $result;
     }
-    if(empty($device)){
-        $device = 'PC';
+
+    /**
+    * Get File checksum
+    */
+    public function getFileChecksum($filename, $user='') {
+        if(empty($user)) {
+            $user = \OC_User::getUser();
+        }
+        $absolutePath = \OC_User::getHome($user) . '/files' . $filename;
+
+        if(file_exists($absolutePath)) {
+            return md5_file($absolutePath, false);
+        }
+        return '';
     }
-  $browser = ($browser == 'neon')?'mirall':$browser;
-  $os = ($device == 'Macintosh')?'MAC OS X':$os;
+    /**
+    * Get File checksum
+    */
+    public function getFileSize($filename, $user='') {
+        if(empty($user)) {
+            $user = \OC_User::getUser();
+        }
+        $absolutePath = \OC_User::getHome($user) . '/files' . $filename;
 
-    $result = array(
-        'os' => $os,
-        'browser' => $browser,
-        'device' => $device,
-        'userip' => $uIP,
-    'userAgent' => $uaStr
-    );
-    return $result;
-}
+        if(file_exists($absolutePath)) {
+            return filesize($absolutePath);
+        }
+        return 0;
+    }
 
- /**
-  * Get File checksum
-  */
- public function getFileChecksum($filename) {
-     $absolutePath = \OC_User::getHome(\OC_User::getUser()) . '/files' . $filename;
+    public function isVaildIP($inputIP = null,$ips = array()){
+        $inputIP = $inputIP=='::1'?'127.0.0.1':$inputIP;
+        foreach($ips as $ip) {
+            $matches = array();
+            $start = 0;
+            $end = 0;
+            $input = 0;
+            $rangebit = 31;
 
-     if(file_exists($absolutePath)) {
-         return md5_file($absolutePath, false);
-     }
-     return '';
- }
- /**
-  * Get File checksum
-  */
- public function getFileSize($filename) {
-     $absolutePath = \OC_User::getHome(\OC_User::getUser()) . '/files' . $filename;
+            //대역 비트가 있으면 비트를 얻어온다
+            if(preg_match_all('/\/\d{1,2}/', $ip,$matches)){
+                $rangebit = intval(str_replace('/','',$matches[0][0]));
+                $ip = str_replace($matches[0][0], '', $ip);
+            }
 
-     if(file_exists($absolutePath)) {
-         return filesize($absolutePath);
-     }
-     return 0;
- }
+            //아이피 주소를 정수로 변환
+            $start = ip2long($ip);
+            $input = ip2long($inputIP);
+
+            //비트에 따른 아이피 갯수 계산
+            $q = 0;
+            for($f = (31-$rangebit);$f>=0;$f--){
+                $q += pow(2,$f);
+            }
+            $end = $start + $q;
+            if($start <= $input && $input <=$end){
+                return true;
+            }
+        }
+        return false;
+    }
 }

@@ -109,9 +109,6 @@ class Hooks {
 		$affectedUsers = self::getUserPathsFromPath($filePath);
 
 		foreach ($affectedUsers as $user => $path) {
-// SGCOM MODIFIED :: 원래 세팅을 해야 데이터가 쌓이는 구조 였지만
-//  감사자료를 남기기 위해 무조건 데이터는 쌓게 하였다.
-
 			$userSubject = $subject;
 			$userParams = array($path, \OCP\User::getUser());
 
@@ -121,6 +118,7 @@ class Hooks {
 			);
 		}
 	}
+
 
 	/**
 	 * Returns a "username => path" map for all affected users
@@ -184,13 +182,62 @@ class Hooks {
 	 */
 	protected static function addNotificationsForUser($user, $subject, $subjectParams, $path, $type = Data::TYPE_SHARED) {
 
-		Data::send('files', $subject, $subjectParams, $path, $user, $type);
+		
 
 		// Add activity to mail queue
-		// if ($emailSetting) {
-		// 	$latestSend = time() + $emailSetting;
-		// 	Data::storeMail('files', $subject, $subjectParams, $user, $type, $latestSend);
-		// }
+		$settings = new \OCA\Audit_log\Settings();
+		$filters = $settings->getFilterstoArray();
+		$datahelper = new \OCA\Audit_log\Datahelper();
+		$clientInfo = $datahelper->parseUserAgent();
+		if($type !== Data::TYPE_SHARE_DELETED){
+            $clientInfo['filesize'] = $datahelper->getFileSize($path,$user);
+            $clientInfo['checksum'] = $datahelper->getFileChecksum($path,$user);
+        }
+
+		Data::send('files', $subject, $subjectParams, $path, $user, $type);
+
+		//필터 처리
+		foreach($filters as $filter) {
+			$flag = true;
+			$daterange = explode(' ~ ', $filters['daterange']);
+			$types = explode(',', $filters['types']);
+			$device = explode(',', $filters['device']);
+			$os = explode(',', $filters['os']);
+			$ips = explode(',', $filters['userip']);
+
+			//파일명
+			$flag = $flag && (preg_match_all($filters['filename'], $path)>0);
+
+			//파일크기
+			if(!empty($filters['sizerange'])){
+				$sizerange = explode(' ~ ', $filters['sizerange']);
+				$flag = $flag && ($sizerange[0] < $clientInfo['filesize'] && $clientInfo['filesize'] < $sizerange[1]);
+			}
+			//기간
+			$curStamp = (new DateTime())->getTimestamp();
+			$stdStamp = DateTime::createFromFormat('Y-m-d',$daterange[0])->getTimestamp();
+			$endStamp = DateTime::createFromFormat('Y-m-d',$daterange[1])->getTimestamp();
+
+			$flag = $flag && $filters['consecutive']?true:($stdStamp < $curStamp && $curStamp < $endStamp);
+
+			//유형, 디바이스, 운영체제
+			$flag = $flag && in_array($clientInfo['types'], $types);
+			$flag = $flag && in_array($clientInfo['device'], $device);
+			$flag = $flag && in_array($clientInfo['os'], $os);
+
+			//아이피체크
+			$flag = $flag && $datahelper->isVaildIP($clientInfo['userip'],$ips);			
+
+			$flag = ($filters['checksum'] === $datahelper::getFileChecksum($path,$user));
+
+
+
+			if ($flag) {
+				$latestSend = time();
+				Data::storeMail('files', $subject, $subjectParams, $user, $type, $latestSend);
+			}
+		}
+
 	}
 
 	/**

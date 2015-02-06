@@ -50,7 +50,7 @@ class MailQueueHandler {
 
 		$query = \OCP\DB::prepare(
 			'SELECT `amq_affecteduser`, MIN(`amq_latest_send`) AS `amq_trigger_time` '
-			. ' FROM `*PREFIX*activity_mq` '
+			. ' FROM `*PREFIX*audit_log_mq` '
 			. ' WHERE `amq_latest_send` < ? '
 			. ' GROUP BY `amq_affecteduser` '
 			. ' ORDER BY `amq_trigger_time` ASC',
