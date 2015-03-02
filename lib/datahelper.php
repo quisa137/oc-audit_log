@@ -24,6 +24,7 @@ namespace OCA\Audit_log;
 
 use \OCP\Util;
 use \OCP\Audit_log\IManager;
+use OCA\Audit_log\Settings;
 
 class DataHelper {
     /**
@@ -141,7 +142,7 @@ class DataHelper {
     */
     public function parseUserAgent() {
         $uaStr = $_SERVER['HTTP_USER_AGENT'];
-        $uIP = \OC_Util::getUserIP();
+        $uIP = Settings::getUserIP();
         $uIP = ($uIP==='::1')?'127.0.0.1':$uIP;
         $osRegex = '/Windows( NT| Phone| CE)?|Mac OS X|Android( \d(\.\d(\.\d)?)?)?/';
         $isLinuxRegex = '/Linux( arm| x86_64| i686)?/';
